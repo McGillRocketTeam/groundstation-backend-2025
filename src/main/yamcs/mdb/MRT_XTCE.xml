@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="FlightComputer"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/XTCE/20180204"
+			 xsi:schemaLocation="https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd ">
+	<TelemetryMetaData>
+		<ParameterTypeSet>
+			<IntegerParameterType name="uint8" signed="false">
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+			</IntegerParameterType>
+			<IntegerParameterType name="uint16" signed="false">
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"/>
+			</IntegerParameterType>
+			<IntegerParameterType name="uint32" signed="false">
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="32"/>
+			</IntegerParameterType>
+			<IntegerParameterType name="int8">
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="8"/>
+			</IntegerParameterType>
+			<IntegerParameterType name="int16">
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16"/>
+			</IntegerParameterType>
+			<IntegerParameterType name="int32">
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="32"/>
+			</IntegerParameterType>
+			<FloatParameterType name="float">
+				<UnitSet/>
+				<FloatDataEncoding sizeInBits="32"/>
+			</FloatParameterType>
+			<AggregateParameterType name="xyzFloat">
+				<MemberList>
+					<Member name="x" typeRef="float"/>
+					<Member name="y" typeRef="float"/>
+					<Member name="z" typeRef="float"/>
+				</MemberList>
+			</AggregateParameterType>
+			<AggregateParameterType name="xyzYPRFloat">
+				<MemberList>
+					<Member name="x" typeRef="float"/>
+					<Member name="y" typeRef="float"/>
+					<Member name="z" typeRef="float"/>
+					<Member name="yaw" typeRef="float"/>
+					<Member name="pitch" typeRef="float"/>
+					<Member name="roll" typeRef="float"/>
+				</MemberList>
+			</AggregateParameterType>
+			<EnumeratedParameterType name="flightStageType">
+				<UnitSet/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+				<EnumerationList>
+					<Enumeration value="99" label="Pre-Pad, error in initialization"/>
+					<Enumeration value="0" label="Pad, filling and readying for launch"/>
+					<Enumeration value="1" label="Ascent, climbing at high velocity"/>
+					<Enumeration value="2" label="Pre-Apogee, checking for ejection"/>
+					<Enumeration value="3" label="Drogue descent"/>
+					<Enumeration value="4" label="Main descent"/>
+					<Enumeration value="5" label="Landed"/>
+				</EnumerationList>
+			</EnumeratedParameterType>
+			<BinaryParameterType name="payloadPacketType">
+				<BinaryDataEncoding>
+					<SizeInBits>
+						<FixedValue>96</FixedValue>
+					</SizeInBits>
+				</BinaryDataEncoding>
+			</BinaryParameterType>
+			<BooleanParameterType name="bool">
+				<UnitSet/>
+				<IntegerDataEncoding sizeInBits="1"/>
+			</BooleanParameterType>
+			<StringParameterType name="callsign">
+				<UnitSet/>
+				<StringDataEncoding>
+					<SizeInBits>
+						<Fixed>
+							<FixedValue>48</FixedValue>
+						</Fixed>
+					</SizeInBits>
+				</StringDataEncoding>
+			</StringParameterType>
+		</ParameterTypeSet>
+		<ParameterSet>
+<!--			<Parameter name="Row Type" parameterTypeRef="uint8"/>-->
+			<Parameter name="Callsign" parameterTypeRef="callsign"/>
+			<Parameter name="Time_Since_Last_Poll" parameterTypeRef="uint16"/>
+			<Parameter name="Flight_Stage" parameterTypeRef="flightStageType"/>
+			<Parameter name="Altitude_from_ground" parameterTypeRef="float"/>
+			<Parameter name="Altitude_rate_of_change" parameterTypeRef="float"/>
+			<Parameter name="Apogee_from_ground" parameterTypeRef="float"/>
+			<Parameter name="Atmospheric_Pressure" parameterTypeRef="float"/>
+			<Parameter name="GPS_position" parameterTypeRef="xyzFloat"/>
+			<Parameter name="Time_since_last_GPS_update" parameterTypeRef="uint32"/>
+			<Parameter name="Time_from_software_reset" parameterTypeRef="uint32"/>
+			<Parameter name="Timesincelast_radio_contact" parameterTypeRef="uint16"/>
+			<Parameter name="Acceleration" parameterTypeRef="xyzYPRFloat"/>
+			<Parameter name="Magnetic_Orientation" parameterTypeRef="xyzFloat"/>
+			<Parameter name="Atmospheric_Temperature" parameterTypeRef="int8"/>
+			<Parameter name="Battery_Voltage" parameterTypeRef="int16"/>
+			<Parameter name="Battery_Current" parameterTypeRef="int16"/>
+			<Parameter name="Radio_Frequency" parameterTypeRef="uint16"/>
+			<Parameter name="Radio_FC_TX_RX_ratio" parameterTypeRef="uint8"/>
+			<Parameter name="Continuity_of_Drogue_Ejection" parameterTypeRef="bool"/>
+			<Parameter name="Continuity_of_Main_Ejection" parameterTypeRef="bool"/>
+			<Parameter name="Electrical_Arming_of_Drogue_Ejection" parameterTypeRef="bool"/>
+			<Parameter name="Electrical_Arming_of_Main_Ejection" parameterTypeRef="bool"/>
+			<Parameter name="Logical_Ejection_Arming" parameterTypeRef="bool"/>
+			<Parameter name="CAN_Bus_active" parameterTypeRef="bool"/>
+			<Parameter name="Camera_is_on" parameterTypeRef="bool"/>
+			<Parameter name="SD_Card_file_open" parameterTypeRef="bool"/>
+			<Parameter name="SD_Card_deletion_armed" parameterTypeRef="bool"/>
+			<Parameter name="Logical_Propulsion_Arming" parameterTypeRef="bool"/>
+			<Parameter name="Logical_Launch_Arming" parameterTypeRef="bool"/>
+			<Parameter name="Electrical_Propulsion_Arming" parameterTypeRef="bool"/>
+			<Parameter name="Top_Valves_Continuity" parameterTypeRef="bool"/>
+			<Parameter name="Bottom_Valves_Continuity" parameterTypeRef="bool"/>
+			<Parameter name="Bypass_Valve" parameterTypeRef="bool"/>
+			<Parameter name="GPS_fix" parameterTypeRef="bool"/>
+			<Parameter name="Tank_Top_Pressure" parameterTypeRef="uint16"/>
+			<Parameter name="Tank_Bottom_pressure" parameterTypeRef="uint16"/>
+			<Parameter name="Top_Thermocouple_Temperature" parameterTypeRef="uint8"/>
+			<Parameter name="Bottom_Thermocouple_Temperature" parameterTypeRef="uint8"/>
+			<Parameter name="Payload_Data" parameterTypeRef="payloadPacketType"/>
+		</ParameterSet>
+		<ContainerSet>
+			<SequenceContainer name="FCPacket">
+				<EntryList>
+					<ParameterRefEntry parameterRef="Callsign" />
+					<ParameterRefEntry parameterRef="Time_Since_Last_Poll" />
+					<ParameterRefEntry parameterRef="Flight_Stage" />
+					<ParameterRefEntry parameterRef="Altitude_from_ground" />
+					<ParameterRefEntry parameterRef="Altitude_rate_of_change" />
+					<ParameterRefEntry parameterRef="Apogee_from_ground" />
+					<ParameterRefEntry parameterRef="Atmospheric_Pressure" />
+					<ParameterRefEntry parameterRef="GPS_position" />
+					<ParameterRefEntry parameterRef="Time_since_last_GPS_update" />
+					<ParameterRefEntry parameterRef="Time_from_software_reset" />
+					<ParameterRefEntry parameterRef="Timesincelast_radio_contact" />
+					<ParameterRefEntry parameterRef="Acceleration" />
+					<ParameterRefEntry parameterRef="Magnetic_Orientation" />
+					<ParameterRefEntry parameterRef="Atmospheric_Temperature" />
+					<ParameterRefEntry parameterRef="Battery_Voltage" />
+					<ParameterRefEntry parameterRef="Battery_Current" />
+					<ParameterRefEntry parameterRef="Radio_Frequency" />
+					<ParameterRefEntry parameterRef="Radio_FC_TX_RX_ratio" />
+					<ParameterRefEntry parameterRef="Continuity_of_Drogue_Ejection" />
+					<ParameterRefEntry parameterRef="Continuity_of_Main_Ejection" />
+					<ParameterRefEntry parameterRef="Electrical_Arming_of_Drogue_Ejection" />
+					<ParameterRefEntry parameterRef="Electrical_Arming_of_Main_Ejection" />
+					<ParameterRefEntry parameterRef="Logical_Ejection_Arming" />
+					<ParameterRefEntry parameterRef="CAN_Bus_active" />
+					<ParameterRefEntry parameterRef="Camera_is_on" />
+					<ParameterRefEntry parameterRef="SD_Card_file_open" />
+					<ParameterRefEntry parameterRef="SD_Card_deletion_armed" />
+					<ParameterRefEntry parameterRef="Logical_Propulsion_Arming" />
+					<ParameterRefEntry parameterRef="Logical_Launch_Arming" />
+					<ParameterRefEntry parameterRef="Electrical_Propulsion_Arming" />
+					<ParameterRefEntry parameterRef="Top_Valves_Continuity" />
+					<ParameterRefEntry parameterRef="Bottom_Valves_Continuity" />
+					<ParameterRefEntry parameterRef="Bypass_Valve" />
+					<ParameterRefEntry parameterRef="GPS_fix" />
+					<ParameterRefEntry parameterRef="Tank_Top_Pressure" />
+					<ParameterRefEntry parameterRef="Tank_Bottom_pressure" />
+					<ParameterRefEntry parameterRef="Top_Thermocouple_Temperature" />
+					<ParameterRefEntry parameterRef="Bottom_Thermocouple_Temperature" />
+					<ParameterRefEntry parameterRef="Payload_Data" />
+				</EntryList>
+			</SequenceContainer>
+		</ContainerSet>
+	</TelemetryMetaData>
+	<CommandMetaData>
+		<ArgumentTypeSet>
+			<IntegerArgumentType name="CCSDS_Version_Type" signed="false">
+				<UnitSet/>
+				<IntegerDataEncoding sizeInBits="3"/>
+			</IntegerArgumentType>
+			<BooleanArgumentType name="CCSDS_Type_Type" zeroStringValue="TM" oneStringValue="TC">
+				<UnitSet/>
+				<IntegerDataEncoding sizeInBits="1"/>
+			</BooleanArgumentType>
+			<BooleanArgumentType name="CCSDS_Sec_Hdr_Flag_Type" zeroStringValue="NotPresent" oneStringValue="Present">
+				<UnitSet/>
+				<IntegerDataEncoding sizeInBits="1"/>
+			</BooleanArgumentType>
+			<IntegerArgumentType name="CCSDS_APID_Type" signed="false">
+				<UnitSet/>
+				<IntegerDataEncoding sizeInBits="11"/>
+			</IntegerArgumentType>
+			<EnumeratedArgumentType name="CCSDS_Group_Flags_Type">
+				<UnitSet/>
+				<IntegerDataEncoding sizeInBits="2"/>
+				<EnumerationList>
+					<Enumeration value="0" label="Continuation"/>
+					<Enumeration value="1" label="First"/>
+					<Enumeration value="2" label="Last"/>
+					<Enumeration value="3" label="Standalone"/>
+				</EnumerationList>
+			</EnumeratedArgumentType>
+			<IntegerArgumentType name="Packet_ID_Type" signed="false">
+				<UnitSet/>
+				<IntegerDataEncoding sizeInBits="16"/>
+			</IntegerArgumentType>
+			<IntegerArgumentType name="Battery_Type" signed="false">
+				<UnitSet/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"/>
+				<ValidRangeSet>
+					<ValidRange minInclusive="1" maxInclusive="3"/>
+				</ValidRangeSet>
+			</IntegerArgumentType>
+		</ArgumentTypeSet>
+		<MetaCommandSet>
+			<MetaCommand name="CCSDSPacket" abstract="true">
+				<ArgumentList>
+					<Argument argumentTypeRef="CCSDS_Version_Type" name="CCSDS_Version"/>
+					<Argument argumentTypeRef="CCSDS_Type_Type" name="CCSDS_Type"/>
+					<Argument argumentTypeRef="CCSDS_Sec_Hdr_Flag_Type" name="CCSDS_Sec_Hdr_Flag"/>
+					<Argument argumentTypeRef="CCSDS_APID_Type" name="CCSDS_APID"/>
+					<Argument argumentTypeRef="CCSDS_Group_Flags_Type" name="CCSDS_Group_Flags"/>
+				</ArgumentList>
+				<CommandContainer name="CCSDSPacket">
+					<EntryList>
+						<ArgumentRefEntry argumentRef="CCSDS_Version"/>
+						<ArgumentRefEntry argumentRef="CCSDS_Type"/>
+						<ArgumentRefEntry argumentRef="CCSDS_Sec_Hdr_Flag"/>
+						<ArgumentRefEntry argumentRef="CCSDS_APID"/>
+						<ArgumentRefEntry argumentRef="CCSDS_Group_Flags"/>
+						<!-- Final value is set by post-processor after the command is submitted. -->
+						<FixedValueEntry name="CCSDS_Source_Sequence_Count" binaryValue="0000" sizeInBits="14"/>
+						<!-- Final value is set by post-processor after the command is submitted. -->
+						<FixedValueEntry name="CCSDS_Packet_Length" binaryValue="0000" sizeInBits="16"/>
+					</EntryList>
+				</CommandContainer>
+			</MetaCommand>
+			<MetaCommand name="MyProjectPacket" abstract="true">
+				<BaseMetaCommand metaCommandRef="CCSDSPacket">
+					<ArgumentAssignmentList>
+						<ArgumentAssignment argumentName="CCSDS_Version" argumentValue="0"/>
+						<ArgumentAssignment argumentName="CCSDS_Type" argumentValue="TC"/>
+						<ArgumentAssignment argumentName="CCSDS_Sec_Hdr_Flag" argumentValue="NotPresent"/>
+						<ArgumentAssignment argumentName="CCSDS_APID" argumentValue="101"/>
+						<ArgumentAssignment argumentName="CCSDS_Group_Flags" argumentValue="Standalone"/>
+					</ArgumentAssignmentList>
+				</BaseMetaCommand>
+				<ArgumentList>
+					<Argument argumentTypeRef="Packet_ID_Type" name="Packet_ID"/>
+				</ArgumentList>
+				<CommandContainer name="MyProjectPacket">
+					<EntryList>
+						<ArgumentRefEntry argumentRef="Packet_ID"/>
+					</EntryList>
+					<BaseContainer containerRef="CCSDSPacket"/>
+				</CommandContainer>
+			</MetaCommand>
+			<MetaCommand name="Reboot">
+				<BaseMetaCommand metaCommandRef="MyProjectPacket">
+					<ArgumentAssignmentList>
+						<ArgumentAssignment argumentName="Packet_ID" argumentValue="1"/>
+					</ArgumentAssignmentList>
+				</BaseMetaCommand>
+				<CommandContainer name="Reboot">
+					<EntryList/>
+					<BaseContainer containerRef="MyProjectPacket"/>
+				</CommandContainer>
+				<DefaultSignificance consequenceLevel="vital"/>
+			</MetaCommand>
+			<MetaCommand name="SwitchVoltageOn" shortDescription="Switches a battery on">
+				<BaseMetaCommand metaCommandRef="MyProjectPacket">
+					<ArgumentAssignmentList>
+						<ArgumentAssignment argumentName="Packet_ID" argumentValue="2"/>
+					</ArgumentAssignmentList>
+				</BaseMetaCommand>
+				<ArgumentList>
+					<Argument argumentTypeRef="Battery_Type" name="Battery" shortDescription="Number of the battery"/>
+				</ArgumentList>
+				<CommandContainer name="SwitchVoltageOn">
+					<EntryList>
+						<ArgumentRefEntry argumentRef="Battery"/>
+					</EntryList>
+					<BaseContainer containerRef="MyProjectPacket"/>
+				</CommandContainer>
+			</MetaCommand>
+			<MetaCommand name="SwitchVoltageOff" shortDescription="Switches a battery off">
+				<BaseMetaCommand metaCommandRef="MyProjectPacket">
+					<ArgumentAssignmentList>
+						<ArgumentAssignment argumentName="Packet_ID" argumentValue="3"/>
+					</ArgumentAssignmentList>
+				</BaseMetaCommand>
+				<ArgumentList>
+					<Argument argumentTypeRef="Battery_Type" name="Battery" shortDescription="Number of the battery"/>
+				</ArgumentList>
+				<CommandContainer name="SwitchVoltageOff">
+					<EntryList>
+						<ArgumentRefEntry argumentRef="Battery"/>
+					</EntryList>
+					<BaseContainer containerRef="MyProjectPacket"/>
+				</CommandContainer>
+			</MetaCommand>
+		</MetaCommandSet>
+	</CommandMetaData>
+</SpaceSystem>
