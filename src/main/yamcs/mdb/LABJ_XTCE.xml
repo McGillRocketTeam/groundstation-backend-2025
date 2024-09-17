@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="LabJackT7"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/XTCE/20180204"
+             xsi:schemaLocation="https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd ">
+    <TelemetryMetaData>
+        <ParameterTypeSet>
+            <EnumeratedParameterType name="digital_pin_state">
+                <UnitSet/>
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="2"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="low"/>
+                    <Enumeration value="1" label="high"/>
+                    <Enumeration value="2" label="unknown"/>
+                </EnumerationList>
+            </EnumeratedParameterType>
+            <FloatParameterType name="float_32">
+                <FloatDataEncoding encoding="IEEE754_1985"/>
+            </FloatParameterType>
+
+        </ParameterTypeSet>
+        <ParameterSet>
+            <Parameter name="AIN0" parameterTypeRef="float_32"/>
+            <Parameter name="AIN1" parameterTypeRef="float_32"/>
+            <Parameter name="AIN2" parameterTypeRef="float_32"/>
+            <Parameter name="AIN3" parameterTypeRef="float_32"/>
+            <Parameter name="AIN4" parameterTypeRef="float_32"/>
+            <Parameter name="AIN5" parameterTypeRef="float_32"/>
+            <Parameter name="AIN6" parameterTypeRef="float_32"/>
+            <Parameter name="AIN7" parameterTypeRef="float_32"/>
+            <Parameter name="AIN8" parameterTypeRef="float_32"/>
+            <Parameter name="AIN9" parameterTypeRef="float_32"/>
+            <Parameter name="AIN10" parameterTypeRef="float_32"/>
+            <Parameter name="AIN11" parameterTypeRef="float_32"/>
+            <Parameter name="AIN12" parameterTypeRef="float_32"/>
+            <Parameter name="AIN13" parameterTypeRef="float_32"/>
+            <Parameter name="AIN14" parameterTypeRef="float_32"/>
+
+
+
+            <Parameter name="FIO0" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="FIO1" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="FIO2" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="FIO3" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="FIO4" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="FIO5" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="FIO6" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="FIO7" parameterTypeRef="digital_pin_state"/>
+
+            <Parameter name="EIO8" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO9" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO10" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO11" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO12" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO13" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO14" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO15" parameterTypeRef="digital_pin_state"/>
+
+            <Parameter name="CIO16" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="CIO17" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="CIO18" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="CIO19" parameterTypeRef="digital_pin_state"/>
+
+            <Parameter name="MIO20" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="MIO21" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="MIO22" parameterTypeRef="digital_pin_state"/>
+        </ParameterSet>
+        <ContainerSet>
+            <SequenceContainer name="LabJackPacket">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="AIN0"/>
+                    <ParameterRefEntry parameterRef="AIN1"/>
+                    <ParameterRefEntry parameterRef="AIN2"/>
+                    <ParameterRefEntry parameterRef="AIN3"/>
+                    <ParameterRefEntry parameterRef="AIN4"/>
+                    <ParameterRefEntry parameterRef="AIN5"/>
+                    <ParameterRefEntry parameterRef="AIN6"/>
+                    <ParameterRefEntry parameterRef="AIN7"/>
+                    <ParameterRefEntry parameterRef="AIN8"/>
+                    <ParameterRefEntry parameterRef="AIN9"/>
+                    <ParameterRefEntry parameterRef="AIN10"/>
+                    <ParameterRefEntry parameterRef="AIN11"/>
+                    <ParameterRefEntry parameterRef="AIN12"/>
+                    <ParameterRefEntry parameterRef="AIN13"/>
+                    <ParameterRefEntry parameterRef="AIN14"/>
+
+
+
+                    <ParameterRefEntry parameterRef="FIO0"/>
+                    <ParameterRefEntry parameterRef="FIO1"/>
+                    <ParameterRefEntry parameterRef="FIO2"/>
+                    <ParameterRefEntry parameterRef="FIO3"/>
+                    <ParameterRefEntry parameterRef="FIO4"/>
+                    <ParameterRefEntry parameterRef="FIO5"/>
+                    <ParameterRefEntry parameterRef="FIO6"/>
+                    <ParameterRefEntry parameterRef="FIO7"/>
+
+                    <ParameterRefEntry parameterRef="EIO8"/>
+                    <ParameterRefEntry parameterRef="EIO9"/>
+                    <ParameterRefEntry parameterRef="EIO10"/>
+                    <ParameterRefEntry parameterRef="EIO11"/>
+                    <ParameterRefEntry parameterRef="EIO12"/>
+                    <ParameterRefEntry parameterRef="EIO13"/>
+                    <ParameterRefEntry parameterRef="EIO14"/>
+                    <ParameterRefEntry parameterRef="EIO15"/>
+
+                    <ParameterRefEntry parameterRef="CIO16"/>
+                    <ParameterRefEntry parameterRef="CIO17"/>
+                    <ParameterRefEntry parameterRef="CIO18"/>
+                    <ParameterRefEntry parameterRef="CIO19"/>
+
+                    <ParameterRefEntry parameterRef="MIO20"/>
+                    <ParameterRefEntry parameterRef="MIO21"/>
+                    <ParameterRefEntry parameterRef="MIO22"/>
+                </EntryList>
+            </SequenceContainer>
+        </ContainerSet>
+    </TelemetryMetaData>
+    <CommandMetaData>
+    </CommandMetaData>
+</SpaceSystem>

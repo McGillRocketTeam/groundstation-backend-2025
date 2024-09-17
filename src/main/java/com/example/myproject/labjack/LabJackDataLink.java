@@ -1,20 +1,24 @@
 package com.example.myproject.labjack;
 
+import com.google.common.io.ByteStreams;
 import com.sun.jna.ptr.DoubleByReference;
 import com.sun.jna.ptr.IntByReference;
 import libs.LJM;
 import org.yamcs.TmPacket;
 import org.yamcs.tctm.AbstractTmDataLink;
 
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.BitSet;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
     private int deviceHandle = 0;
     private boolean isConnected = false;
-    private static final int NUMER_OF_ANALOG_PINS = 14;
-    private final Set<Integer> digitalPinsToReadFrom = new HashSet<>();
+    private static final int NUM_ANALOG_PINS = 14;
+    private static final int NUM_DIGITAL_PINS = 23;
 
     public void attemptLabJackConnection(){
         IntByReference handleRef = new IntByReference(0);
@@ -54,19 +58,68 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
             throw new IllegalStateException();
         }
 
-        double[] analogReadings = new double[NUMER_OF_ANALOG_PINS];
+        double[] analogReadings = new double[NUM_ANALOG_PINS];
 
-        for(int i = 0; i < NUMER_OF_ANALOG_PINS; i++){
+        for(int i = 0; i < NUM_ANALOG_PINS; i++){
             analogReadings[i] = readAnalogPin(i);
         }
+        byte[] analogBinaryData = createAnalogBinaryPacket(analogReadings);
 
-        Boolean[] digitalReadings = new Boolean[digitalPinsToReadFrom.size()];
 
-        for(int i = 0; i < digitalPinsToReadFrom.size(); i++){
+        int[] digitalReadings = new int[NUM_DIGITAL_PINS];
+
+        for(int i = 0; i < NUM_DIGITAL_PINS; i++){
             digitalReadings[i] = readDigitalPin(i);
         }
+        byte[] digitalBinaryData = createDigitalBinaryPacket(digitalReadings);
 
-        return null;
+
+        byte[] combinedBinaryData = new byte[analogBinaryData.length + digitalBinaryData.length];
+        int index = 0;
+        for(; index < analogBinaryData.length; index++){
+            combinedBinaryData[index] = analogBinaryData[index];
+        }
+        for(; index < combinedBinaryData.length; index++){
+            combinedBinaryData[index] = digitalBinaryData[index-analogBinaryData.length];
+        }
+        TmPacket tmPacket = new TmPacket(timeService.getMissionTime(), combinedBinaryData);
+
+        return packetPreprocessor.process(tmPacket);
+    }
+    private byte[] createDigitalBinaryPacket(int[] pinValues) {
+        int totalBits = pinValues.length * 2; // Each value is 2 bits
+        int byteCount = (totalBits + 7) / 8;  // Calculate the number of bytes needed (round up)
+        byte[] packet = new byte[byteCount];  // Byte array to hold the packed bits
+
+        int bitPosition = 0;  // Tracks where in the byte array to place the next value
+
+        for (int value : pinValues) {
+            if (value < 0 || value > 3) {
+                throw new IllegalArgumentException("Pin values must be between 0 and 3 (2-bit value).");
+            }
+
+            // Calculate which byte and bit to place the value in
+            int byteIndex = bitPosition / 8;
+            int bitOffset = bitPosition % 8;
+
+            // Pack the 2-bit value into the correct position in the byte array
+            packet[byteIndex] |= (byte) ((value & 0x03) << (6 - bitOffset));
+
+            bitPosition += 2; // Move to the next 2 bits
+        }
+
+        return packet;
+    }
+
+    private byte[] createAnalogBinaryPacket(double[] floatValues) {
+        ByteBuffer buffer = ByteBuffer.allocate(floatValues.length * 4); // Each float is 4 bytes (32 bits)
+
+        for (double value : floatValues) {
+            int bits = Float.floatToIntBits((float) value);  // Convert float to 32-bit int representation
+            buffer.putInt(bits);  // Add the 32-bit int to the byte buffer
+        }
+
+        return buffer.array();  // Return the packed byte array
     }
 
     private double readAnalogPin(int address){
@@ -81,7 +134,14 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         return valueRef.getValue();
     }
 
-    public Boolean readDigitalPin(int address){
+    /**
+     * Reads a digital pin on the LabJack. NOTE: this method must return a value that can fit within 2 bits
+     * or else the above the createDigitalBinaryPacket method will break.
+     * @param address address of the digital pin (0-22)
+     * @return 0 if reading is low, 1 if reading is high and 2 if unknown reading
+     * @see #createDigitalBinaryPacket
+     */
+    public int readDigitalPin(int address){
         DoubleByReference valueRef = new DoubleByReference(0);
         int base_address = 2000;
         int type = LJM.Constants.UINT16;
@@ -89,9 +149,9 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
             LJM.eReadAddress(deviceHandle, base_address + address, type, valueRef);
         } catch(Exception e){
             log.error("Could not read from digital pin: " + (base_address + address * 2));
-            return null;
+            return 2;
         }
-        return valueRef.getValue() >= 0.5;
+        return valueRef.getValue() >= 0.5 ? 1 : 0;
     }
 
 
