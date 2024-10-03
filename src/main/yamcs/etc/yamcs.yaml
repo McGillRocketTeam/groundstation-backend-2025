@@ -19,7 +19,7 @@ services:
 dataDir: yamcs-data
 
 instances:
-  - myproject
+  - gs_backend
 
 # Secret key unique to a particular Yamcs installation.
 # This is used to provide cryptographic signing.

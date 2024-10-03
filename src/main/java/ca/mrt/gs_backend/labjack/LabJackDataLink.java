@@ -1,6 +1,5 @@
-package com.example.myproject.labjack;
+package ca.mrt.gs_backend.labjack;
 
-import com.google.common.io.ByteStreams;
 import com.sun.jna.ptr.DoubleByReference;
 import com.sun.jna.ptr.IntByReference;
 import libs.LJM;
@@ -8,18 +7,31 @@ import org.yamcs.TmPacket;
 import org.yamcs.tctm.AbstractTmDataLink;
 
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Stream;
+
+/**
+ * @author Jake
+ * This class manages the connection to the LabJack, reads and writes to the LabJack
+ * and places its readings into a binary packet (defined in LABJ_XTCE.xml) which is then put into a TM stream.
+ *
+ * At the moment, all readable pins (digital and analog) are read at every possible moment.
+ */
 
 public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
+    //stores handle of currently connected LabJack device
     private int deviceHandle = 0;
+
+    //stores whether the class is currently connected to a LabJack
     private boolean isConnected = false;
+
+    //total number of analog pins on the LabJack (T7)
     private static final int NUM_ANALOG_PINS = 14;
+
+    //total number of digital pins on the LabJack (T7)
     private static final int NUM_DIGITAL_PINS = 23;
 
+    /**
+     * Attempts to connect to any LabJack device (via ethernet or USB)
+     */
     public void attemptLabJackConnection(){
         IntByReference handleRef = new IntByReference(0);
         try{
@@ -51,7 +63,11 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
 
     }
 
-
+    /**
+     * Reads all readable LabJack pins (analog, digital) and packs the readings into a binary packet according to
+     * LABJ_XTCE.xml where all analog data is first followed by all digital data.
+     * @return a TmPacket containing the constructed binary packet
+     */
     private TmPacket readAllPins(){
         if(!isConnected){
             log.error("Attempting to read LabJack pins when no LabJack is connected");
@@ -86,6 +102,16 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
 
         return packetPreprocessor.process(tmPacket);
     }
+
+    /**
+     * Takes an array of digital pin readings and converts it into an array of bytes corresponding to the reading.
+     * Note that each element in the incoming pinValues array is converted into a 2-bit integer where:
+     * 0 - corresponds to LOW
+     * 1 - corresponds to HIGH
+     * 2 - corresponds to UNKNOWN
+     * @param pinValues array of digital pin readings
+     * @return array of bytes corresponding to the incoming array of ints, just converted to 2-bits each
+     */
     private byte[] createDigitalBinaryPacket(int[] pinValues) {
         int totalBits = pinValues.length * 2; // Each value is 2 bits
         int byteCount = (totalBits + 7) / 8;  // Calculate the number of bytes needed (round up)
@@ -111,6 +137,11 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         return packet;
     }
 
+    /**
+     * Converts array of floating point analog readings into a corresponding array of bytes.
+     * @param floatValues array of analog readings
+     * @return array of bytes corresponding to the incoming array of readings (just used Float.floatToIntBits)
+     */
     private byte[] createAnalogBinaryPacket(double[] floatValues) {
         ByteBuffer buffer = ByteBuffer.allocate(floatValues.length * 4); // Each float is 4 bytes (32 bits)
 
@@ -122,6 +153,11 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         return buffer.array();  // Return the packed byte array
     }
 
+    /**
+     * Reads a single analog pin
+     * @param address address of pin to read (MUST BE BETWEEN 0-13 inclusive)
+     * @return value read from analog pin, Double.NaN if error occurred
+     */
     private double readAnalogPin(int address){
         DoubleByReference valueRef = new DoubleByReference(0);
         int base_address = 0;

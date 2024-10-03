@@ -1,4 +1,4 @@
-package com.example.myproject.serialcomm;
+package ca.mrt.gs_backend.serialcomm;
 
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortEvent;

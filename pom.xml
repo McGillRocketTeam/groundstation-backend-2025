@@ -2,12 +2,12 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.example</groupId>
-  <artifactId>myproject</artifactId>
+  <groupId>ca.mrt</groupId>
+  <artifactId>gs_backend</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>My Project</name>
+  <name>GS GUI Backend</name>
   <url>https://example.com</url>
 
   <properties>

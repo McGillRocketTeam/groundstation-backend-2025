@@ -23,27 +23,27 @@ services:
         warmupTime: 60
   - class: org.yamcs.plists.ParameterListService
   - class: org.yamcs.timeline.TimelineService
-  - class: com.example.myproject.serialcomm.SerialUtil
+  - class: ca.mrt.gs_backend.serialcomm.SerialUtil
 
 dataLinks:
   - name: udp-in
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_flight_computers
     port: 10015
-    packetPreprocessorClassName: com.example.myproject.MyPacketPreprocessor
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: udp-out
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
     host: localhost
     port: 10025
-    commandPostprocessorClassName: com.example.myproject.MyCommandPostprocessor
+    commandPostprocessorClassName: ca.mrt.gs_backend.MyCommandPostprocessor
 
   - name: serial-in
-    class: com.example.myproject.serialcomm.SerialDataLink
+    class: ca.mrt.gs_backend.serialcomm.SerialDataLink
     stream: tm_flight_computers
     unique_identifier: "522.5"
-    packetPreprocessorClassName: com.example.myproject.MyPacketPreprocessor
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
 mdb:
   # Configuration of the active loaders

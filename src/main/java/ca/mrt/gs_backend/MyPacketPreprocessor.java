@@ -1,4 +1,4 @@
-package com.example.myproject;
+package ca.mrt.gs_backend;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -9,14 +9,13 @@ import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
 import org.yamcs.tctm.AbstractPacketPreprocessor;
 import org.yamcs.utils.TimeEncoding;
-import org.yamcs.tctm.StreamParameterProvider;
 
 /**
  * Component capable of modifying packet binary received from a link, before passing it further into Yamcs.
  * <p>
  * A single instance of this class is created, scoped to the link udp-in.
  * <p>
- * This is specified in the configuration file yamcs.myproject.yaml:
+ * This is specified in the configuration file yamcs.gs_backend.yaml:
  * 
  * <pre>
  * ...
