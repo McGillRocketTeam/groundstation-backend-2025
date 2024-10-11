@@ -17,17 +17,18 @@ import java.nio.ByteBuffer;
  */
 
 public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
+    //total number of analog pins on the LabJack (T7)
+    private static final int NUM_ANALOG_PINS = 14;
+
+    //total number of digital pins on the LabJack (T7)
+    private static final int NUM_DIGITAL_PINS = 23;
+
     //stores handle of currently connected LabJack device
     private int deviceHandle = 0;
 
     //stores whether the class is currently connected to a LabJack
     private boolean isConnected = false;
 
-    //total number of analog pins on the LabJack (T7)
-    private static final int NUM_ANALOG_PINS = 14;
-
-    //total number of digital pins on the LabJack (T7)
-    private static final int NUM_DIGITAL_PINS = 23;
 
     /**
      * Attempts to connect to any LabJack device (via ethernet or USB)
@@ -36,7 +37,7 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         IntByReference handleRef = new IntByReference(0);
         try{
             LJM.openS("ANY", "ANY", "ANY", handleRef);
-            System.out.println("LabJack Connected");
+            log.info("LabJack Connected");
             deviceHandle = handleRef.getValue();
 
             //Watchdog 5 min
@@ -99,7 +100,7 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
             combinedBinaryData[index] = digitalBinaryData[index-analogBinaryData.length];
         }
         TmPacket tmPacket = new TmPacket(timeService.getMissionTime(), combinedBinaryData);
-
+        updateStats(combinedBinaryData.length);
         return packetPreprocessor.process(tmPacket);
     }
 
@@ -198,20 +199,43 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
 
     @Override
     protected void doStart() {
-
+        if (!isDisabled()) {
+            Thread thread = new Thread(this);
+            thread.setName(getClass().getSimpleName());
+            thread.start();
+        }
+        notifyStarted();
     }
 
     @Override
     protected void doStop() {
-
+        if(isConnected){
+            LJM.close(deviceHandle);
+        }
+        notifyStopped();
     }
 
     @Override
     public void run() {
         while (isRunningAndEnabled()){
             if(isConnected){
+                processPacket(readAllPins());
+            }else {
+                attemptLabJackConnection();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
+        }
+    }
+
+    @Override
+    public void doDisable() {
+        if (isConnected) {
+            LJM.close(deviceHandle);
         }
     }
 

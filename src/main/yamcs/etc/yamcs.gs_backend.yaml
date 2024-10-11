@@ -45,6 +45,11 @@ dataLinks:
     unique_identifier: "522.5"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
+  - name: labJack-in
+    class: ca.mrt.gs_backend.labjack.LabJackDataLink
+    stream: tm_labJack
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+
 mdb:
   # Configuration of the active loaders
   # Valid loaders are: sheet, xtce or fully qualified name of the class
@@ -60,6 +65,10 @@ mdb:
       - type: xtce
         args:
           file: mdb/MRT_XTCE.xml
+  - type: xtce
+    spec: "LabJack"
+    args:
+      file: mdb/LABJ_XTCE.xml
 
 
 # Configuration for streams created at server startup
@@ -68,6 +77,9 @@ streamConfig:
     - name: "tm_flight_computers"
       processor: "realtime"
       rootContainer: "/FC1/FlightComputer/FCPacket"
+    - name: "tm_labJack"
+      processor: "realtime"
+      rootContainer: "/LabJackT7/LabJackPacket"
 #    - name: "tm_dump"
   cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
   event: ["events_realtime", "events_dump"]

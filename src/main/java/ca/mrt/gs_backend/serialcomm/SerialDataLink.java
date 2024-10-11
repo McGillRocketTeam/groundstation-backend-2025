@@ -69,7 +69,7 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
                 timeOfLastPacket = System.currentTimeMillis();
 
                 TmPacket tmPacket = new TmPacket(timeService.getMissionTime(), serialPortEvent.getReceivedData());
-
+                updateStats(tmPacket.getPacket().length);
                 packetQueue.add(packetPreprocessor.process(tmPacket));
             }
         });

@@ -33,7 +33,6 @@
             <Parameter name="AIN11" parameterTypeRef="float_32"/>
             <Parameter name="AIN12" parameterTypeRef="float_32"/>
             <Parameter name="AIN13" parameterTypeRef="float_32"/>
-            <Parameter name="AIN14" parameterTypeRef="float_32"/>
 
 
 
@@ -46,23 +45,23 @@
             <Parameter name="FIO6" parameterTypeRef="digital_pin_state"/>
             <Parameter name="FIO7" parameterTypeRef="digital_pin_state"/>
 
-            <Parameter name="EIO8" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="EIO9" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="EIO10" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="EIO11" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="EIO12" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="EIO13" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="EIO14" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="EIO15" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO0" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO1" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO2" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO3" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO4" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO5" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO6" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="EIO7" parameterTypeRef="digital_pin_state"/>
 
-            <Parameter name="CIO16" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="CIO17" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="CIO18" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="CIO19" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="CIO0" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="CIO1" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="CIO2" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="CIO3" parameterTypeRef="digital_pin_state"/>
 
-            <Parameter name="MIO20" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="MIO21" parameterTypeRef="digital_pin_state"/>
-            <Parameter name="MIO22" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="MIO0" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="MIO1" parameterTypeRef="digital_pin_state"/>
+            <Parameter name="MIO2" parameterTypeRef="digital_pin_state"/>
         </ParameterSet>
         <ContainerSet>
             <SequenceContainer name="LabJackPacket">
@@ -81,7 +80,6 @@
                     <ParameterRefEntry parameterRef="AIN11"/>
                     <ParameterRefEntry parameterRef="AIN12"/>
                     <ParameterRefEntry parameterRef="AIN13"/>
-                    <ParameterRefEntry parameterRef="AIN14"/>
 
 
 
@@ -94,23 +92,23 @@
                     <ParameterRefEntry parameterRef="FIO6"/>
                     <ParameterRefEntry parameterRef="FIO7"/>
 
-                    <ParameterRefEntry parameterRef="EIO8"/>
-                    <ParameterRefEntry parameterRef="EIO9"/>
-                    <ParameterRefEntry parameterRef="EIO10"/>
-                    <ParameterRefEntry parameterRef="EIO11"/>
-                    <ParameterRefEntry parameterRef="EIO12"/>
-                    <ParameterRefEntry parameterRef="EIO13"/>
-                    <ParameterRefEntry parameterRef="EIO14"/>
-                    <ParameterRefEntry parameterRef="EIO15"/>
+                    <ParameterRefEntry parameterRef="EIO0"/>
+                    <ParameterRefEntry parameterRef="EIO1"/>
+                    <ParameterRefEntry parameterRef="EIO2"/>
+                    <ParameterRefEntry parameterRef="EIO3"/>
+                    <ParameterRefEntry parameterRef="EIO4"/>
+                    <ParameterRefEntry parameterRef="EIO5"/>
+                    <ParameterRefEntry parameterRef="EIO6"/>
+                    <ParameterRefEntry parameterRef="EIO7"/>
 
-                    <ParameterRefEntry parameterRef="CIO16"/>
-                    <ParameterRefEntry parameterRef="CIO17"/>
-                    <ParameterRefEntry parameterRef="CIO18"/>
-                    <ParameterRefEntry parameterRef="CIO19"/>
+                    <ParameterRefEntry parameterRef="CIO0"/>
+                    <ParameterRefEntry parameterRef="CIO1"/>
+                    <ParameterRefEntry parameterRef="CIO2"/>
+                    <ParameterRefEntry parameterRef="CIO3"/>
 
-                    <ParameterRefEntry parameterRef="MIO20"/>
-                    <ParameterRefEntry parameterRef="MIO21"/>
-                    <ParameterRefEntry parameterRef="MIO22"/>
+                    <ParameterRefEntry parameterRef="MIO0"/>
+                    <ParameterRefEntry parameterRef="MIO1"/>
+                    <ParameterRefEntry parameterRef="MIO2"/>
                 </EntryList>
             </SequenceContainer>
         </ContainerSet>
