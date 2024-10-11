@@ -55,7 +55,6 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
             LJM.eWriteAddress(deviceHandle, WATCHDOG_DIO_STATE_DEFAULT, type, 0); //DIO all LOW
             LJM.eWriteAddress(deviceHandle, WATCHDOG_DIO_ENABLE_DEFAULT, type, 1); //Re enable DIO
             LJM.eWriteAddress(deviceHandle, WATCHDOG_ENABLE_DEFAULT, type, 1); //Re-enable watchdog
-
             isConnected = true;
 
         } catch(Exception e){
@@ -82,14 +81,7 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         }
         byte[] analogBinaryData = createAnalogBinaryPacket(analogReadings);
 
-
-        int[] digitalReadings = new int[NUM_DIGITAL_PINS];
-
-        for(int i = 0; i < NUM_DIGITAL_PINS; i++){
-            digitalReadings[i] = readDigitalPin(i);
-        }
-        byte[] digitalBinaryData = createDigitalBinaryPacket(digitalReadings);
-
+        byte[] digitalBinaryData = readDigitalPins();
 
         byte[] combinedBinaryData = new byte[analogBinaryData.length + digitalBinaryData.length];
         int index = 0;
@@ -190,6 +182,38 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         }
         return valueRef.getValue() >= 0.5 ? 1 : 0;
     }
+
+    /**
+     * Reads the DIO_STATE on the LabJack. The DIO_STATE register contains the state of every digital pin
+     * on the LabJack. It is preferred to read this register over reading the individual pins since reading
+     * individual pins will cause their directionality to be set to input.
+     * The DIO_STATE contains a 32-bit unsigned integer for which the most significant 9 bits are garbage
+     * (32-9=23! # of digital pins).
+     *
+     * @return an array of 3 bytes for which the last element's least significant bit is garbage
+     */
+    public byte[] readDigitalPins(){
+        DoubleByReference readingRef = new DoubleByReference();
+
+        try{
+            LJM.eReadName(deviceHandle, "DIO_STATE", readingRef);
+            int temp = Integer.reverse(((int) readingRef.getValue()) << 9) << 9;
+
+
+            byte[] result = new byte[3];
+
+            result[0] = (byte) (temp >> 24);  // Most significant byte
+            result[1] = (byte) (temp >> 16);
+            result[2] = (byte) (temp >> 8);
+            return result;
+
+        } catch(Exception e){
+            log.error("Could not read from DIO_STATE register");
+            return null;
+        }
+    }
+
+
 
 
     @Override
