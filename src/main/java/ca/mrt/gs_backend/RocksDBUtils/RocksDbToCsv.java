@@ -1,60 +1,85 @@
 package ca.mrt.gs_backend.RocksDBUtils;
 
+import lombok.Data;
+import lombok.Getter;
+import org.openjdk.nashorn.internal.objects.annotations.Setter;
 import org.rocksdb.*;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+@Data
 public class RocksDbToCsv {
     static {
         RocksDB.loadLibrary();
     }
 
 
-    public static void main(String[] args) {
-        try (final ColumnFamilyOptions cfOpts = new ColumnFamilyOptions().optimizeUniversalStyleCompaction()) {
-            String dbPath = "target/yamcs/yamcs-data/gs_backend.rdb/"; // Replace with your RocksDB path
-            String csvPath = "export.csv";      // Output CSV file
+    private List<String> columnHeaders = new ArrayList<>();
 
+
+    public void writeToCsv(String dbPath, String csvPath) {
+        Byte[] byteArray = getDbContent(dbPath);
+        List<Integer> bitArray= getBitArrayFromDB(byteArray);
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(csvPath));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public List<Integer> getBitArrayFromDB(Byte[] dbContent) {
+        List<Integer> returnList = new ArrayList<>();
+
+
+
+        return returnList;
+    }
+
+    public Byte[] getDbContent(String dbPath) {
+        try (final ColumnFamilyOptions cfOpts = new ColumnFamilyOptions().optimizeUniversalStyleCompaction()) {
+
+            //create options for accesing DB
             DBOptions  options = new DBOptions().setCreateIfMissing(false)
                     .setCreateMissingColumnFamilies(true);
-            final List<ColumnFamilyDescriptor> cfDescriptors = Arrays.asList(
-                    new ColumnFamilyDescriptor(RocksDB.DEFAULT_COLUMN_FAMILY, cfOpts),
-                    new ColumnFamilyDescriptor("_metadata_".getBytes(), cfOpts),
-                    new ColumnFamilyDescriptor("rt_data".getBytes(), cfOpts),
-                    new ColumnFamilyDescriptor("parameter_archive".getBytes(), cfOpts)
-            );
+            List<ColumnFamilyDescriptor> cfDescriptors = new ArrayList<>();
 
-            final List<ColumnFamilyHandle> columnFamilyHandleList =
-                    new ArrayList<>();
+            //set up Column family headers
+            cfDescriptors.add(new ColumnFamilyDescriptor(RocksDB.DEFAULT_COLUMN_FAMILY, cfOpts));
+            columnHeaders.stream().forEach(family -> {
+                ColumnFamilyDescriptor descriptor =new ColumnFamilyDescriptor(family.getBytes(), cfOpts);
+                cfDescriptors.add(descriptor);
+            });
 
-            try (RocksDB db = RocksDB.open(options, dbPath,cfDescriptors,columnFamilyHandleList);
-                 BufferedWriter writer = new BufferedWriter(new FileWriter(csvPath))) {
+            final List<ColumnFamilyHandle> columnFamilyHandleList = new ArrayList<>();
 
-                // Write the CSV header
-                writer.write("key,value");
-                writer.newLine();
+            //iterate over DB
+            try (RocksDB db = RocksDB.open(options, dbPath,cfDescriptors,columnFamilyHandleList)) {
 
-                // Iterate over all key-value pairs in the RocksDB database
                 RocksIterator iterator = db.newIterator();
+
                 iterator.seekToFirst();
-                System.out.println(db.get("apdoawpdoka".getBytes()));
 
                 while (iterator.isValid()) {
-
-
+                    System.out.print("Key :");
+                    System.out.println(Arrays.toString(iterator.key()));
+                    System.out.print("Value :");
+                    System.out.println(Arrays.toString(iterator.value()));
                     iterator.next();
                 }
-            } catch (IOException e) {
-                System.err.println("Error writing to CSV: " + e.getMessage());
-            } catch (Exception e) {
-                System.err.println("Error accessing RocksDB: " + e.getMessage());
+            } catch (RocksDBException e) {
+                throw new RuntimeException(e);
             }
 
         }
-}
+
+        return new Byte[0];
+    }
 }
