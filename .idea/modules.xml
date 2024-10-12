@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/gs_backend.iml" filepath="$PROJECT_DIR$/gs_backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/myproject.iml" filepath="$PROJECT_DIR$/myproject.iml" />
     </modules>
   </component>
