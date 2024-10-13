@@ -18,6 +18,21 @@ import java.util.concurrent.TimeUnit;
 
 //todo look into using serialPort.getPortDescription() for logging since it gives the name of the device connected, verify this works on mac
 
+/**
+ * @author Jake
+ * This class is a singleton service whose sole purpose is to determine which comports (USB) have an MRT device
+ * connected that have a corresponding SerialDataLink instance with that device's unique identifier. (matchmaker)
+ * <p>
+ * This class keeps track of all existing comports {@link #existingSerialPorts} which have been tested for device connectivity previously but
+ * could not be mapped to a SerialDataLink instance.
+ * <p>
+ * Every 20s it checks for new comports which have not been pinged yet. Every 100s it re-pings all previously pinged
+ * comports to check if any new device was connected. Whenever it 'checks' a comport, it pings and awaits a response.
+ * If it receives a response of the correct format, its able to identify if the comport has an FC or a control box connected
+ * and if it is an FC, the radio frequency that the FC is on. From this, it will attempt to find a {@link SerialDataLink} instance
+ * which has a matching unique identifier. Once the comport is given to the {@link SerialDataLink} instance, it is added to a set
+ * {@link SerialDataLink#activePorts} of comports to no longer ping and should not be written to or read from by this class.
+ */
 public class SerialUtil extends AbstractYamcsService implements Runnable{
     private Log log;
     private ScheduledExecutorService executorService;

@@ -12,6 +12,22 @@ import org.yamcs.tctm.AbstractTmDataLink;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * @author Jake
+ * This class manages a connection with a serial (USB) device.
+ * In the context of MRT operations (as of now), this device could be a groundstation radio
+ * connected to a flight computer on a unique frequency OR a control box.
+ * <p>
+ * Since we must have the ability to connect to multiple FCs at the same time, and we will
+ * never have more than one FC on the same frequency, we use an option called the
+ * 'unique identifier' to inform the data link which device it will be connecting to.
+ * If the data link is supposed to connect to an FC, the unique identifier is the radio frequency
+ * which that FC is on (e.g. 433).
+ * If the data link is suppossed to connect to a control box, the unique identifier will be 'control_box'.
+ * <p>
+ * The way in which these SerialDataLink instances are connected to the correct device on the correct serial port
+ * is controlled by the {@link SerialUtil} class.
+ */
 public class SerialDataLink extends AbstractTmDataLink implements Runnable{
 
     protected static Map<String, SerialDataLink> uniqueIdentifierToLink = new HashMap<>();
