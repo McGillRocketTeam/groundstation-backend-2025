@@ -83,6 +83,10 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
 
         byte[] digitalBinaryData = readDigitalPins();
 
+        if(digitalBinaryData == null){
+            return null;
+        }
+
         byte[] combinedBinaryData = new byte[analogBinaryData.length + digitalBinaryData.length];
         int index = 0;
         for(; index < analogBinaryData.length; index++){
@@ -243,11 +247,14 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
     public void run() {
         while (isRunningAndEnabled()){
             if(isConnected){
-                processPacket(readAllPins());
+                TmPacket tmPacket = readAllPins();
+                if(tmPacket != null){
+                    processPacket(tmPacket);
+                }
             }else {
                 attemptLabJackConnection();
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
