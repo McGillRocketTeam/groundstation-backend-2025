@@ -12,10 +12,12 @@ public class testRocksDbToCsv {
     public void testGetBytes() {
         RocksDbToCsv converter = new RocksDbToCsv();
         converter.setColumnHeaders(Arrays.asList("_metadata_","rt_data","parameter_archive"));
-
+        converter.updateWith("HIIIIAAAWA","target/yamcs/yamcs-data/gs_backend.rdb");
 
         converter.getDbContent("target/yamcs/yamcs-data/gs_backend.rdb");
 
 
     }
+
+
 }
