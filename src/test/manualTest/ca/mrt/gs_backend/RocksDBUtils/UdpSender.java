@@ -10,21 +10,20 @@ import java.net.InetAddress;
 public class UdpSender {
     public static void main(String[] args) {
         // Configuration
-        String host = "localhost"; // Change to your Yamcs server's IP address if needed
-        int port = 10035; // Port configured in your UDP data link
-        String filePath = "src/test/manualTest/ca/mrt/gs_backend/RocksDBUtils/files/packets - Copy.raw"; // Path to your raw file
+        String host = "localhost";
+        int port = 10035;
+        String filePath = "src/test/manualTest/ca/mrt/gs_backend/RocksDBUtils/files/packets - Copy.raw";
 
-        // Create a UDP socket
-        // Create a UDP socket
+
         try (DatagramSocket socket = new DatagramSocket()) {
             // Read the raw file
             File file = new File(filePath);
             byte[] data = new byte[(int) file.length()];
             try (FileInputStream fis = new FileInputStream(file)) {
-                fis.read(data); // Read the entire file into byte array
+                fis.read(data);
             }
 
-            // Send data in smaller packets
+
             int offset = 0;
             int total_size = 0;
             while (offset < data.length) {
@@ -32,7 +31,7 @@ public class UdpSender {
                 DatagramPacket packet = new DatagramPacket(data, offset, packetSize, InetAddress.getByName(host), port);
                 socket.send(packet);
                 System.out.println("Sent packet of size " + packetSize + " bytes to " + host + ":" + port);
-                offset += packetSize; // Move to the next chunk
+                offset += packetSize;
                 total_size += packetSize;
             }
             System.out.println("Total packet size is " + total_size);
