@@ -6,11 +6,10 @@
         <ParameterTypeSet>
             <EnumeratedParameterType name="digital_pin_state">
                 <UnitSet/>
-                <IntegerDataEncoding encoding="unsigned" sizeInBits="2"/>
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="1"/>
                 <EnumerationList>
                     <Enumeration value="0" label="low"/>
                     <Enumeration value="1" label="high"/>
-                    <Enumeration value="2" label="unknown"/>
                 </EnumerationList>
             </EnumeratedParameterType>
             <FloatParameterType name="float_32">
