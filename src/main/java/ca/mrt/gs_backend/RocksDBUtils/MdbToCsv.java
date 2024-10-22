@@ -1,5 +1,6 @@
 package ca.mrt.gs_backend.RocksDBUtils;
 import ca.mrt.gs_backend.RocksDBUtils.dataPacketFormats.DataPacketInformation;
+import ca.mrt.gs_backend.RocksDBUtils.dataPacketFormats.LabjackT7Packet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -30,31 +31,34 @@ public class MdbToCsv {
 
     }
 
+
+
     public List<DataPacket> getData(List<DataPacket> dataPackets) {
         dataPackets.stream().forEach(packet -> {
+            packet.setDataPacketInformation(new LabjackT7Packet());
             int number = packet.getSequenceNumber();
             String generationTime = packet.getISO_8601_generationTime();
-            System.out.println("Sequence Number: " + number);
-            System.out.println("Generation Time: " + generationTime);
+            //System.out.println("Sequence Number: " + number);
+            //System.out.println("Generation Time: " + generationTime);
+
             StringBuilder urlBuilder = new StringBuilder();
             urlBuilder.append("http://localhost:8090/yamcs/api/archive/gs_backend/packets/%2FLabJackT7%2FLabJackPacket/")
                     .append(generationTime)
                     .append("/")
                     .append(number)
-                    .append(":extract%200");
+                    .append(":extract");
             String url = urlBuilder.toString();
-            System.out.println(url);
+            //System.out.println(url);
             try {
                 String response = getHTTPResponse(url);
                 JsonObject jsonResponse = JsonParser.parseString(response.toString()).getAsJsonObject();
-                System.out.println(jsonResponse);
+                JsonArray params = jsonResponse.getAsJsonArray("parameterValues");
+                packet.getDataPacketInformation().getFromJSONArray(params);
+               // System.out.println(params);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
-
-
-
         return dataPackets;
     }
 
