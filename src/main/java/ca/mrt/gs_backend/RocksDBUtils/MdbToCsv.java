@@ -20,15 +20,27 @@ public class MdbToCsv {
        List<DataPacket> packets = getPackets();
        getData(packets);
         StringBuilder builder = new StringBuilder();
+       try {
+           BufferedWriter writer = new BufferedWriter(new FileWriter(csvPath),256000);
         packets.stream().forEach(packet -> {
             builder.append(packet.getSequenceNumber()).append(",");
             builder.append(packet.getGenerationTime()).append(",");
             builder.append(packet.getReceptionTime()).append(",");
-            builder.append(packet.getDataPacketInformation().getInformationAsCSV()).append("\n");});
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(csvPath));
+            builder.append(packet.getDataPacketInformation().getInformationAsCSV()).append("\n");
             String toWrite = builder.toString();
-            writer.write(toWrite);
+            builder.delete(0, builder.length());
+            System.out.println("wrote");
+            try {
+                writer.write(toWrite);
+                writer.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
