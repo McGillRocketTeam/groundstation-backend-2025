@@ -1,11 +1,11 @@
 package manualTest.ca.mrt.gs_backend.RocksDBUtils;
 
-import ca.mrt.gs_backend.RocksDBUtils.DataPacket;
-import ca.mrt.gs_backend.RocksDBUtils.MdbToCsv;
+import ca.mrt.gs_backend.MDBUtils.DataPacket;
+import ca.mrt.gs_backend.MDBUtils.MdbToCsv;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
-public class testRocksDbToCsv {
+public class testMDBToCsv {
 
 
     @Test

@@ -1,6 +1,6 @@
-package ca.mrt.gs_backend.RocksDBUtils;
+package ca.mrt.gs_backend.MDBUtils;
 
-import ca.mrt.gs_backend.RocksDBUtils.dataPacketFormats.DataPacketInformation;
+import ca.mrt.gs_backend.MDBUtils.dataPacketFormats.DataPacketInformation;
 import lombok.Data;
 
 import java.time.Instant;

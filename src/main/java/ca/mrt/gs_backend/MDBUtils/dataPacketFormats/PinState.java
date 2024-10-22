@@ -1,4 +1,4 @@
-package ca.mrt.gs_backend.RocksDBUtils.dataPacketFormats;
+package ca.mrt.gs_backend.MDBUtils.dataPacketFormats;
 
 
 public enum PinState {
