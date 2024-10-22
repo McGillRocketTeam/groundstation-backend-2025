@@ -1,4 +1,4 @@
-package ca.mrt.gs_backend.RocksDBUtils.dataPacketFormats;
+package ca.mrt.gs_backend.MDBUtils.dataPacketFormats;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -22,9 +22,13 @@ public class LabjackT7Packet implements DataPacketInformation {
 
         StringBuilder builder = new StringBuilder();
         builder.append(AINPins.stream().map(f -> f.toString()).collect(Collectors.joining(",")));
+        builder.append(",");
         builder.append(FIOPins.stream().map(f -> f.toString()).collect(Collectors.joining(",")));
+        builder.append(",");
         builder.append(EIOPins.stream().map(f -> f.toString()).collect(Collectors.joining(",")));
+        builder.append(",");
         builder.append(CIOPins.stream().map(f -> f.toString()).collect(Collectors.joining(",")));
+        builder.append(",");
         builder.append(MIOPins.stream().map(f -> f.toString()).collect(Collectors.joining(",")));
         return builder.toString();
 
