@@ -16,24 +16,25 @@ import java.util.List;
 public class MdbToCsv {
 
 
-
-    private List<String> columnHeaders = new ArrayList<>();
-
-
-    public void writeToCsv(String csvPath) {
+   public void writeToCsv(String csvPath) {
+       List<DataPacket> packets = getPackets();
+       getData(packets);
+        StringBuilder builder = new StringBuilder();
+        packets.stream().forEach(packet -> {
+            builder.append(packet.getSequenceNumber()).append(",");
+            builder.append(packet.getGenerationTime()).append(",");
+            builder.append(packet.getReceptionTime()).append(",");
+            builder.append(packet.getDataPacketInformation().getInformationAsCSV()).append("\n");});
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(csvPath));
-
+            String toWrite = builder.toString();
+            writer.write(toWrite);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
-
-
-    public List<DataPacket> getData(List<DataPacket> dataPackets) {
+    public void getData(List<DataPacket> dataPackets) {
         dataPackets.stream().forEach(packet -> {
             packet.setDataPacketInformation(new LabjackT7Packet());
             int number = packet.getSequenceNumber();
@@ -59,7 +60,7 @@ public class MdbToCsv {
                 e.printStackTrace();
             }
         });
-        return dataPackets;
+
     }
 
     private String getHTTPResponse(String url) throws IOException {

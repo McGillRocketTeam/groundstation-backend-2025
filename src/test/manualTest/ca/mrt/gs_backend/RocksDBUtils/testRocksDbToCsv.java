@@ -17,6 +17,7 @@ public class testRocksDbToCsv {
         try {
             List<DataPacket> packets = converter.getPackets();
             converter.getData(packets);
+            System.out.println(packets);
         }catch (Exception e) {
             e.printStackTrace();
         }
