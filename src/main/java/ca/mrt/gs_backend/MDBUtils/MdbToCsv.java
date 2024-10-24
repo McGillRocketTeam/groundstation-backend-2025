@@ -15,6 +15,7 @@ public class MdbToCsv {
 
     private curlTool tool = new curlTool();
 
+
    public void writeToCsv(String csvPath) {
        List<DataPacket> packets = getPackets();
        getData(packets);
@@ -28,7 +29,6 @@ public class MdbToCsv {
             builder.append(packet.getDataPacketInformation().getInformationAsCSV()).append("\n");
             String toWrite = builder.toString();
             builder.delete(0, builder.length());
-            System.out.println("wrote");
             try {
                 writer.write(toWrite);
                 writer.flush();
@@ -69,21 +69,42 @@ public class MdbToCsv {
     }
 
     public List<DataPacket> getPackets(){
+        String url = "http://localhost:8090/yamcs/api/archive/gs_backend/packets?&fields=id,generationTime,earthReceptionTime,receptionTime,sequenceNumber,link,size%200";
+        List<DataPacket> dataPackets = new ArrayList<>();
+        String continuationToken = "";
+        JsonObject response = getJsonResponse(url);
+        JsonArray packets = response.getAsJsonArray("packet");
+        continuationToken = response.getAsJsonObject().get("continuationToken").getAsString();
+        extractDataPackets(dataPackets, packets);
+
+        while (!continuationToken.isEmpty()) {
+            String newUrl = url + "&next=" + continuationToken;
+            response = getJsonResponse(newUrl);
+            packets = response.getAsJsonArray("packet");
+            if (response.getAsJsonObject().get("continuationToken") != null) continuationToken = response.getAsJsonObject().get("continuationToken").getAsString();
+            extractDataPackets(dataPackets, packets);
+        }
+
+        return dataPackets;
+    }
+
+    private void extractDataPackets(List<DataPacket> dataPackets, JsonArray packets) {
+        for (int i = 0; i < packets.size(); i++) {
+            JsonObject packet = packets.get(i).getAsJsonObject();
+            DataPacket dataPacket = new DataPacket(Integer.parseInt(packet.get("sequenceNumber").toString()), packet.get("receptionTime").getAsString(), packet.get("generationTime").getAsString(), packet.get("earthReceptionTime").getAsString());
+            dataPackets.add(dataPacket);
+        }
+    }
+
+    private JsonObject getJsonResponse (String url) {
         String response = "";
         try {
-            response = tool.getHTTPResponse("http://localhost:8090/yamcs/api/archive/gs_backend/packets?&fields=id,generationTime,earthReceptionTime,receptionTime,sequenceNumber,link,size%200");
+            response = tool.getHTTPResponse(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<DataPacket> dataPackets = new ArrayList<>();
-        JsonObject jsonResponse = JsonParser.parseString(response).getAsJsonObject();
 
-        JsonArray packets = jsonResponse.getAsJsonArray("packet");
-            for (int i = 0; i < packets.size(); i++) {
-                JsonObject packet = packets.get(i).getAsJsonObject();
-                DataPacket dataPacket = new DataPacket(Integer.parseInt(packet.get("sequenceNumber").toString()),packet.get("receptionTime").getAsString(),packet.get("generationTime").getAsString(),packet.get("earthReceptionTime").getAsString());
-                dataPackets.add(dataPacket);
-            }
-        return dataPackets;
+        JsonObject jsonResponse = JsonParser.parseString(response).getAsJsonObject();
+        return jsonResponse;
     }
 }
