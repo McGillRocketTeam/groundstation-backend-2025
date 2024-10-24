@@ -14,16 +14,12 @@ public class testMDBToCsv {
         try {
             List<DataPacket> packets = converter.getPackets();
             converter.getData(packets);
-            System.out.println(packets);
+            System.out.println(packets.size());
         }catch (Exception e) {
             e.printStackTrace();
         }
 
         converter.writeToCsv("AAAAAAAAAAAAAAAAAAA.csv");
-
-
-
-
 
     }
 
