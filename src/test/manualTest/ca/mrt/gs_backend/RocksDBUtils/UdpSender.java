@@ -10,6 +10,7 @@ import java.net.InetAddress;
 public class UdpSender {
     public static void main(String[] args) {
         // Configuration
+        int shmolSize = 59;
         String host = "localhost";
         int port = 10035;
         String filePath = "src/test/manualTest/ca/mrt/gs_backend/RocksDBUtils/files/packets - Copy.raw";
@@ -27,7 +28,7 @@ public class UdpSender {
             int offset = 0;
             int total_size = 0;
             while (offset < data.length) {
-                int packetSize = Math.min(1400, data.length - offset);
+                int packetSize = Math.min(shmolSize, data.length - offset);
                 DatagramPacket packet = new DatagramPacket(data, offset, packetSize, InetAddress.getByName(host), port);
                 socket.send(packet);
                 System.out.println("Sent packet of size " + packetSize + " bytes to " + host + ":" + port);
