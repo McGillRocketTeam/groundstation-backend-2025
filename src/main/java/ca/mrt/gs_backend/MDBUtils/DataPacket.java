@@ -4,6 +4,11 @@ import ca.mrt.gs_backend.MDBUtils.dataPacketFormats.DataPacketInformation;
 import lombok.Data;
 
 import java.time.Instant;
+
+/**
+ * @author Tarek Namani
+ * Defines what a DataPacket is like
+ */
 @Data
 public class DataPacket {
     private int sequenceNumber;

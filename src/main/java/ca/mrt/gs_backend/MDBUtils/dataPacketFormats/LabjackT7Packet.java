@@ -9,14 +9,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * @author Tarek Namani
+ * This class defines the structure for a LabjackT7 datapacket, and contains some utility functions for parsing them
+ */
 @Data
 public class LabjackT7Packet implements DataPacketInformation {
 
-    private List<Float> AINPins = new ArrayList<Float>(14);
-    private List<PinState> FIOPins = new ArrayList<PinState>(8);
-    private List<PinState> EIOPins = new ArrayList<PinState>(8);
-    private List<PinState> CIOPins = new ArrayList<PinState>(4);
-    private List<PinState> MIOPins = new ArrayList<PinState>(3);
+    private List<Float> AINPins = new ArrayList(14);
+    private List<PinState> FIOPins = new ArrayList(8);
+    private List<PinState> EIOPins = new ArrayList(8);
+    private List<PinState> CIOPins = new ArrayList(4);
+    private List<PinState> MIOPins = new ArrayList(3);
 
     public String getInformationAsCSV() {
 

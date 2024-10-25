@@ -1,11 +1,14 @@
 package manualTest.ca.mrt.gs_backend.RocksDBUtils;
 
-import ca.mrt.gs_backend.MDBUtils.DataPacket;
 import ca.mrt.gs_backend.MDBUtils.MdbToCsv;
+import ca.mrt.gs_backend.MDBUtils.dataPacketFormats.PacketFormat;
 import ca.mrt.gs_backend.MDBUtils.dataSource.UdpSender;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 
+/**
+ * @author Tarek Namani
+ * Manual tests to acertain that the csv writer works
+ */
 public class testMDBToCsv {
 
 
@@ -13,15 +16,10 @@ public class testMDBToCsv {
     public void testGetBytes() {
         MdbToCsv converter = new MdbToCsv();
         try {
-            List<DataPacket> packets = converter.getPackets();
-            converter.getData(packets);
-            System.out.println(packets.size());
+            converter.writeToCsv("AAAAAAAAAAAAAAAAAAA.csv","http://localhost:8090/yamcs/api/archive/gs_backend/packets?&fields=id,generationTime,earthReceptionTime,receptionTime,sequenceNumber,link,size%200", PacketFormat.LABJACK);
         }catch (Exception e) {
             e.printStackTrace();
         }
-
-        converter.writeToCsv("AAAAAAAAAAAAAAAAAAA.csv");
-
 
     }
 
