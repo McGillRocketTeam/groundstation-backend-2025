@@ -3,8 +3,13 @@ package ca.mrt.gs_backend.labjack;
 import com.sun.jna.ptr.IntByReference;
 import libs.LJM;
 import org.yamcs.TmPacket;
+import org.yamcs.YConfiguration;
+import org.yamcs.mdb.Mdb;
+import org.yamcs.mdb.MdbFactory;
 import org.yamcs.mdb.XtceTmExtractor;
 import org.yamcs.tctm.AbstractTmDataLink;
+import org.yamcs.xtce.ParameterEntry;
+import org.yamcs.xtce.SequenceContainer;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,6 +17,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -41,10 +50,11 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
     //stores whether the class is currently connected to a LabJack
     private boolean isConnected = false;
 
-    private final Queue<byte[]> dataQueue = new ConcurrentLinkedQueue<>();
+    private final Queue<TmPacket> dataQueue = new ConcurrentLinkedQueue<>();
     private ScheduledExecutorService executorService;
     private BufferedWriter csvWriter;
-
+    private XtceTmExtractor tmExtractor;
+    private SequenceContainer sequenceContainer;
 
 
 
@@ -115,16 +125,14 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
             combinedBinaryData[index] = digitalBinaryData[index-analogBinaryData.length];
         }
         updateStats(combinedBinaryData.length);
+        TmPacket tmPacket = new TmPacket(timeService.getMissionTime(), combinedBinaryData);
 
         if(++packetCount > GRAPH_FREQ){
             packetCount = 0;
-
-            TmPacket tmPacket = new TmPacket(timeService.getMissionTime(), combinedBinaryData);
-            processPacket(packetPreprocessor.process(tmPacket));
+            executorService.schedule(()-> processPacket(packetPreprocessor.process(tmPacket)), 0, TimeUnit.SECONDS);
         }
 
-        dataQueue.add(combinedBinaryData);
-
+        dataQueue.add(tmPacket);
     }
 
 
@@ -132,9 +140,25 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
     private void savePacketToCSV() {
 
         while(!dataQueue.isEmpty()){
-            byte[] dataArr = dataQueue.poll();
-            int count = 0;
             StringBuilder row = new StringBuilder();
+
+            TmPacket dataArr = dataQueue.poll();
+            LocalDateTime dateTime = Instant.ofEpochMilli(dataArr.getReceptionTime())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+            row.append(dateTime.format(DateTimeFormatter.ISO_LOCAL_TIME)).append(",");
+            var result = tmExtractor.processPacket(dataArr.getPacket(), dataArr.getGenerationTime(), dataArr.getReceptionTime(), dataArr.getSeqCount());
+            row.append(dataArr.getReceptionTime());
+            for(var param : result.getParameterResult()){
+                row.append(param.getEngValue()).append(",");
+            }
+            row.setLength(row.length()-1);
+            try {
+                csvWriter.write(row.toString());
+                csvWriter.newLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
         }
     }
@@ -193,7 +217,7 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
 
         try {
             csvWriter = new BufferedWriter(new FileWriter(CSV_FILENAME));
-           writeCSVHeader();
+            writeCSVHeader();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -206,6 +230,7 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
 
     private void writeCSVHeader() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Reception Time,");
         for(int i = 0; i < LabJackUtil.NUM_ANALOG_PINS; i++){
             stringBuilder.append("AIN").append(i).append(",");
         }
@@ -234,5 +259,21 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         } else {
             return "UNAVAILABLE, not connected to LabJack";
         }
+    }
+
+    @Override
+    public void init(String instance, String name, YConfiguration config) {
+        super.init(instance, name, config);
+        Mdb mdb = MdbFactory.getInstance("gs_backend");
+        tmExtractor = new XtceTmExtractor(mdb);
+        sequenceContainer = mdb.getSequenceContainer("/LabJackT7/LabJackPacket");
+        tmExtractor.startProviding(sequenceContainer);
+
+        for(var seqEntry : sequenceContainer.getEntryList()){
+            if(seqEntry instanceof ParameterEntry parameterEntry){
+                tmExtractor.startProviding(parameterEntry.getParameter());
+            }
+        }
+
     }
 }
