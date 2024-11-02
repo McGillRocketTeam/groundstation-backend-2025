@@ -4,15 +4,16 @@ import com.sun.jna.ptr.IntByReference;
 import libs.LJM;
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
+import org.yamcs.commanding.ArgumentValue;
+import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.mdb.Mdb;
 import org.yamcs.mdb.MdbFactory;
 import org.yamcs.mdb.XtceTmExtractor;
-import org.yamcs.tctm.AbstractTmDataLink;
+import org.yamcs.tctm.AbstractTcTmParamLink;
 import org.yamcs.xtce.ParameterEntry;
 import org.yamcs.xtce.SequenceContainer;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -36,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  * At the moment, all readable pins (digital and analog) are read at every possible moment.
  */
 
-public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
+public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
     private static final String CSV_FILENAME = "storage\\labj_" + (new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss")).format(new Date()) + ".csv";
     /*
     Determines how many packets are sent to be graphed by YAMCS out of the total number of packets collected.
@@ -68,7 +69,6 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
             LJM.openS("ANY", "ANY", "ANY", handleRef);
             log.info("LabJack Connected");
             deviceHandle = handleRef.getValue();
-
 
             //Watchdog 5 min
             int type = LJM.Constants.UINT32;
@@ -124,7 +124,7 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         for(; index < combinedBinaryData.length; index++){
             combinedBinaryData[index] = digitalBinaryData[index-analogBinaryData.length];
         }
-        updateStats(combinedBinaryData.length);
+        dataIn(1, combinedBinaryData.length);
         TmPacket tmPacket = new TmPacket(timeService.getMissionTime(), combinedBinaryData);
 
         if(++packetCount > GRAPH_FREQ){
@@ -275,5 +275,30 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
             }
         }
 
+    }
+
+    @Override
+    public boolean sendCommand(PreparedCommand preparedCommand) {
+        if(!isConnected){
+            log.info("Attempting to send LabJack commands while not being connected to a LabJack");
+            return false;
+        }
+        var arguments = preparedCommand.getArgAssignment();
+        int pinNum = -1;
+        ArgumentValue valueToWrite = null;
+        for(var argument : arguments.entrySet()){
+            if(argument.getKey().getName().equals("pin_number")){
+                pinNum = argument.getValue().getEngValue().getUint32Value();
+            }else{
+                valueToWrite = argument.getValue();
+            }
+        }
+
+        if(preparedCommand.getCommandName().endsWith("write_digital_pin")){
+            LabJackUtil.setDigitalPin(deviceHandle, pinNum, ((int) valueToWrite.getEngValue().getSint64Value()));
+        }else if(preparedCommand.getCommandName().endsWith("write_DAC_pin")){
+            LabJackUtil.setDACPin(deviceHandle, pinNum, valueToWrite.getEngValue().getFloatValue());
+        }
+        return true;
     }
 }

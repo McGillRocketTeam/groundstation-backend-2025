@@ -90,4 +90,40 @@ public class LabJackUtil {
         }
         return valueRef.getValue();
     }
+
+    /**
+     * Sets the given DAC pin to the given voltage.
+     * @param deviceHandle device handle of the connected LabJack
+     * @param pinNum pin number of DAC pin to write to (between 0-1 inclusive)
+     * @param value voltage to set DAC pin to (between 0-5 inclusive)
+     */
+    public static void setDACPin(int deviceHandle, int pinNum, double value){
+
+        int base_address = 1000;
+        int type = LJM.Constants.FLOAT32;
+
+        LJM.eWriteAddress(deviceHandle, base_address + pinNum*2, type, value);
+    }
+
+    /**
+     * Sets the given digital pin to the given state.
+     * @param deviceHandle device handle of the connected LabJack
+     * @param pinNum pin number of digital pin to write to (between 0-22 inclusive)
+     * @param digitalState digital pin state to set pin to (HIGH = 1, LOW = 0)
+     */
+    public static void setDigitalPin(int deviceHandle, int pinNum, int digitalState){
+        int base_address = 2000;
+        int type = LJM.Constants.UINT16;
+        if(digitalState != 0 && digitalState != 1){
+            log.error("Writing invalid state to digital pin (not HIGH or LOW)");
+            return;
+        }
+        if(pinNum < 0 || pinNum > 22){
+            log.error("Writing to digital pin that does not exist (not 0-22)");
+            return;
+        }
+
+        LJM.eWriteAddress(deviceHandle, base_address + pinNum, type, digitalState);
+
+    }
 }

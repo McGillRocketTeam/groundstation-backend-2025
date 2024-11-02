@@ -113,5 +113,61 @@
         </ContainerSet>
     </TelemetryMetaData>
     <CommandMetaData>
+        <ArgumentTypeSet>
+            <EnumeratedArgumentType name="digital_pin_state">
+                <IntegerDataEncoding sizeInBits="1"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="LOW"/>
+                    <Enumeration value="1" label="HIGH"/>
+                </EnumerationList>
+            </EnumeratedArgumentType>
+            <FloatArgumentType name="DAC_voltage">
+                <UnitSet>
+                    <Unit>V</Unit>
+                </UnitSet>
+                <FloatDataEncoding/>
+                <ValidRangeSet>
+                    <ValidRange minInclusive="0.00" maxInclusive="5.00"/>
+                </ValidRangeSet>
+            </FloatArgumentType>
+            <IntegerArgumentType name="digital_pin_number" signed="false" sizeInBits="8">
+                <IntegerDataEncoding/>
+                <ValidRangeSet>
+                    <ValidRange minInclusive="0" maxInclusive="22"/>
+                </ValidRangeSet>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="DAC_pin_number" signed="false" sizeInBits="8">
+                <IntegerDataEncoding/>
+                <ValidRangeSet>
+                    <ValidRange minInclusive="0" maxInclusive="1"/>
+                </ValidRangeSet>
+            </IntegerArgumentType>
+        </ArgumentTypeSet>
+        <MetaCommandSet>
+            <MetaCommand name="write_digital_pin">
+                <ArgumentList>
+                    <Argument name="pin_number" argumentTypeRef="digital_pin_number" shortDescription="Pin number of the digital pin (0-22)"/>
+                    <Argument name="pin_state" argumentTypeRef="digital_pin_state" shortDescription="State to write to digital pin (HIGH/LOW)"/>
+                </ArgumentList>
+                <CommandContainer name="write_digital_pin">
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="pin_state"/>
+                        <ArgumentRefEntry argumentRef="pin_number"/>
+                    </EntryList>
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="write_DAC_pin">
+                <ArgumentList>
+                    <Argument name="pin_number" argumentTypeRef="DAC_pin_number" shortDescription="Pin number of the DAC pin (0-1)"/>
+                    <Argument name="pin_voltage" argumentTypeRef="DAC_voltage" shortDescription="Voltage to set DAC pin to (0-5)"/>
+                </ArgumentList>
+                <CommandContainer name="write_DAC_pin">
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="pin_voltage"/>
+                        <ArgumentRefEntry argumentRef="pin_number"/>
+                    </EntryList>
+                </CommandContainer>
+            </MetaCommand>
+        </MetaCommandSet>
     </CommandMetaData>
 </SpaceSystem>
