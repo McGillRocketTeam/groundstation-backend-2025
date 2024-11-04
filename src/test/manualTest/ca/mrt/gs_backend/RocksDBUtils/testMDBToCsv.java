@@ -6,7 +6,7 @@ import ca.mrt.gs_backend.MDBUtils.dataSource.UdpSender;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author Tarek Namani
+ * @author Tarek Namani and Davi Gava Bittencourt
  * Manual tests to acertain that the csv writer works
  */
 public class testMDBToCsv {
@@ -25,7 +25,7 @@ public class testMDBToCsv {
 
     @Test void testSendPackets() {
         UdpSender.sendPackets(10035,"src/test/manualTest/ca/mrt/gs_backend/RocksDBUtils/files/packets - Copy.raw");
+        UdpSender.sendPackets(27000,"src/test/manualTest/ca/mrt/gs_backend/RocksDBUtils/files/json_test.json");
     }
-
 
 }
