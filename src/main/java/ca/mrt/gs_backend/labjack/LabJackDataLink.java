@@ -1,39 +1,69 @@
 package ca.mrt.gs_backend.labjack;
 
-import com.sun.jna.ptr.DoubleByReference;
 import com.sun.jna.ptr.IntByReference;
 import libs.LJM;
 import org.yamcs.TmPacket;
-import org.yamcs.tctm.AbstractTmDataLink;
+import org.yamcs.YConfiguration;
+import org.yamcs.commanding.ArgumentValue;
+import org.yamcs.commanding.PreparedCommand;
+import org.yamcs.mdb.Mdb;
+import org.yamcs.mdb.MdbFactory;
+import org.yamcs.mdb.XtceTmExtractor;
+import org.yamcs.tctm.AbstractTcTmParamLink;
+import org.yamcs.xtce.ParameterEntry;
+import org.yamcs.xtce.SequenceContainer;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Jake
- * This class manages the connection to the LabJack, reads and writes to the LabJack
+ * This class manages the connection to the LabJack, reads and writes from/to the LabJack
  * and places its readings into a binary packet (defined in LABJ_XTCE.xml) which is then put into a TM stream.
  *
  * At the moment, all readable pins (digital and analog) are read at every possible moment.
  */
 
-public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
-    //total number of analog pins on the LabJack (T7)
-    private static final int NUM_ANALOG_PINS = 14;
-
-    //total number of digital pins on the LabJack (T7)
-    private static final int NUM_DIGITAL_PINS = 23;
-
+public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
+    private static final String CSV_FILENAME = "storage\\labj_" + (new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss")).format(new Date()) + ".csv";
+    /*
+    Determines how many packets are sent to be graphed by YAMCS out of the total number of packets collected.
+    E.g. for every GRAPH_FREQ number of packets collected, 1 packet is sent to YAMCS.
+     */
+    private static final int GRAPH_FREQ = 10000;
+    private int packetCount = 0;
     //stores handle of currently connected LabJack device
     private int deviceHandle = 0;
 
     //stores whether the class is currently connected to a LabJack
     private boolean isConnected = false;
 
+    private final Queue<TmPacket> dataQueue = new ConcurrentLinkedQueue<>();
+    private ScheduledExecutorService executorService;
+    private BufferedWriter csvWriter;
+    private XtceTmExtractor tmExtractor;
+    private SequenceContainer sequenceContainer;
+
+
+
 
     /**
      * Attempts to connect to any LabJack device (via ethernet or USB)
      */
-    public void attemptLabJackConnection(){
+    private void attemptLabJackConnection(){
         IntByReference handleRef = new IntByReference(0);
         try{
             LJM.openS("ANY", "ANY", "ANY", handleRef);
@@ -55,41 +85,36 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
             LJM.eWriteAddress(deviceHandle, WATCHDOG_DIO_STATE_DEFAULT, type, 0); //DIO all LOW
             LJM.eWriteAddress(deviceHandle, WATCHDOG_DIO_ENABLE_DEFAULT, type, 1); //Re enable DIO
             LJM.eWriteAddress(deviceHandle, WATCHDOG_ENABLE_DEFAULT, type, 1); //Re-enable watchdog
-
             isConnected = true;
 
         } catch(Exception e){
             log.warn("Could not connect to LabJack");
         }
-
     }
 
     /**
      * Reads all readable LabJack pins (analog, digital) and packs the readings into a binary packet according to
-     * LABJ_XTCE.xml where all analog data is first followed by all digital data.
-     * @return a TmPacket containing the constructed binary packet
+     * LABJ_XTCE.xml where all analog data is in the most significant bits followed by all digital data.
+     * This binary packet is then added to the {@link #dataQueue}.
      */
-    private TmPacket readAllPins(){
+    private void readAllPins(){
         if(!isConnected){
             log.error("Attempting to read LabJack pins when no LabJack is connected");
             throw new IllegalStateException();
         }
 
-        double[] analogReadings = new double[NUM_ANALOG_PINS];
+        double[] analogReadings = new double[LabJackUtil.NUM_ANALOG_PINS];
 
-        for(int i = 0; i < NUM_ANALOG_PINS; i++){
-            analogReadings[i] = readAnalogPin(i);
+        for(int i = 0; i < LabJackUtil.NUM_ANALOG_PINS; i++){
+            analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
         }
         byte[] analogBinaryData = createAnalogBinaryPacket(analogReadings);
 
+        byte[] digitalBinaryData = LabJackUtil.readDigitalPins(deviceHandle);
 
-        int[] digitalReadings = new int[NUM_DIGITAL_PINS];
-
-        for(int i = 0; i < NUM_DIGITAL_PINS; i++){
-            digitalReadings[i] = readDigitalPin(i);
+        if(digitalBinaryData == null){
+            return;
         }
-        byte[] digitalBinaryData = createDigitalBinaryPacket(digitalReadings);
-
 
         byte[] combinedBinaryData = new byte[analogBinaryData.length + digitalBinaryData.length];
         int index = 0;
@@ -99,43 +124,43 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         for(; index < combinedBinaryData.length; index++){
             combinedBinaryData[index] = digitalBinaryData[index-analogBinaryData.length];
         }
+        dataIn(1, combinedBinaryData.length);
         TmPacket tmPacket = new TmPacket(timeService.getMissionTime(), combinedBinaryData);
-        updateStats(combinedBinaryData.length);
-        return packetPreprocessor.process(tmPacket);
-    }
 
-    /**
-     * Takes an array of digital pin readings and converts it into an array of bytes corresponding to the reading.
-     * Note that each element in the incoming pinValues array is converted into a 2-bit integer where:
-     * 0 - corresponds to LOW
-     * 1 - corresponds to HIGH
-     * 2 - corresponds to UNKNOWN
-     * @param pinValues array of digital pin readings
-     * @return array of bytes corresponding to the incoming array of ints, just converted to 2-bits each
-     */
-    private byte[] createDigitalBinaryPacket(int[] pinValues) {
-        int totalBits = pinValues.length * 2; // Each value is 2 bits
-        int byteCount = (totalBits + 7) / 8;  // Calculate the number of bytes needed (round up)
-        byte[] packet = new byte[byteCount];  // Byte array to hold the packed bits
-
-        int bitPosition = 0;  // Tracks where in the byte array to place the next value
-
-        for (int value : pinValues) {
-            if (value < 0 || value > 3) {
-                throw new IllegalArgumentException("Pin values must be between 0 and 3 (2-bit value).");
-            }
-
-            // Calculate which byte and bit to place the value in
-            int byteIndex = bitPosition / 8;
-            int bitOffset = bitPosition % 8;
-
-            // Pack the 2-bit value into the correct position in the byte array
-            packet[byteIndex] |= (byte) ((value & 0x03) << (6 - bitOffset));
-
-            bitPosition += 2; // Move to the next 2 bits
+        if(++packetCount > GRAPH_FREQ){
+            packetCount = 0;
+            executorService.schedule(()-> processPacket(packetPreprocessor.process(tmPacket)), 0, TimeUnit.SECONDS);
         }
 
-        return packet;
+        dataQueue.add(tmPacket);
+    }
+
+
+
+    private void savePacketToCSV() {
+
+        while(!dataQueue.isEmpty()){
+            StringBuilder row = new StringBuilder();
+
+            TmPacket dataArr = dataQueue.poll();
+            LocalDateTime dateTime = Instant.ofEpochMilli(dataArr.getReceptionTime())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+            row.append(dateTime.format(DateTimeFormatter.ISO_LOCAL_TIME)).append(",");
+            var result = tmExtractor.processPacket(dataArr.getPacket(), dataArr.getGenerationTime(), dataArr.getReceptionTime(), dataArr.getSeqCount());
+            row.append(dataArr.getReceptionTime());
+            for(var param : result.getParameterResult()){
+                row.append(param.getEngValue()).append(",");
+            }
+            row.setLength(row.length()-1);
+            try {
+                csvWriter.write(row.toString());
+                csvWriter.newLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
     }
 
     /**
@@ -152,43 +177,6 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         }
 
         return buffer.array();  // Return the packed byte array
-    }
-
-    /**
-     * Reads a single analog pin
-     * @param address address of pin to read (MUST BE BETWEEN 0-13 inclusive)
-     * @return value read from analog pin, Double.NaN if error occurred
-     */
-    private double readAnalogPin(int address){
-        DoubleByReference valueRef = new DoubleByReference(0);
-        int base_address = 0;
-        try{
-            LJM.eReadAddress(deviceHandle, base_address + address*2, LJM.Constants.FLOAT32, valueRef);
-        } catch(Exception e){
-            log.error("Could not read from analog pin: " + (base_address + address * 2));
-            return Double.NaN;
-        }
-        return valueRef.getValue();
-    }
-
-    /**
-     * Reads a digital pin on the LabJack. NOTE: this method must return a value that can fit within 2 bits
-     * or else the above the createDigitalBinaryPacket method will break.
-     * @param address address of the digital pin (0-22)
-     * @return 0 if reading is low, 1 if reading is high and 2 if unknown reading
-     * @see #createDigitalBinaryPacket
-     */
-    public int readDigitalPin(int address){
-        DoubleByReference valueRef = new DoubleByReference(0);
-        int base_address = 2000;
-        int type = LJM.Constants.UINT16;
-        try{
-            LJM.eReadAddress(deviceHandle, base_address + address, type, valueRef);
-        } catch(Exception e){
-            log.error("Could not read from digital pin: " + (base_address + address * 2));
-            return 2;
-        }
-        return valueRef.getValue() >= 0.5 ? 1 : 0;
     }
 
 
@@ -211,31 +199,54 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
     protected void doStop() {
         if(isConnected){
             LJM.close(deviceHandle);
+            isConnected = false;
         }
         notifyStopped();
     }
 
     @Override
     public void run() {
-        while (isRunningAndEnabled()){
-            if(isConnected){
-                processPacket(readAllPins());
-            }else {
-                attemptLabJackConnection();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
+        while(!isConnected){
+            attemptLabJackConnection();
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
+
+        try {
+            csvWriter = new BufferedWriter(new FileWriter(CSV_FILENAME));
+            writeCSVHeader();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        executorService = Executors.newScheduledThreadPool(2);
+        executorService.scheduleAtFixedRate(this::readAllPins, 100, 100, TimeUnit.MICROSECONDS);
+        executorService.scheduleWithFixedDelay(this::savePacketToCSV, 1000, 500, TimeUnit.MILLISECONDS);
+    }
+
+    private void writeCSVHeader() throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Reception Time,");
+        for(int i = 0; i < LabJackUtil.NUM_ANALOG_PINS; i++){
+            stringBuilder.append("AIN").append(i).append(",");
+        }
+        for(int i = 0; i < LabJackUtil.NUM_DIGITAL_PINS; i++){
+            stringBuilder.append("DIO").append(i).append(",");
+        }
+        stringBuilder.setLength(stringBuilder.length()-1);
+        csvWriter.write(stringBuilder.toString());
+        csvWriter.newLine();
     }
 
     @Override
     public void doDisable() {
         if (isConnected) {
             LJM.close(deviceHandle);
+            isConnected = false;
         }
     }
 
@@ -248,5 +259,46 @@ public class LabJackDataLink extends AbstractTmDataLink implements Runnable{
         } else {
             return "UNAVAILABLE, not connected to LabJack";
         }
+    }
+
+    @Override
+    public void init(String instance, String name, YConfiguration config) {
+        super.init(instance, name, config);
+        Mdb mdb = MdbFactory.getInstance("gs_backend");
+        tmExtractor = new XtceTmExtractor(mdb);
+        sequenceContainer = mdb.getSequenceContainer("/LabJackT7/LabJackPacket");
+        tmExtractor.startProviding(sequenceContainer);
+
+        for(var seqEntry : sequenceContainer.getEntryList()){
+            if(seqEntry instanceof ParameterEntry parameterEntry){
+                tmExtractor.startProviding(parameterEntry.getParameter());
+            }
+        }
+
+    }
+
+    @Override
+    public boolean sendCommand(PreparedCommand preparedCommand) {
+        if(!isConnected){
+            log.info("Attempting to send LabJack commands while not being connected to a LabJack");
+            return false;
+        }
+        var arguments = preparedCommand.getArgAssignment();
+        int pinNum = -1;
+        ArgumentValue valueToWrite = null;
+        for(var argument : arguments.entrySet()){
+            if(argument.getKey().getName().equals("pin_number")){
+                pinNum = argument.getValue().getEngValue().getUint32Value();
+            }else{
+                valueToWrite = argument.getValue();
+            }
+        }
+
+        if(preparedCommand.getCommandName().endsWith("write_digital_pin")){
+            LabJackUtil.setDigitalPin(deviceHandle, pinNum, ((int) valueToWrite.getEngValue().getSint64Value()));
+        }else if(preparedCommand.getCommandName().endsWith("write_DAC_pin")){
+            LabJackUtil.setDACPin(deviceHandle, pinNum, valueToWrite.getEngValue().getFloatValue());
+        }
+        return true;
     }
 }

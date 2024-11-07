@@ -34,7 +34,7 @@ dataLinks:
 
   - name: udp-out
     class: org.yamcs.tctm.UdpTcDataLink
-    stream: tc_realtime
+    stream: tc_labJack
     host: localhost
     port: 10025
     commandPostprocessorClassName: ca.mrt.gs_backend.MyCommandPostprocessor
@@ -45,9 +45,10 @@ dataLinks:
     unique_identifier: "522.5"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
-  - name: labJack-in
+  - name: labJack
     class: ca.mrt.gs_backend.labjack.LabJackDataLink
-    stream: tm_labJack
+    tmStream: tm_labJack
+    tcStream: tc_labJack
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
 mdb:
@@ -86,6 +87,7 @@ streamConfig:
   param: ["pp_realtime", "pp_dump", "sys_param", "proc_param"]
   parameterAlarm: ["alarms_realtime"]
   tc:
-    - name: "tc_realtime"
+    - name: "tc_labJack"
       processor: "realtime"
+      rootContainer: "/LabJackT7"
 
