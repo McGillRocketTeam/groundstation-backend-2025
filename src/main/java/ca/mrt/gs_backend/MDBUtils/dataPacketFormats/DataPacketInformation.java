@@ -23,4 +23,6 @@ public interface DataPacketInformation {
         JsonElement map =(element.getAsJsonObject().get("engValue"));
         return ((JsonObject) map).get("floatValue").getAsFloat();
     }
+
+    byte[] getAsByteArray();
 }
