@@ -27,9 +27,32 @@ services:
       context: "https://github.com/McGillRocketTeam/groundstation-frontend-v2.git"
     ports:
       - "80:80"
-    depends_on: [backend]
+    depends_on:
+      - backend
+      - mongodb
+    networks:
+      - quickstart
+
+
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    hostname: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+        - mongodb_data:/data/db
+    networks:
+      - quickstart
+
 networks:
   quickstart:
     driver: bridge
 volumes:
   yamcs-telemetry:
+  mongodb_data:
+    driver: local
