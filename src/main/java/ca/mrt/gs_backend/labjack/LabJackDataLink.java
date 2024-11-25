@@ -14,6 +14,7 @@ import org.yamcs.xtce.ParameterEntry;
 import org.yamcs.xtce.SequenceContainer;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -200,6 +201,12 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
         if(isConnected){
             LJM.close(deviceHandle);
             isConnected = false;
+            try {
+                csvWriter.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         notifyStopped();
     }
@@ -216,7 +223,10 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
         }
 
         try {
-            csvWriter = new BufferedWriter(new FileWriter(CSV_FILENAME));
+            File file = new File(CSV_FILENAME);
+            file.getParentFile().mkdirs();
+            log.info(file.getAbsolutePath());
+            csvWriter = new BufferedWriter(new FileWriter(file));
             writeCSVHeader();
 
         } catch (IOException e) {
@@ -247,6 +257,11 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
         if (isConnected) {
             LJM.close(deviceHandle);
             isConnected = false;
+            try {
+                csvWriter.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
