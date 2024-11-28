@@ -95,7 +95,7 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
     protected void doStart() {
         if (!isDisabled()) {
             Thread thread = new Thread(this);
-            thread.setName(getClass().getSimpleName() + "-" + linkName + " " + uniqueIdentifier);
+            thread.setName(getClass().getSimpleName() + "-" + linkName + "-" + uniqueIdentifier);
             thread.start();
         }
         notifyStarted();
@@ -143,7 +143,12 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
             throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number");
         }
     }
-
+    @Override
+    public void doEnable(){
+        Thread thread = new Thread(this);
+        thread.setName(getClass().getSimpleName() + "-" + linkName + "-" + uniqueIdentifier);
+        thread.start();
+    }
     @Override
     public void doDisable() {
         if (currConnectedPort != null) {
