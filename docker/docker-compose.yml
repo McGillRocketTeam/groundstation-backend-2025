@@ -12,7 +12,8 @@ services:
       retries: 30
       start_period: 30s
     volumes:
-      - ../:/yamcs
+      - yamcs-telemetry:/yamcs/gs_backend/yamcs-data
+    privileged: true
     ports:
       - "8090:8090"
       - "10015:10015/udp"
