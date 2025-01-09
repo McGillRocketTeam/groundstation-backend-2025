@@ -14,6 +14,7 @@ import org.yamcs.xtce.ParameterEntry;
 import org.yamcs.xtce.SequenceContainer;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -198,8 +199,15 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
     @Override
     protected void doStop() {
         if(isConnected){
+            executorService.shutdown();
             LJM.close(deviceHandle);
             isConnected = false;
+
+            try {
+                csvWriter.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         notifyStopped();
     }
@@ -215,9 +223,20 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
             }
         }
 
+        initializeCSVWriterAndTasks();
+    }
+
+    private void initializeCSVWriterAndTasks(){
         try {
-            csvWriter = new BufferedWriter(new FileWriter(CSV_FILENAME));
-            writeCSVHeader();
+            File file = new File(CSV_FILENAME);
+            if(!file.exists()){
+                file.getParentFile().mkdirs();
+                log.info("Creating LabJack CSV file at: " + file.getAbsolutePath());
+                csvWriter = new BufferedWriter(new FileWriter(file));
+                writeCSVHeader();
+            } else{
+                csvWriter = new BufferedWriter(new FileWriter(file));
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -245,10 +264,26 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
     @Override
     public void doDisable() {
         if (isConnected) {
+            executorService.shutdown();
+
             LJM.close(deviceHandle);
             isConnected = false;
+            try {
+                csvWriter.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
+
+    @Override
+    public void doEnable(){
+        Thread thread = new Thread(this);
+        thread.setName(getClass().getSimpleName() + "-" + linkName);
+        thread.start();
+    }
+
+
 
     @Override
     public String getDetailedStatus() {
