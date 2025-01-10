@@ -34,7 +34,7 @@ dataLinks:
 
   - name: udp-out
     class: org.yamcs.tctm.UdpTcDataLink
-    stream: tc_labJack
+    stream: tc_udp
     host: localhost
     port: 10025
     commandPostprocessorClassName: ca.mrt.gs_backend.MyCommandPostprocessor
@@ -89,5 +89,8 @@ streamConfig:
   tc:
     - name: "tc_labJack"
       processor: "realtime"
-      rootContainer: "/LabJackT7"
+      tcPatterns: ["/LabJackT7/.*"]
+    - name: "tc_udp"
+      processor: "realtime"
+      tcPatterns: ["/FC.*"]
 
