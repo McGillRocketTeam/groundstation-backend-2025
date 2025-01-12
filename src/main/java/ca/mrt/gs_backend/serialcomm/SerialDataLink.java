@@ -156,7 +156,7 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
         uniqueIdentifierToLink.put(uniqueIdentifier, this);
 
         if(!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.matches("^\\d+.\\d+$")){
-            throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number");
+            throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number representing a frequency");
         }
     }
 
@@ -172,9 +172,16 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
         if (isDisabled()) {
             return "DISABLED";
         } else if(currConnectedPort != null){
-            return "OK, receiving on port " + currConnectedPort.getSystemPortName();
+            return "OK,"+ getIdentifier() +" receiving on port " + currConnectedPort.getSystemPortName();
         } else {
-            return "UNAVAILABLE, not connected to any port";
+            return "UNAVAILABLE, "+ getIdentifier() +" not connected to any port";
         }
+    }
+
+    private String getIdentifier(){
+        if(uniqueIdentifier.equals("control_box")){
+            return "Control Box";
+        }
+        return (uniqueIdentifier + "Hz");
     }
 }
