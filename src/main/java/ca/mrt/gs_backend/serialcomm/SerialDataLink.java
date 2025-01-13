@@ -4,11 +4,16 @@ import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortEvent;
 import com.fazecast.jSerialComm.SerialPortMessageListener;
 import org.yamcs.ConfigurationException;
-import org.yamcs.Spec;
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
-import org.yamcs.tctm.AbstractTmDataLink;
+import org.yamcs.YamcsServer;
+import org.yamcs.cmdhistory.CommandHistoryPublisher;
+import org.yamcs.commanding.PreparedCommand;
+import org.yamcs.protobuf.Commanding;
+import org.yamcs.tctm.AbstractTcTmParamLink;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -28,7 +33,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * The way in which these SerialDataLink instances are connected to the correct device on the correct serial port
  * is controlled by the {@link SerialUtil} class.
  */
-public class SerialDataLink extends AbstractTmDataLink implements Runnable{
+public abstract class SerialDataLink extends AbstractTcTmParamLink implements Runnable{
 
     protected static Map<String, SerialDataLink> uniqueIdentifierToLink = new HashMap<>();
     protected static Set<String> activePorts = new HashSet<>();
@@ -36,6 +41,7 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
     //todo maybe change this to an Optional
     private SerialPort currConnectedPort;
     private long timeOfLastPacket = System.currentTimeMillis();
+    private CommandHistoryPublisher ackPublisher;
 
     /**
      * For ground stations connected to FCs, the unique identifier is their radio frequency
@@ -43,9 +49,10 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
      */
     private String uniqueIdentifier;
     private final Queue<TmPacket> packetQueue = new ConcurrentLinkedQueue<>();
+    private final Map<String, Commanding.CommandId> ackStrToMostRecentCmdId = new HashMap<>();
 
     protected void connectToPort(SerialPort serialPort){
-        if(currConnectedPort != null){
+        if(isCurrentlyConnected()){
             log.error("Cannot connect to new serial port before disconnecting from existing port: "
                     + currConnectedPort.getSystemPortName());
             return;
@@ -83,9 +90,15 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
                     disconnectFromCurrPort();
                 }
                 timeOfLastPacket = System.currentTimeMillis();
+                dataIn(1, serialPortEvent.getReceivedData().length);
 
-                TmPacket tmPacket = new TmPacket(timeService.getMissionTime(), serialPortEvent.getReceivedData());
-                updateStats(tmPacket.getPacket().length);
+                String dataStr = (new String(serialPortEvent.getReceivedData())).strip();
+                if(processAck(dataStr)){ //incoming message is an ack
+                    return;
+                }
+
+                TmPacket tmPacket = new TmPacket(getCurrentTime(), serialPortEvent.getReceivedData());
+
                 packetQueue.add(packetPreprocessor.process(tmPacket));
             }
         });
@@ -93,8 +106,24 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
         activePorts.add(serialPort.getSystemPortName());
     }
 
+    private boolean processAck(String ackText){
+        String ackName = ackText.split(":")[0];
+        if(!ackStrToMostRecentCmdId.containsKey(ackName)){
+            return false;
+        }
+
+        if(ackPublisher == null){
+            ackPublisher = YamcsServer.getServer().getProcessor("gs_backend", "realtime").getCommandHistoryPublisher();
+        }
+
+        ackPublisher.publishAck(ackStrToMostRecentCmdId.get(ackText), ackText, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+        return true;
+    }
+
+    protected abstract String getAckStrFromCmd(PreparedCommand command);
+
     private void disconnectFromCurrPort(){
-        if(currConnectedPort == null){
+        if(!isCurrentlyConnected()){
             log.error("Cannot disconnect from port since no port is connected");
             return;
         }
@@ -119,7 +148,7 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
 
     @Override
     protected void doStop() {
-        if(currConnectedPort != null){
+        if(isCurrentlyConnected()){
             disconnectFromCurrPort();
         }
         notifyStopped();
@@ -143,17 +172,17 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
     }
 
     @Override
-    public Spec getSpec() {
-        var spec = getDefaultSpec();
-        spec.addOption("unique_identifier", Spec.OptionType.STRING);
-        return spec;
-    }
-
-    @Override
     public void init(String instance, String name, YConfiguration config) throws ConfigurationException {
         super.init(instance, name, config);
-        uniqueIdentifier = config.getString("unique_identifier");
-        uniqueIdentifierToLink.put(uniqueIdentifier, this);
+        if(config.containsKey("frequency")){
+            uniqueIdentifier = config.getString("frequency");
+        } else {
+            uniqueIdentifier = "control_box";
+        }
+
+        if(uniqueIdentifierToLink.put(uniqueIdentifier, this) != null){
+            throw new ConfigurationException("Cannot have duplicate unique identifiers (can't have 2 control boxes, 2 FCs with same frequency, etc.)");
+        }
 
         if(!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.matches("^\\d+.\\d+$")){
             throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number representing a frequency");
@@ -167,7 +196,7 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
     }
     @Override
     public void doDisable() {
-        if (currConnectedPort != null) {
+        if (isCurrentlyConnected()) {
             disconnectFromCurrPort();
         }
     }
@@ -176,7 +205,7 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
     public String getDetailedStatus() {
         if (isDisabled()) {
             return "DISABLED";
-        } else if(currConnectedPort != null){
+        } else if(isCurrentlyConnected()){
             return "OK,"+ getIdentifier() +" receiving on port " + currConnectedPort.getSystemPortName();
         } else {
             return "UNAVAILABLE, "+ getIdentifier() +" not connected to any port";
@@ -188,5 +217,38 @@ public class SerialDataLink extends AbstractTmDataLink implements Runnable{
             return "Control Box";
         }
         return (uniqueIdentifier + "Hz");
+    }
+
+    public boolean isCurrentlyConnected(){
+        return currConnectedPort != null;
+    }
+
+    protected boolean writePort(String text){
+        if(!isCurrentlyConnected()){
+            return false;
+        }
+
+        byte[] dataToWrite = (text.strip() + "\r\n").getBytes(StandardCharsets.UTF_8);
+        try {
+            currConnectedPort.getOutputStream().write(dataToWrite);
+            log.info("Wrote " + text + " to " + currConnectedPort.getSystemPortName());
+        } catch (IOException e) {
+            log.error("Failed to write " + text + " to " + currConnectedPort.getSystemPortName());
+            log.error(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean sendCommand(PreparedCommand preparedCommand){
+        if(!isCurrentlyConnected()){
+            log.warn("Attempting to send serial device commands while not connected to this device");
+            return false;
+        }
+
+        ackStrToMostRecentCmdId.put(getAckStrFromCmd(preparedCommand), preparedCommand.getCommandId());
+
+        return writePort(preparedCommand.getCommandName());
     }
 }
