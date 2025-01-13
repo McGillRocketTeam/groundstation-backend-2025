@@ -331,8 +331,10 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
 
         if(preparedCommand.getCommandName().endsWith("write_digital_pin")){
             LabJackUtil.setDigitalPin(deviceHandle, pinNum, ((int) valueToWrite.getEngValue().getSint64Value()));
+            log.info("Wrote: " + valueToWrite + " to digital pin " + pinNum);
         }else if(preparedCommand.getCommandName().endsWith("write_DAC_pin")){
             LabJackUtil.setDACPin(deviceHandle, pinNum, valueToWrite.getEngValue().getFloatValue());
+            log.info("Wrote: " + valueToWrite + " to DAC pin " + pinNum);
         }
         return true;
     }
