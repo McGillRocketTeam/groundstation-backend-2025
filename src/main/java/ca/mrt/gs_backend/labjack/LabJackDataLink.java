@@ -126,7 +126,7 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
             combinedBinaryData[index] = digitalBinaryData[index-analogBinaryData.length];
         }
         dataIn(1, combinedBinaryData.length);
-        TmPacket tmPacket = new TmPacket(timeService.getMissionTime(), combinedBinaryData);
+        TmPacket tmPacket = new TmPacket(getCurrentTime(), combinedBinaryData);
 
         if(++packetCount > GRAPH_FREQ){
             packetCount = 0;
@@ -315,7 +315,7 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
     @Override
     public boolean sendCommand(PreparedCommand preparedCommand) {
         if(!isConnected){
-            log.info("Attempting to send LabJack commands while not being connected to a LabJack");
+            log.warn("Attempting to send LabJack commands while not being connected to a LabJack");
             return false;
         }
         var arguments = preparedCommand.getArgAssignment();
