@@ -33,8 +33,6 @@ services:
     networks:
       - quickstart
 
-
-
   mongodb:
     image: mongo:6.0
     container_name: mongodb
