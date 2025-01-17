@@ -1,10 +1,10 @@
 
 services:
   backend:
-    image: "jacobkogut/gs_backend"
+    image: "ghcr.io/mcgillrocketteam/groundstation-backend-2025:master"
     build:
       context: "https://github.com/McGillRocketTeam/groundstation-backend-2025.git"
-    hostname: yamcs
+    hostname: localhost
     container_name: yamcs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8090"]
@@ -20,10 +20,9 @@ services:
       - "10015:10015/udp"
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    networks:
-      - quickstart
+    network_mode: host
   frontend:
-    image: "jacobkogut/gs_frontend"
+    image: "ghcr.io/mcgillrocketteam/groundstation-frontend-v2:main"
     build:
       context: "https://github.com/McGillRocketTeam/groundstation-frontend-v2.git"
     ports:
