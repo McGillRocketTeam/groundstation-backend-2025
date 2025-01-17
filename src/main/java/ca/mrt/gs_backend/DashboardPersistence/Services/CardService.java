@@ -15,7 +15,7 @@ public class CardService {
         card.setHeight(Integer.parseInt(map.get("h").toString()));
         card.setWidth(Integer.parseInt(map.get("w").toString()));
         card.setIndex((map.get("i").toString()));
-        card.setConfig((HashMap<String, Object>) map.get("config"));
+        card.setConfig(map.get("config").toString());
         return card;
     }
 

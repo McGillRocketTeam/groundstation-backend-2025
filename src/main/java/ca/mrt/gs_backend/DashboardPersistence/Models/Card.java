@@ -11,5 +11,5 @@ public class Card {
     private int width;
     private int height;
     private String index;
-    private HashMap<String, Object> config;
+    private String config;
 }

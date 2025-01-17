@@ -1,8 +1,10 @@
 package ca.mrt.gs_backend.DashboardPersistence.Services;
 
+import ca.mrt.gs_backend.DashboardPersistence.Models.Card;
 import ca.mrt.gs_backend.DashboardPersistence.Models.Dashboard;
 import ca.mrt.gs_backend.DashboardPersistence.MongoHandler;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoIterable;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -65,5 +67,42 @@ public class DashboardService {
                 )));
     }
 
+    public HashMap<String, Object> getDashboard(String path) {
+        MongoCollection collection = mongoHandler.getCollection(mongoHandler.collectionName);
+        CardService cardService = new CardService();
+        Document dashboardDoc = (Document) collection.find(eq("path", path)).first();
+        Dashboard dashboard = new Dashboard();
+        dashboard.setName((String) dashboardDoc.get("name"));
+        dashboard.setPath((String) dashboardDoc.get("path"));
+        dashboard.setIconName((String) dashboardDoc.get("icon_name"));
+        List<Document> layout = (List<Document>) dashboardDoc.get("layout");
+        dashboard.setLayout(layout.stream().map(card ->{
+            Card cardInLayout = new Card();
+            cardInLayout.setY((Integer) card.get("y"));
+            cardInLayout.setX((Integer) card.get("x"));
+            cardInLayout.setHeight((Integer) card.get("w"));
+            cardInLayout.setWidth((Integer) card.get("h"));
+            cardInLayout.setIndex(card.get("y").toString());
+            cardInLayout.setConfig(card.get("config").toString());
+            return cardInLayout;
+        }).toList());
+        return getDashboardAsMap(dashboard);
+    }
+
+    public List<HashMap<String, Object>> getAllDashboards() {
+        MongoCollection collection = mongoHandler.getCollection(mongoHandler.collectionName);
+        MongoIterable<Document> iterable = collection.find(new Document());
+        List<HashMap<String, Object>> dashboards = new ArrayList<>();
+        for (Document document : iterable) {
+            HashMap<String, Object> dashboard = getDashboard(document.getString("path"));
+            dashboards.add(dashboard);
+        }
+        return dashboards;
+    }
+
+    public void init() {
+        this.mongoHandler = new MongoHandler();
+        mongoHandler.getDatabase(mongoHandler.databaseName);
+    }
 
 }
