@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
-    private static final String CSV_FILENAME = "storage" + File.separator + "labj_" + (new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss")).format(new Date()) + ".csv";
+    private static final String CSV_FILENAME = "yamcs-data" + File.separator + "labjack_csv" + File.separator + "labj_" + (new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss")).format(new Date()) + ".csv";
     /*
     Determines how many packets are sent to be graphed by YAMCS out of the total number of packets collected.
     E.g. for every GRAPH_FREQ number of packets collected, 1 packet is sent to YAMCS.
