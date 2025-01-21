@@ -1,26 +1,28 @@
 package ca.mrt.gs_backend.DashboardPersistence.Controller;
 
+import ca.mrt.gs_backend.DashboardPersistence.Api.AbstractDashboardAPI;
 import ca.mrt.gs_backend.DashboardPersistence.Services.DashboardService;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import org.slf4j.LoggerFactory;
-import org.yamcs.InitException;
-import org.yamcs.YamcsService;
-import org.yamcs.http.AbstractHttpService;
-import org.yamcs.http.HandlerContext;
-import org.yamcs.http.HttpHandler;
+import com.google.protobuf.Descriptors;
+import com.google.protobuf.Message;
+import org.yamcs.*;
+import org.yamcs.api.Api;
+import org.yamcs.api.Observer;
 import org.yamcs.http.HttpServer;
+import org.yamcs.logging.Log;
 
+import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.security.Provider;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
-public class DashboardController extends AbstractHttpService implements YamcsService {
+import static org.openjdk.nashorn.internal.runtime.regexp.joni.Config.log;
+
+public class DashboardController extends AbstractDashboardAPI {
 
     DashboardService dashboardService = new DashboardService();
+    private HttpServer httpServer;
+    private static final Log log = new Log(DashboardController.class);
 
     public void saveDashboard(HashMap<String, Object> dashboard) {dashboardService.saveDashboard(dashboardService.createDashboard(dashboard));}
 
@@ -33,45 +35,7 @@ public class DashboardController extends AbstractHttpService implements YamcsSer
     public List<HashMap<String, Object>> getAllDashboards() {return dashboardService.getAllDashboards();}
 
     public HashMap<String, Object> getDashboard(String path) {return dashboardService.getDashboard(path);}
-    @Override
-    public void init(HttpServer httpServer) throws InitException {
-        dashboardService = new DashboardService();
-        dashboardService.init();
-        log.info("Dashboard service initialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        httpServer.addRoute("/api/dashboards/", ()->new HttpHandler() {
-                @Override
-                public boolean requireAuth() {
-                    return false;
-                }
 
-                @Override
-                public void handle(HandlerContext ctx) {
-                    ctx.requireGET();
-                    List<HashMap<String, Object>> dashboards = dashboardService.getAllDashboards();
-                    Gson gson = new Gson();
-                    try {
-                        String jsonResponse = gson.toJson(dashboards);
-                        System.out.println(jsonResponse);
-                        ctx.sendOK(new JsonParser().parse(jsonResponse).getAsJsonObject());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            });
-        }
 
-    @Override
-    protected void doStart() {
 
-    }
-
-    @Override
-    protected void doStop() {
-
-    }
-
-    @Override
-    public String getYamcsInstance() {
-        return "";
-    }
 }

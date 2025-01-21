@@ -4,7 +4,6 @@ services:
   - class: org.yamcs.archive.AlarmRecorder
   - class: org.yamcs.archive.EventRecorder
   - class: org.yamcs.archive.ReplayServer
-  - class : ca.mrt.gs_backend.DashboardPersistence.Controller.DashboardController
   - class: org.yamcs.parameter.SystemParametersService
     args:
       producers:

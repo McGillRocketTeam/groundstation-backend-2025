@@ -19,7 +19,7 @@ public class MongoHandler {
     public MongoDatabase getDatabase(String db) {
         if (mongoClient == null )
         {
-            mongoClient = MongoClients.create("mongodb://root:root@localhost:27017/admin");
+            mongoClient = MongoClients.create("mongodb://root:example@localhost:27017/admin");
         }
         MongoDatabase database = mongoClient.getDatabase(db);
         return database;
