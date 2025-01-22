@@ -6,6 +6,7 @@ import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
 import org.yamcs.*;
 import org.yamcs.api.Api;
+import org.yamcs.api.HttpBody;
 import org.yamcs.api.Observer;
 import org.yamcs.http.HttpServer;
 import org.yamcs.logging.Log;
@@ -18,10 +19,9 @@ import java.util.List;
 
 import static org.openjdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
-public class DashboardController extends AbstractDashboardAPI {
+public class DashboardController {
 
     DashboardService dashboardService = new DashboardService();
-    private HttpServer httpServer;
     private static final Log log = new Log(DashboardController.class);
 
     public void saveDashboard(HashMap<String, Object> dashboard) {dashboardService.saveDashboard(dashboardService.createDashboard(dashboard));}

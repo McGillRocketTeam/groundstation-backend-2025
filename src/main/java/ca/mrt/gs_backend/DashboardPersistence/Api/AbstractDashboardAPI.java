@@ -1,8 +1,10 @@
 package ca.mrt.gs_backend.DashboardPersistence.Api;
 
+
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
 import org.yamcs.api.Api;
+import org.yamcs.api.HttpBody;
 import org.yamcs.api.Observer;
 
 public abstract class AbstractDashboardAPI implements Api {
@@ -12,6 +14,8 @@ public abstract class AbstractDashboardAPI implements Api {
     public AbstractDashboardAPI(Descriptors.ServiceDescriptor serviceDescriptor) {
         this.serviceDescriptor = serviceDescriptor;
     }
+
+    public abstract void getAllDashboards(generated.GetAllDashboardsRequest request, Observer<HttpBody> observer);
 
     @Override
     public Descriptors.ServiceDescriptor getDescriptorForType() {
