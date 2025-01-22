@@ -41,6 +41,7 @@ def send_tm(simulator):
             data_to_send = exampleBytes
 
         tm_socket.sendto(data_to_send, ('127.0.0.1', 10015))
+        sleep(1)
         simulator.tm_counter += 1
 
         if simulator.mode != 'variable-time':
