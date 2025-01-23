@@ -18,6 +18,7 @@ public class DashboardApi extends AbstractDashboardAPI<Context> {
     @Override
     public void getAllDashboards(GetAllDashboardsRequest request, Observer<HttpBody> observer) {
 
+
     }
 
     @Override

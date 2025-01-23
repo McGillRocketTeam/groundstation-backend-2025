@@ -6,10 +6,12 @@ import ca.mrt.gs_backend.DashboardPersistence.Api.generated.GetAllDashboardsRequ
 import ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest;
 import ca.mrt.gs_backend.DashboardPersistence.Api.generated.UpdateDashboardRequest;
 import com.google.protobuf.Descriptors;
+import com.google.protobuf.Empty;
 import com.google.protobuf.Message;
 import org.yamcs.api.Api;
 import org.yamcs.api.HttpBody;
 import org.yamcs.api.Observer;
+import org.yamcs.web.api.ParseFilterData;
 
 public abstract class AbstractDashboardAPI<Context> implements Api<Context> {
 
@@ -31,21 +33,74 @@ public abstract class AbstractDashboardAPI<Context> implements Api<Context> {
 
     @Override
     public Message getRequestPrototype(Descriptors.MethodDescriptor methodDescriptor) {
-        return null;
+        if (methodDescriptor.getService() != getDescriptorForType()) {
+            throw new IllegalArgumentException("Method not contained by this service.");
+        }
+        switch (methodDescriptor.getIndex()) {
+            case 0:
+                return Empty.getDefaultInstance();
+            case 1:
+                return Empty.getDefaultInstance();
+            case 2:
+                return Empty.getDefaultInstance();
+            case 3:
+                return Empty.getDefaultInstance();
+            default:
+                throw new IllegalStateException();
+        }
     }
 
     @Override
     public Message getResponsePrototype(Descriptors.MethodDescriptor methodDescriptor) {
-        return null;
+        if (methodDescriptor.getService() != getDescriptorForType()) {
+            throw new IllegalArgumentException("Method not contained by this service.");
+        }
+        switch (methodDescriptor.getIndex()) {
+            case 0:
+                return GetAllDashboardsRequest.getDefaultInstance();
+            case 1:
+                return SaveDashboardRequest.getDefaultInstance();
+            case 2:
+                return UpdateDashboardRequest.getDefaultInstance();
+            case 3:
+                return DeleteDashboardRequest.getDefaultInstance();
+            default:
+                throw new IllegalStateException();
+        }
     }
 
     @Override
     public Observer<Message> callMethod(Descriptors.MethodDescriptor methodDescriptor, Object o, Observer observer) {
-        return null;
+        if (methodDescriptor.getService() != getDescriptorForType()) {
+            throw new IllegalArgumentException("Method not contained by this service.");
+        }
+        switch (methodDescriptor.getIndex()) {
+            default:
+                throw new IllegalStateException();
+        }
     }
 
     @Override
     public void callMethod(Descriptors.MethodDescriptor methodDescriptor, Object o, Message message, Observer observer) {
+        if (methodDescriptor.getService() != getDescriptorForType()) {
+            throw new IllegalArgumentException("Method not contained by this service.");
+        }
+        switch (methodDescriptor.getIndex()) {
+            case 0:
+                getAllDashboards((GetAllDashboardsRequest) message, observer);
+                return ;
+            case 1:
+                saveDashboard((SaveDashboardRequest) message, observer);
+                return ;
+            case 2:
+                updateDashboard((UpdateDashboardRequest) message, observer);
+                return ;
+            case 3:
+                deleteDashboard((DeleteDashboardRequest) message, observer);
+                return ;
+            default:
+                throw new IllegalStateException();
+        }
 
     }
 }
