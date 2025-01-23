@@ -3,10 +3,10 @@
 // source: Protobuf/Dashboards.proto
 // Protobuf Java Version: 4.29.3
 
-package generated;
+package ca.mrt.gs_backend.DashboardPersistence.Api.generated;
 
 public interface DashboardOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard)
+    // @@protoc_insertion_point(interface_extends:Dashboard)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -61,26 +61,26 @@ public interface DashboardOrBuilder extends
       getPathBytes();
 
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
-  java.util.List<generated.Card> 
+  java.util.List<ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card> 
       getCardsList();
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
-  generated.Card getCards(int index);
+  ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card getCards(int index);
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
   int getCardsCount();
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
-  java.util.List<? extends generated.CardOrBuilder> 
+  java.util.List<? extends ca.mrt.gs_backend.DashboardPersistence.Api.generated.CardOrBuilder> 
       getCardsOrBuilderList();
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
-  generated.CardOrBuilder getCardsOrBuilder(
+  ca.mrt.gs_backend.DashboardPersistence.Api.generated.CardOrBuilder getCardsOrBuilder(
       int index);
 }

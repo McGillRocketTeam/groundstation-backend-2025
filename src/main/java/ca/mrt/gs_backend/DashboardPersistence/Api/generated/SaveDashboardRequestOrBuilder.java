@@ -3,24 +3,24 @@
 // source: Protobuf/Dashboards.proto
 // Protobuf Java Version: 4.29.3
 
-package generated;
+package ca.mrt.gs_backend.DashboardPersistence.Api.generated;
 
 public interface SaveDashboardRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:ca.mrt.gs_backend.DashboardPersistence.Api.SaveDashboardRequest)
+    // @@protoc_insertion_point(interface_extends:SaveDashboardRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+   * <code>required .Dashboard dashboard = 1;</code>
    * @return Whether the dashboard field is set.
    */
   boolean hasDashboard();
   /**
-   * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+   * <code>required .Dashboard dashboard = 1;</code>
    * @return The dashboard.
    */
-  generated.Dashboard getDashboard();
+  ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard getDashboard();
   /**
-   * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+   * <code>required .Dashboard dashboard = 1;</code>
    */
-  generated.DashboardOrBuilder getDashboardOrBuilder();
+  ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardOrBuilder getDashboardOrBuilder();
 }

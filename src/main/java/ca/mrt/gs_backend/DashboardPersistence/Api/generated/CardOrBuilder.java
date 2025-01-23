@@ -3,10 +3,10 @@
 // source: Protobuf/Dashboards.proto
 // Protobuf Java Version: 4.29.3
 
-package generated;
+package ca.mrt.gs_backend.DashboardPersistence.Api.generated;
 
 public interface CardOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:ca.mrt.gs_backend.DashboardPersistence.Api.Card)
+    // @@protoc_insertion_point(interface_extends:Card)
     com.google.protobuf.MessageOrBuilder {
 
   /**

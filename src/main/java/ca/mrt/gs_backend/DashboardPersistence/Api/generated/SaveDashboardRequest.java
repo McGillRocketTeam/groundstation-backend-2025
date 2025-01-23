@@ -3,14 +3,14 @@
 // source: Protobuf/Dashboards.proto
 // Protobuf Java Version: 4.29.3
 
-package generated;
+package ca.mrt.gs_backend.DashboardPersistence.Api.generated;
 
 /**
- * Protobuf type {@code ca.mrt.gs_backend.DashboardPersistence.Api.SaveDashboardRequest}
+ * Protobuf type {@code SaveDashboardRequest}
  */
 public final class SaveDashboardRequest extends
     com.google.protobuf.GeneratedMessage implements
-    // @@protoc_insertion_point(message_implements:ca.mrt.gs_backend.DashboardPersistence.Api.SaveDashboardRequest)
+    // @@protoc_insertion_point(message_implements:SaveDashboardRequest)
     SaveDashboardRequestOrBuilder {
 private static final long serialVersionUID = 0L;
   static {
@@ -31,22 +31,22 @@ private static final long serialVersionUID = 0L;
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_descriptor;
+    return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_SaveDashboardRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_fieldAccessorTable
+    return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_SaveDashboardRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            generated.SaveDashboardRequest.class, generated.SaveDashboardRequest.Builder.class);
+            ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest.class, ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest.Builder.class);
   }
 
   private int bitField0_;
   public static final int DASHBOARD_FIELD_NUMBER = 1;
-  private generated.Dashboard dashboard_;
+  private ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard dashboard_;
   /**
-   * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+   * <code>required .Dashboard dashboard = 1;</code>
    * @return Whether the dashboard field is set.
    */
   @java.lang.Override
@@ -54,19 +54,19 @@ private static final long serialVersionUID = 0L;
     return ((bitField0_ & 0x00000001) != 0);
   }
   /**
-   * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+   * <code>required .Dashboard dashboard = 1;</code>
    * @return The dashboard.
    */
   @java.lang.Override
-  public generated.Dashboard getDashboard() {
-    return dashboard_ == null ? generated.Dashboard.getDefaultInstance() : dashboard_;
+  public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard getDashboard() {
+    return dashboard_ == null ? ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.getDefaultInstance() : dashboard_;
   }
   /**
-   * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+   * <code>required .Dashboard dashboard = 1;</code>
    */
   @java.lang.Override
-  public generated.DashboardOrBuilder getDashboardOrBuilder() {
-    return dashboard_ == null ? generated.Dashboard.getDefaultInstance() : dashboard_;
+  public ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardOrBuilder getDashboardOrBuilder() {
+    return dashboard_ == null ? ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.getDefaultInstance() : dashboard_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -117,10 +117,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof generated.SaveDashboardRequest)) {
+    if (!(obj instanceof ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest)) {
       return super.equals(obj);
     }
-    generated.SaveDashboardRequest other = (generated.SaveDashboardRequest) obj;
+    ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest other = (ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest) obj;
 
     if (hasDashboard() != other.hasDashboard()) return false;
     if (hasDashboard()) {
@@ -147,44 +147,44 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static generated.SaveDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static generated.SaveDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static generated.SaveDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static generated.SaveDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static generated.SaveDashboardRequest parseFrom(byte[] data)
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static generated.SaveDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static generated.SaveDashboardRequest parseFrom(java.io.InputStream input)
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static generated.SaveDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -192,26 +192,26 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public static generated.SaveDashboardRequest parseDelimitedFrom(java.io.InputStream input)
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static generated.SaveDashboardRequest parseDelimitedFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static generated.SaveDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static generated.SaveDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -224,7 +224,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(generated.SaveDashboardRequest prototype) {
+  public static Builder newBuilder(ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -240,26 +240,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code ca.mrt.gs_backend.DashboardPersistence.Api.SaveDashboardRequest}
+   * Protobuf type {@code SaveDashboardRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:ca.mrt.gs_backend.DashboardPersistence.Api.SaveDashboardRequest)
-      generated.SaveDashboardRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:SaveDashboardRequest)
+      ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_descriptor;
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_SaveDashboardRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_fieldAccessorTable
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_SaveDashboardRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              generated.SaveDashboardRequest.class, generated.SaveDashboardRequest.Builder.class);
+              ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest.class, ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest.Builder.class);
     }
 
-    // Construct using generated.SaveDashboardRequest.newBuilder()
+    // Construct using ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -290,17 +290,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_descriptor;
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_SaveDashboardRequest_descriptor;
     }
 
     @java.lang.Override
-    public generated.SaveDashboardRequest getDefaultInstanceForType() {
-      return generated.SaveDashboardRequest.getDefaultInstance();
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest getDefaultInstanceForType() {
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest.getDefaultInstance();
     }
 
     @java.lang.Override
-    public generated.SaveDashboardRequest build() {
-      generated.SaveDashboardRequest result = buildPartial();
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest build() {
+      ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -308,14 +308,14 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public generated.SaveDashboardRequest buildPartial() {
-      generated.SaveDashboardRequest result = new generated.SaveDashboardRequest(this);
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest buildPartial() {
+      ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest result = new ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest(this);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartial0(generated.SaveDashboardRequest result) {
+    private void buildPartial0(ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest result) {
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -329,16 +329,16 @@ private static final long serialVersionUID = 0L;
 
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof generated.SaveDashboardRequest) {
-        return mergeFrom((generated.SaveDashboardRequest)other);
+      if (other instanceof ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest) {
+        return mergeFrom((ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(generated.SaveDashboardRequest other) {
-      if (other == generated.SaveDashboardRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest other) {
+      if (other == ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest.getDefaultInstance()) return this;
       if (other.hasDashboard()) {
         mergeDashboard(other.getDashboard());
       }
@@ -398,31 +398,31 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private generated.Dashboard dashboard_;
+    private ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard dashboard_;
     private com.google.protobuf.SingleFieldBuilder<
-        generated.Dashboard, generated.Dashboard.Builder, generated.DashboardOrBuilder> dashboardBuilder_;
+        ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.Builder, ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardOrBuilder> dashboardBuilder_;
     /**
-     * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+     * <code>required .Dashboard dashboard = 1;</code>
      * @return Whether the dashboard field is set.
      */
     public boolean hasDashboard() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+     * <code>required .Dashboard dashboard = 1;</code>
      * @return The dashboard.
      */
-    public generated.Dashboard getDashboard() {
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard getDashboard() {
       if (dashboardBuilder_ == null) {
-        return dashboard_ == null ? generated.Dashboard.getDefaultInstance() : dashboard_;
+        return dashboard_ == null ? ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.getDefaultInstance() : dashboard_;
       } else {
         return dashboardBuilder_.getMessage();
       }
     }
     /**
-     * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+     * <code>required .Dashboard dashboard = 1;</code>
      */
-    public Builder setDashboard(generated.Dashboard value) {
+    public Builder setDashboard(ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard value) {
       if (dashboardBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -436,10 +436,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+     * <code>required .Dashboard dashboard = 1;</code>
      */
     public Builder setDashboard(
-        generated.Dashboard.Builder builderForValue) {
+        ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.Builder builderForValue) {
       if (dashboardBuilder_ == null) {
         dashboard_ = builderForValue.build();
       } else {
@@ -450,13 +450,13 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+     * <code>required .Dashboard dashboard = 1;</code>
      */
-    public Builder mergeDashboard(generated.Dashboard value) {
+    public Builder mergeDashboard(ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard value) {
       if (dashboardBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0) &&
           dashboard_ != null &&
-          dashboard_ != generated.Dashboard.getDefaultInstance()) {
+          dashboard_ != ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.getDefaultInstance()) {
           getDashboardBuilder().mergeFrom(value);
         } else {
           dashboard_ = value;
@@ -471,7 +471,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+     * <code>required .Dashboard dashboard = 1;</code>
      */
     public Builder clearDashboard() {
       bitField0_ = (bitField0_ & ~0x00000001);
@@ -484,33 +484,33 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+     * <code>required .Dashboard dashboard = 1;</code>
      */
-    public generated.Dashboard.Builder getDashboardBuilder() {
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.Builder getDashboardBuilder() {
       bitField0_ |= 0x00000001;
       onChanged();
       return getDashboardFieldBuilder().getBuilder();
     }
     /**
-     * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+     * <code>required .Dashboard dashboard = 1;</code>
      */
-    public generated.DashboardOrBuilder getDashboardOrBuilder() {
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardOrBuilder getDashboardOrBuilder() {
       if (dashboardBuilder_ != null) {
         return dashboardBuilder_.getMessageOrBuilder();
       } else {
         return dashboard_ == null ?
-            generated.Dashboard.getDefaultInstance() : dashboard_;
+            ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.getDefaultInstance() : dashboard_;
       }
     }
     /**
-     * <code>required .ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard dashboard = 1;</code>
+     * <code>required .Dashboard dashboard = 1;</code>
      */
     private com.google.protobuf.SingleFieldBuilder<
-        generated.Dashboard, generated.Dashboard.Builder, generated.DashboardOrBuilder> 
+        ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.Builder, ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardOrBuilder> 
         getDashboardFieldBuilder() {
       if (dashboardBuilder_ == null) {
         dashboardBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-            generated.Dashboard, generated.Dashboard.Builder, generated.DashboardOrBuilder>(
+            ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.Builder, ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardOrBuilder>(
                 getDashboard(),
                 getParentForChildren(),
                 isClean());
@@ -519,16 +519,16 @@ private static final long serialVersionUID = 0L;
       return dashboardBuilder_;
     }
 
-    // @@protoc_insertion_point(builder_scope:ca.mrt.gs_backend.DashboardPersistence.Api.SaveDashboardRequest)
+    // @@protoc_insertion_point(builder_scope:SaveDashboardRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:ca.mrt.gs_backend.DashboardPersistence.Api.SaveDashboardRequest)
-  private static final generated.SaveDashboardRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:SaveDashboardRequest)
+  private static final ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new generated.SaveDashboardRequest();
+    DEFAULT_INSTANCE = new ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest();
   }
 
-  public static generated.SaveDashboardRequest getDefaultInstance() {
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
@@ -564,7 +564,7 @@ private static final long serialVersionUID = 0L;
   }
 
   @java.lang.Override
-  public generated.SaveDashboardRequest getDefaultInstanceForType() {
+  public ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

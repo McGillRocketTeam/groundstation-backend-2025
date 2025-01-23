@@ -1,13 +1,17 @@
 package ca.mrt.gs_backend.DashboardPersistence.Api;
 
 
+import ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest;
+import ca.mrt.gs_backend.DashboardPersistence.Api.generated.GetAllDashboardsRequest;
+import ca.mrt.gs_backend.DashboardPersistence.Api.generated.SaveDashboardRequest;
+import ca.mrt.gs_backend.DashboardPersistence.Api.generated.UpdateDashboardRequest;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
 import org.yamcs.api.Api;
 import org.yamcs.api.HttpBody;
 import org.yamcs.api.Observer;
 
-public abstract class AbstractDashboardAPI implements Api {
+public abstract class AbstractDashboardAPI<Context> implements Api<Context> {
 
     private final Descriptors.ServiceDescriptor serviceDescriptor;
 
@@ -15,7 +19,10 @@ public abstract class AbstractDashboardAPI implements Api {
         this.serviceDescriptor = serviceDescriptor;
     }
 
-    public abstract void getAllDashboards(generated.GetAllDashboardsRequest request, Observer<HttpBody> observer);
+    public abstract void getAllDashboards(GetAllDashboardsRequest request, Observer<HttpBody> observer);
+    public abstract void saveDashboard(SaveDashboardRequest request, Observer<HttpBody> observer);
+    public abstract void updateDashboard(UpdateDashboardRequest request, Observer<HttpBody> observer);
+    public abstract void deleteDashboard(DeleteDashboardRequest request, Observer<HttpBody> observer);
 
     @Override
     public Descriptors.ServiceDescriptor getDescriptorForType() {

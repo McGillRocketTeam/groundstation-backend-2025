@@ -3,18 +3,18 @@
 // source: Protobuf/Dashboards.proto
 // Protobuf Java Version: 4.29.3
 
-package generated;
+package ca.mrt.gs_backend.DashboardPersistence.Api.generated;
 
 /**
  * <pre>
  * Schemas
  * </pre>
  *
- * Protobuf type {@code ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard}
+ * Protobuf type {@code Dashboard}
  */
 public final class Dashboard extends
     com.google.protobuf.GeneratedMessage implements
-    // @@protoc_insertion_point(message_implements:ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard)
+    // @@protoc_insertion_point(message_implements:Dashboard)
     DashboardOrBuilder {
 private static final long serialVersionUID = 0L;
   static {
@@ -39,15 +39,15 @@ private static final long serialVersionUID = 0L;
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_descriptor;
+    return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_Dashboard_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_fieldAccessorTable
+    return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_Dashboard_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            generated.Dashboard.class, generated.Dashboard.Builder.class);
+            ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.class, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.Builder.class);
   }
 
   private int bitField0_;
@@ -200,41 +200,41 @@ private static final long serialVersionUID = 0L;
 
   public static final int CARDS_FIELD_NUMBER = 4;
   @SuppressWarnings("serial")
-  private java.util.List<generated.Card> cards_;
+  private java.util.List<ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card> cards_;
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
   @java.lang.Override
-  public java.util.List<generated.Card> getCardsList() {
+  public java.util.List<ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card> getCardsList() {
     return cards_;
   }
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
   @java.lang.Override
-  public java.util.List<? extends generated.CardOrBuilder> 
+  public java.util.List<? extends ca.mrt.gs_backend.DashboardPersistence.Api.generated.CardOrBuilder> 
       getCardsOrBuilderList() {
     return cards_;
   }
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
   @java.lang.Override
   public int getCardsCount() {
     return cards_.size();
   }
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
   @java.lang.Override
-  public generated.Card getCards(int index) {
+  public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card getCards(int index) {
     return cards_.get(index);
   }
   /**
-   * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+   * <code>repeated .Card cards = 4;</code>
    */
   @java.lang.Override
-  public generated.CardOrBuilder getCardsOrBuilder(
+  public ca.mrt.gs_backend.DashboardPersistence.Api.generated.CardOrBuilder getCardsOrBuilder(
       int index) {
     return cards_.get(index);
   }
@@ -315,10 +315,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof generated.Dashboard)) {
+    if (!(obj instanceof ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard)) {
       return super.equals(obj);
     }
-    generated.Dashboard other = (generated.Dashboard) obj;
+    ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard other = (ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard) obj;
 
     if (hasIconName() != other.hasIconName()) return false;
     if (hasIconName()) {
@@ -369,44 +369,44 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static generated.Dashboard parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static generated.Dashboard parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static generated.Dashboard parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static generated.Dashboard parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static generated.Dashboard parseFrom(byte[] data)
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static generated.Dashboard parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static generated.Dashboard parseFrom(java.io.InputStream input)
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static generated.Dashboard parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -414,26 +414,26 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public static generated.Dashboard parseDelimitedFrom(java.io.InputStream input)
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static generated.Dashboard parseDelimitedFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static generated.Dashboard parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static generated.Dashboard parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -446,7 +446,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(generated.Dashboard prototype) {
+  public static Builder newBuilder(ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -466,26 +466,26 @@ private static final long serialVersionUID = 0L;
    * Schemas
    * </pre>
    *
-   * Protobuf type {@code ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard}
+   * Protobuf type {@code Dashboard}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard)
-      generated.DashboardOrBuilder {
+      // @@protoc_insertion_point(builder_implements:Dashboard)
+      ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_descriptor;
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_Dashboard_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_fieldAccessorTable
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_Dashboard_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              generated.Dashboard.class, generated.Dashboard.Builder.class);
+              ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.class, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.Builder.class);
     }
 
-    // Construct using generated.Dashboard.newBuilder()
+    // Construct using ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.newBuilder()
     private Builder() {
 
     }
@@ -515,17 +515,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_descriptor;
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_Dashboard_descriptor;
     }
 
     @java.lang.Override
-    public generated.Dashboard getDefaultInstanceForType() {
-      return generated.Dashboard.getDefaultInstance();
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard getDefaultInstanceForType() {
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.getDefaultInstance();
     }
 
     @java.lang.Override
-    public generated.Dashboard build() {
-      generated.Dashboard result = buildPartial();
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard build() {
+      ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -533,15 +533,15 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public generated.Dashboard buildPartial() {
-      generated.Dashboard result = new generated.Dashboard(this);
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard buildPartial() {
+      ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard result = new ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard(this);
       buildPartialRepeatedFields(result);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartialRepeatedFields(generated.Dashboard result) {
+    private void buildPartialRepeatedFields(ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard result) {
       if (cardsBuilder_ == null) {
         if (((bitField0_ & 0x00000008) != 0)) {
           cards_ = java.util.Collections.unmodifiableList(cards_);
@@ -553,7 +553,7 @@ private static final long serialVersionUID = 0L;
       }
     }
 
-    private void buildPartial0(generated.Dashboard result) {
+    private void buildPartial0(ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard result) {
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -573,16 +573,16 @@ private static final long serialVersionUID = 0L;
 
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof generated.Dashboard) {
-        return mergeFrom((generated.Dashboard)other);
+      if (other instanceof ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard) {
+        return mergeFrom((ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(generated.Dashboard other) {
-      if (other == generated.Dashboard.getDefaultInstance()) return this;
+    public Builder mergeFrom(ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard other) {
+      if (other == ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.getDefaultInstance()) return this;
       if (other.hasIconName()) {
         iconName_ = other.iconName_;
         bitField0_ |= 0x00000001;
@@ -680,9 +680,9 @@ private static final long serialVersionUID = 0L;
               break;
             } // case 26
             case 34: {
-              generated.Card m =
+              ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card m =
                   input.readMessage(
-                      generated.Card.parser(),
+                      ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.parser(),
                       extensionRegistry);
               if (cardsBuilder_ == null) {
                 ensureCardsIsMutable();
@@ -949,22 +949,22 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.util.List<generated.Card> cards_ =
+    private java.util.List<ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card> cards_ =
       java.util.Collections.emptyList();
     private void ensureCardsIsMutable() {
       if (!((bitField0_ & 0x00000008) != 0)) {
-        cards_ = new java.util.ArrayList<generated.Card>(cards_);
+        cards_ = new java.util.ArrayList<ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card>(cards_);
         bitField0_ |= 0x00000008;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilder<
-        generated.Card, generated.Card.Builder, generated.CardOrBuilder> cardsBuilder_;
+        ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder, ca.mrt.gs_backend.DashboardPersistence.Api.generated.CardOrBuilder> cardsBuilder_;
 
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
-    public java.util.List<generated.Card> getCardsList() {
+    public java.util.List<ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card> getCardsList() {
       if (cardsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(cards_);
       } else {
@@ -972,7 +972,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
     public int getCardsCount() {
       if (cardsBuilder_ == null) {
@@ -982,9 +982,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
-    public generated.Card getCards(int index) {
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card getCards(int index) {
       if (cardsBuilder_ == null) {
         return cards_.get(index);
       } else {
@@ -992,10 +992,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
     public Builder setCards(
-        int index, generated.Card value) {
+        int index, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card value) {
       if (cardsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1009,10 +1009,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
     public Builder setCards(
-        int index, generated.Card.Builder builderForValue) {
+        int index, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder builderForValue) {
       if (cardsBuilder_ == null) {
         ensureCardsIsMutable();
         cards_.set(index, builderForValue.build());
@@ -1023,9 +1023,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
-    public Builder addCards(generated.Card value) {
+    public Builder addCards(ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card value) {
       if (cardsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1039,10 +1039,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
     public Builder addCards(
-        int index, generated.Card value) {
+        int index, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card value) {
       if (cardsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1056,10 +1056,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
     public Builder addCards(
-        generated.Card.Builder builderForValue) {
+        ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder builderForValue) {
       if (cardsBuilder_ == null) {
         ensureCardsIsMutable();
         cards_.add(builderForValue.build());
@@ -1070,10 +1070,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
     public Builder addCards(
-        int index, generated.Card.Builder builderForValue) {
+        int index, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder builderForValue) {
       if (cardsBuilder_ == null) {
         ensureCardsIsMutable();
         cards_.add(index, builderForValue.build());
@@ -1084,10 +1084,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
     public Builder addAllCards(
-        java.lang.Iterable<? extends generated.Card> values) {
+        java.lang.Iterable<? extends ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card> values) {
       if (cardsBuilder_ == null) {
         ensureCardsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1099,7 +1099,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
     public Builder clearCards() {
       if (cardsBuilder_ == null) {
@@ -1112,7 +1112,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
     public Builder removeCards(int index) {
       if (cardsBuilder_ == null) {
@@ -1125,16 +1125,16 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
-    public generated.Card.Builder getCardsBuilder(
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder getCardsBuilder(
         int index) {
       return getCardsFieldBuilder().getBuilder(index);
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
-    public generated.CardOrBuilder getCardsOrBuilder(
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.CardOrBuilder getCardsOrBuilder(
         int index) {
       if (cardsBuilder_ == null) {
         return cards_.get(index);  } else {
@@ -1142,9 +1142,9 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
-    public java.util.List<? extends generated.CardOrBuilder> 
+    public java.util.List<? extends ca.mrt.gs_backend.DashboardPersistence.Api.generated.CardOrBuilder> 
          getCardsOrBuilderList() {
       if (cardsBuilder_ != null) {
         return cardsBuilder_.getMessageOrBuilderList();
@@ -1153,33 +1153,33 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
-    public generated.Card.Builder addCardsBuilder() {
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder addCardsBuilder() {
       return getCardsFieldBuilder().addBuilder(
-          generated.Card.getDefaultInstance());
+          ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.getDefaultInstance());
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
-    public generated.Card.Builder addCardsBuilder(
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder addCardsBuilder(
         int index) {
       return getCardsFieldBuilder().addBuilder(
-          index, generated.Card.getDefaultInstance());
+          index, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.getDefaultInstance());
     }
     /**
-     * <code>repeated .ca.mrt.gs_backend.DashboardPersistence.Api.Card cards = 4;</code>
+     * <code>repeated .Card cards = 4;</code>
      */
-    public java.util.List<generated.Card.Builder> 
+    public java.util.List<ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder> 
          getCardsBuilderList() {
       return getCardsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilder<
-        generated.Card, generated.Card.Builder, generated.CardOrBuilder> 
+        ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder, ca.mrt.gs_backend.DashboardPersistence.Api.generated.CardOrBuilder> 
         getCardsFieldBuilder() {
       if (cardsBuilder_ == null) {
         cardsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-            generated.Card, generated.Card.Builder, generated.CardOrBuilder>(
+            ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card, ca.mrt.gs_backend.DashboardPersistence.Api.generated.Card.Builder, ca.mrt.gs_backend.DashboardPersistence.Api.generated.CardOrBuilder>(
                 cards_,
                 ((bitField0_ & 0x00000008) != 0),
                 getParentForChildren(),
@@ -1189,16 +1189,16 @@ private static final long serialVersionUID = 0L;
       return cardsBuilder_;
     }
 
-    // @@protoc_insertion_point(builder_scope:ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard)
+    // @@protoc_insertion_point(builder_scope:Dashboard)
   }
 
-  // @@protoc_insertion_point(class_scope:ca.mrt.gs_backend.DashboardPersistence.Api.Dashboard)
-  private static final generated.Dashboard DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:Dashboard)
+  private static final ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new generated.Dashboard();
+    DEFAULT_INSTANCE = new ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard();
   }
 
-  public static generated.Dashboard getDefaultInstance() {
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
@@ -1234,7 +1234,7 @@ private static final long serialVersionUID = 0L;
   }
 
   @java.lang.Override
-  public generated.Dashboard getDefaultInstanceForType() {
+  public ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

@@ -1,15 +1,17 @@
 syntax = "proto2";
 
-package ca.mrt.gs_backend.DashboardPersistence.Api;
-
-option java_package = "generated";
+option java_package = "ca.mrt.gs_backend.DashboardPersistence.Api.generated";
 option java_outer_classname = "DashboardsProto";
 option java_multiple_files = true;
 
 import "Protobuf/yamcs/annotations.proto";
 import "Protobuf/yamcs/httpbody.proto";
+import "google/protobuf/empty.proto";
+
 
 service DashboardApi {
+
+  option (yamcs.api.label) = "DashboardsAPI";
   // Retrieves all dashboards
   rpc GetAllDashboards(GetAllDashboardsRequest) returns (yamcs.api.HttpBody) {
         option (yamcs.api.route) = {
@@ -19,11 +21,11 @@ service DashboardApi {
 
   rpc SaveDashboard(SaveDashboardRequest) returns (yamcs.api.HttpBody)  {
     option (yamcs.api.route) = {
-      post: "/api/dashboards/dashboard"
+      post: "/api/dashboards/{dashboardPath**}"
     };
   }
 
-  rpc DeleteDashboard(DeleteDashboardRequest) returns (yamcs.api.HttpBody)  {
+  rpc DeleteDashboard(DeleteDashboardRequest) returns (google.protobuf.Empty)  {
     option (yamcs.api.route) = {
       delete: "/api/dashboards/dashboard"
     };

@@ -1,6 +1,7 @@
 package ca.mrt.gs_backend.DashboardPersistence;
 
-import ca.mrt.gs_backend.DashboardPersistence.Api.AbstractDashboardAPI;
+
+import ca.mrt.gs_backend.DashboardPersistence.Api.DashboardApi;
 import ca.mrt.gs_backend.DashboardPersistence.Controller.DashboardController;
 import ca.mrt.gs_backend.DashboardPersistence.Services.DashboardService;
 import com.google.gson.Gson;
@@ -35,14 +36,8 @@ public class DashboardPlugin implements Plugin {
             return;
         }
 
-//        try (var in = getClass().getResourceAsStream("/yamcs-prometheus.protobin")) {
-//            httpServer.getProtobufRegistry().importDefinitions(in);
-//        } catch (IOException e) {
-//            throw new PluginException(e);
-//        }
 
-
-        httpServer.addApi(new DashboardController());
+        httpServer.addApi(new DashboardApi());
 
         // Prometheus by default expects a /metrics path.
         // Redirect it to /api/prometheus/metrics for convenience

@@ -3,7 +3,7 @@
 // source: Protobuf/Dashboards.proto
 // Protobuf Java Version: 4.29.3
 
-package generated;
+package ca.mrt.gs_backend.DashboardPersistence.Api.generated;
 
 public final class DashboardsProto {
   private DashboardsProto() {}
@@ -26,35 +26,35 @@ public final class DashboardsProto {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_GetAllDashboardsRequest_descriptor;
+    internal_static_GetAllDashboardsRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_GetAllDashboardsRequest_fieldAccessorTable;
+      internal_static_GetAllDashboardsRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_descriptor;
+    internal_static_SaveDashboardRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_fieldAccessorTable;
+      internal_static_SaveDashboardRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_descriptor;
+    internal_static_DeleteDashboardRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_fieldAccessorTable;
+      internal_static_DeleteDashboardRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_UpdateDashboardRequest_descriptor;
+    internal_static_UpdateDashboardRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_UpdateDashboardRequest_fieldAccessorTable;
+      internal_static_UpdateDashboardRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_descriptor;
+    internal_static_Dashboard_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_fieldAccessorTable;
+      internal_static_Dashboard_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Card_descriptor;
+    internal_static_Card_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Card_fieldAccessorTable;
+      internal_static_Card_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -64,85 +64,82 @@ public final class DashboardsProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\031Protobuf/Dashboards.proto\022*ca.mrt.gs_b" +
-      "ackend.DashboardPersistence.Api\032 Protobu" +
-      "f/yamcs/annotations.proto\032\035Protobuf/yamc" +
-      "s/httpbody.proto\"\031\n\027GetAllDashboardsRequ" +
-      "est\"`\n\024SaveDashboardRequest\022H\n\tdashboard" +
-      "\030\001 \002(\01325.ca.mrt.gs_backend.DashboardPers" +
-      "istence.Api.Dashboard\"&\n\026DeleteDashboard" +
-      "Request\022\014\n\004path\030\001 \002(\t\"b\n\026UpdateDashboard" +
-      "Request\022H\n\tdashboard\030\001 \002(\01325.ca.mrt.gs_b" +
-      "ackend.DashboardPersistence.Api.Dashboar" +
-      "d\"z\n\tDashboard\022\020\n\010iconName\030\001 \002(\t\022\014\n\004name" +
-      "\030\002 \002(\t\022\014\n\004path\030\003 \002(\t\022?\n\005cards\030\004 \003(\01320.ca" +
-      ".mrt.gs_backend.DashboardPersistence.Api" +
-      ".Card\"Z\n\004Card\022\t\n\001x\030\001 \002(\005\022\t\n\001y\030\002 \002(\005\022\r\n\005w" +
-      "idth\030\003 \002(\005\022\016\n\006height\030\004 \002(\005\022\r\n\005index\030\005 \002(" +
-      "\t\022\016\n\006config\030\006 \002(\t2\272\004\n\014DashboardApi\022\203\001\n\020G" +
-      "etAllDashboards\022C.ca.mrt.gs_backend.Dash" +
-      "boardPersistence.Api.GetAllDashboardsReq" +
-      "uest\032\023.yamcs.api.HttpBody\"\025\212\222\003\021\n\017/api/da" +
-      "shboards\022\207\001\n\rSaveDashboard\022@.ca.mrt.gs_b" +
-      "ackend.DashboardPersistence.Api.SaveDash" +
-      "boardRequest\032\023.yamcs.api.HttpBody\"\037\212\222\003\033\032" +
-      "\031/api/dashboards/dashboard\022\213\001\n\017DeleteDas" +
-      "hboard\022B.ca.mrt.gs_backend.DashboardPers" +
-      "istence.Api.DeleteDashboardRequest\032\023.yam" +
-      "cs.api.HttpBody\"\037\212\222\003\033\"\031/api/dashboards/d" +
-      "ashboard\022\213\001\n\017UpdateDashboard\022B.ca.mrt.gs" +
-      "_backend.DashboardPersistence.Api.Update" +
-      "DashboardRequest\032\023.yamcs.api.HttpBody\"\037\212" +
-      "\222\003\033\022\031/api/dashboards/dashboardB\036\n\tgenera" +
-      "tedB\017DashboardsProtoP\001"
+      "\n\031Protobuf/Dashboards.proto\032 Protobuf/ya" +
+      "mcs/annotations.proto\032\035Protobuf/yamcs/ht" +
+      "tpbody.proto\032\033google/protobuf/empty.prot" +
+      "o\"\031\n\027GetAllDashboardsRequest\"5\n\024SaveDash" +
+      "boardRequest\022\035\n\tdashboard\030\001 \002(\0132\n.Dashbo" +
+      "ard\"&\n\026DeleteDashboardRequest\022\014\n\004path\030\001 " +
+      "\002(\t\"7\n\026UpdateDashboardRequest\022\035\n\tdashboa" +
+      "rd\030\001 \002(\0132\n.Dashboard\"O\n\tDashboard\022\020\n\010ico" +
+      "nName\030\001 \002(\t\022\014\n\004name\030\002 \002(\t\022\014\n\004path\030\003 \002(\t\022" +
+      "\024\n\005cards\030\004 \003(\0132\005.Card\"Z\n\004Card\022\t\n\001x\030\001 \002(\005" +
+      "\022\t\n\001y\030\002 \002(\005\022\r\n\005width\030\003 \002(\005\022\016\n\006height\030\004 \002" +
+      "(\005\022\r\n\005index\030\005 \002(\t\022\016\n\006config\030\006 \002(\t2\250\003\n\014Da" +
+      "shboardApi\022X\n\020GetAllDashboards\022\030.GetAllD" +
+      "ashboardsRequest\032\023.yamcs.api.HttpBody\"\025\212" +
+      "\222\003\021\n\017/api/dashboards\022d\n\rSaveDashboard\022\025." +
+      "SaveDashboardRequest\032\023.yamcs.api.HttpBod" +
+      "y\"\'\212\222\003#\032!/api/dashboards/{dashboardPath*" +
+      "*}\022c\n\017DeleteDashboard\022\027.DeleteDashboardR" +
+      "equest\032\026.google.protobuf.Empty\"\037\212\222\003\033\"\031/a" +
+      "pi/dashboards/dashboard\022`\n\017UpdateDashboa" +
+      "rd\022\027.UpdateDashboardRequest\032\023.yamcs.api." +
+      "HttpBody\"\037\212\222\003\033\022\031/api/dashboards/dashboar" +
+      "d\032\021\202\200\001\rDashboardsAPIBI\n4ca.mrt.gs_backen" +
+      "d.DashboardPersistence.Api.generatedB\017Da" +
+      "shboardsProtoP\001"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           org.yamcs.api.AnnotationsProto.getDescriptor(),
           org.yamcs.api.HttpBodyProto.getDescriptor(),
+          com.google.protobuf.EmptyProto.getDescriptor(),
         });
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_GetAllDashboardsRequest_descriptor =
+    internal_static_GetAllDashboardsRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_GetAllDashboardsRequest_fieldAccessorTable = new
+    internal_static_GetAllDashboardsRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_GetAllDashboardsRequest_descriptor,
+        internal_static_GetAllDashboardsRequest_descriptor,
         new java.lang.String[] { });
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_descriptor =
+    internal_static_SaveDashboardRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_fieldAccessorTable = new
+    internal_static_SaveDashboardRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_SaveDashboardRequest_descriptor,
+        internal_static_SaveDashboardRequest_descriptor,
         new java.lang.String[] { "Dashboard", });
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_descriptor =
+    internal_static_DeleteDashboardRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_fieldAccessorTable = new
+    internal_static_DeleteDashboardRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_descriptor,
+        internal_static_DeleteDashboardRequest_descriptor,
         new java.lang.String[] { "Path", });
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_UpdateDashboardRequest_descriptor =
+    internal_static_UpdateDashboardRequest_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_UpdateDashboardRequest_fieldAccessorTable = new
+    internal_static_UpdateDashboardRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_UpdateDashboardRequest_descriptor,
+        internal_static_UpdateDashboardRequest_descriptor,
         new java.lang.String[] { "Dashboard", });
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_descriptor =
+    internal_static_Dashboard_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_fieldAccessorTable = new
+    internal_static_Dashboard_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Dashboard_descriptor,
+        internal_static_Dashboard_descriptor,
         new java.lang.String[] { "IconName", "Name", "Path", "Cards", });
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Card_descriptor =
+    internal_static_Card_descriptor =
       getDescriptor().getMessageTypes().get(5);
-    internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Card_fieldAccessorTable = new
+    internal_static_Card_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_Card_descriptor,
+        internal_static_Card_descriptor,
         new java.lang.String[] { "X", "Y", "Width", "Height", "Index", "Config", });
     descriptor.resolveAllFeaturesImmutable();
     org.yamcs.api.AnnotationsProto.getDescriptor();
     org.yamcs.api.HttpBodyProto.getDescriptor();
+    com.google.protobuf.EmptyProto.getDescriptor();
     com.google.protobuf.ExtensionRegistry registry =
         com.google.protobuf.ExtensionRegistry.newInstance();
+    registry.add(org.yamcs.api.AnnotationsProto.label);
     registry.add(org.yamcs.api.AnnotationsProto.route);
     com.google.protobuf.Descriptors.FileDescriptor
         .internalUpdateFileDescriptor(descriptor, registry);

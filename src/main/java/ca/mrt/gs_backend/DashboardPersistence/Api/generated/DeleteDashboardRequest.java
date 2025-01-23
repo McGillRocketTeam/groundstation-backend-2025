@@ -3,14 +3,14 @@
 // source: Protobuf/Dashboards.proto
 // Protobuf Java Version: 4.29.3
 
-package generated;
+package ca.mrt.gs_backend.DashboardPersistence.Api.generated;
 
 /**
- * Protobuf type {@code ca.mrt.gs_backend.DashboardPersistence.Api.DeleteDashboardRequest}
+ * Protobuf type {@code DeleteDashboardRequest}
  */
 public final class DeleteDashboardRequest extends
     com.google.protobuf.GeneratedMessage implements
-    // @@protoc_insertion_point(message_implements:ca.mrt.gs_backend.DashboardPersistence.Api.DeleteDashboardRequest)
+    // @@protoc_insertion_point(message_implements:DeleteDashboardRequest)
     DeleteDashboardRequestOrBuilder {
 private static final long serialVersionUID = 0L;
   static {
@@ -32,15 +32,15 @@ private static final long serialVersionUID = 0L;
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_descriptor;
+    return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_DeleteDashboardRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_fieldAccessorTable
+    return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_DeleteDashboardRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            generated.DeleteDashboardRequest.class, generated.DeleteDashboardRequest.Builder.class);
+            ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest.class, ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest.Builder.class);
   }
 
   private int bitField0_;
@@ -136,10 +136,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof generated.DeleteDashboardRequest)) {
+    if (!(obj instanceof ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest)) {
       return super.equals(obj);
     }
-    generated.DeleteDashboardRequest other = (generated.DeleteDashboardRequest) obj;
+    ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest other = (ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest) obj;
 
     if (hasPath() != other.hasPath()) return false;
     if (hasPath()) {
@@ -166,44 +166,44 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static generated.DeleteDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static generated.DeleteDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static generated.DeleteDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static generated.DeleteDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static generated.DeleteDashboardRequest parseFrom(byte[] data)
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static generated.DeleteDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static generated.DeleteDashboardRequest parseFrom(java.io.InputStream input)
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static generated.DeleteDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -211,26 +211,26 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public static generated.DeleteDashboardRequest parseDelimitedFrom(java.io.InputStream input)
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static generated.DeleteDashboardRequest parseDelimitedFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static generated.DeleteDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static generated.DeleteDashboardRequest parseFrom(
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -243,7 +243,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(generated.DeleteDashboardRequest prototype) {
+  public static Builder newBuilder(ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -259,26 +259,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code ca.mrt.gs_backend.DashboardPersistence.Api.DeleteDashboardRequest}
+   * Protobuf type {@code DeleteDashboardRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:ca.mrt.gs_backend.DashboardPersistence.Api.DeleteDashboardRequest)
-      generated.DeleteDashboardRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:DeleteDashboardRequest)
+      ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_descriptor;
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_DeleteDashboardRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_fieldAccessorTable
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_DeleteDashboardRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              generated.DeleteDashboardRequest.class, generated.DeleteDashboardRequest.Builder.class);
+              ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest.class, ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest.Builder.class);
     }
 
-    // Construct using generated.DeleteDashboardRequest.newBuilder()
+    // Construct using ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest.newBuilder()
     private Builder() {
 
     }
@@ -299,17 +299,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return generated.DashboardsProto.internal_static_ca_mrt_gs_backend_DashboardPersistence_Api_DeleteDashboardRequest_descriptor;
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardsProto.internal_static_DeleteDashboardRequest_descriptor;
     }
 
     @java.lang.Override
-    public generated.DeleteDashboardRequest getDefaultInstanceForType() {
-      return generated.DeleteDashboardRequest.getDefaultInstance();
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest getDefaultInstanceForType() {
+      return ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest.getDefaultInstance();
     }
 
     @java.lang.Override
-    public generated.DeleteDashboardRequest build() {
-      generated.DeleteDashboardRequest result = buildPartial();
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest build() {
+      ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -317,14 +317,14 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public generated.DeleteDashboardRequest buildPartial() {
-      generated.DeleteDashboardRequest result = new generated.DeleteDashboardRequest(this);
+    public ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest buildPartial() {
+      ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest result = new ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest(this);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartial0(generated.DeleteDashboardRequest result) {
+    private void buildPartial0(ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest result) {
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -336,16 +336,16 @@ private static final long serialVersionUID = 0L;
 
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof generated.DeleteDashboardRequest) {
-        return mergeFrom((generated.DeleteDashboardRequest)other);
+      if (other instanceof ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest) {
+        return mergeFrom((ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(generated.DeleteDashboardRequest other) {
-      if (other == generated.DeleteDashboardRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest other) {
+      if (other == ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest.getDefaultInstance()) return this;
       if (other.hasPath()) {
         path_ = other.path_;
         bitField0_ |= 0x00000001;
@@ -482,16 +482,16 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    // @@protoc_insertion_point(builder_scope:ca.mrt.gs_backend.DashboardPersistence.Api.DeleteDashboardRequest)
+    // @@protoc_insertion_point(builder_scope:DeleteDashboardRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:ca.mrt.gs_backend.DashboardPersistence.Api.DeleteDashboardRequest)
-  private static final generated.DeleteDashboardRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:DeleteDashboardRequest)
+  private static final ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new generated.DeleteDashboardRequest();
+    DEFAULT_INSTANCE = new ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest();
   }
 
-  public static generated.DeleteDashboardRequest getDefaultInstance() {
+  public static ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
@@ -527,7 +527,7 @@ private static final long serialVersionUID = 0L;
   }
 
   @java.lang.Override
-  public generated.DeleteDashboardRequest getDefaultInstanceForType() {
+  public ca.mrt.gs_backend.DashboardPersistence.Api.generated.DeleteDashboardRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

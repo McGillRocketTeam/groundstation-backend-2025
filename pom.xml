@@ -62,6 +62,13 @@
           <version>1.18.30</version>
           <scope>provided</scope>
       </dependency>
+    <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>3.24.3</version>
+    </dependency>
+
 
   </dependencies>
 
@@ -106,6 +113,15 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.xolstice.maven.plugins</groupId>
+        <artifactId>protobuf-maven-plugin</artifactId>
+        <version>0.6.1</version>
+        <configuration>
+          <protocArtifact>com.google.protobuf:protoc:3.24.3:exe:${os.detected.classifier}</protocArtifact>
+          <pluginId>java</pluginId>
+        </configuration>
       </plugin>
     </plugins>
   </build>

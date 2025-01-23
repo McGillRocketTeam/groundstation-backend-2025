@@ -3,9 +3,9 @@
 // source: Protobuf/Dashboards.proto
 // Protobuf Java Version: 4.29.3
 
-package generated;
+package ca.mrt.gs_backend.DashboardPersistence.Api.generated;
 
 public interface GetAllDashboardsRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:ca.mrt.gs_backend.DashboardPersistence.Api.GetAllDashboardsRequest)
+    // @@protoc_insertion_point(interface_extends:GetAllDashboardsRequest)
     com.google.protobuf.MessageOrBuilder {
 }
