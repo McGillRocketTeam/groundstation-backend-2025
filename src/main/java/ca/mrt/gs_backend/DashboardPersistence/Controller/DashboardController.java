@@ -19,9 +19,13 @@ public class DashboardController {
 
     public void updateDashboard(String oldPath, HashMap<String, Object> dashboard) {dashboardService.updateDashboard(oldPath, dashboard);}
 
-    public List<HashMap<String, Object>> getAllDashboards() {return dashboardService.getAllDashboards();}
+    public String getAllDashboards() {return dashboardService.getArrayAsJson(dashboardService.getAllDashboards());}
 
-    public HashMap<String, Object> getDashboard(String path) {return dashboardService.getDashboard(path);}
+    public String getDashboard(String path) {return dashboardService.getAsJson(dashboardService.getDashboard(path));}
+
+    public void init(){
+        dashboardService.init();
+    }
 
 
 

@@ -3,6 +3,7 @@ package ca.mrt.gs_backend.DashboardPersistence.Services;
 import ca.mrt.gs_backend.DashboardPersistence.Models.Card;
 import ca.mrt.gs_backend.DashboardPersistence.Models.Dashboard;
 import ca.mrt.gs_backend.DashboardPersistence.MongoHandler;
+import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
 import org.bson.Document;
@@ -43,6 +44,16 @@ public class DashboardService {
                 .toList();
         map.put("layout", layout);
         return map;
+    }
+
+    public String getAsJson(HashMap<String, Object> map) {
+        Gson gson = new Gson();
+        return gson.toJson(map);
+    }
+
+    public String getArrayAsJson(List<HashMap<String, Object>> list) {
+        Gson gson = new Gson();
+        return gson.toJson(list);
     }
 
 
