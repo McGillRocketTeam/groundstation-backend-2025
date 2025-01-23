@@ -23,4 +23,21 @@ public interface UpdateDashboardRequestOrBuilder extends
    * <code>required .Dashboard dashboard = 1;</code>
    */
   ca.mrt.gs_backend.DashboardPersistence.Api.generated.DashboardOrBuilder getDashboardOrBuilder();
+
+  /**
+   * <code>required string oldPath = 2;</code>
+   * @return Whether the oldPath field is set.
+   */
+  boolean hasOldPath();
+  /**
+   * <code>required string oldPath = 2;</code>
+   * @return The oldPath.
+   */
+  java.lang.String getOldPath();
+  /**
+   * <code>required string oldPath = 2;</code>
+   * @return The bytes for oldPath.
+   */
+  com.google.protobuf.ByteString
+      getOldPathBytes();
 }

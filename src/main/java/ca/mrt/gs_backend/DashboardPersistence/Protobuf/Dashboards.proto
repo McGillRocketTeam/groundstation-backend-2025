@@ -54,6 +54,7 @@ message DeleteDashboardRequest {
 
 message UpdateDashboardRequest {
   required Dashboard dashboard = 1;
+  required string oldPath = 2;
 }
 
 // Schemas

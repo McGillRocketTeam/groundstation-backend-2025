@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DashboardController {
 
-    DashboardService dashboardService = new DashboardService();
+    public DashboardService dashboardService = new DashboardService();
     private static final Log log = new Log(DashboardController.class);
 
     public void saveDashboard(HashMap<String, Object> dashboard) {dashboardService.saveDashboard(dashboardService.createDashboard(dashboard));}

@@ -25,6 +25,7 @@ COPY --from=builder /usr/local/lib /usr/local/lib
 COPY --from=builder /usr/local/include /usr/local/include
 COPY --from=builder /usr/local/share /usr/local/share
 COPY --from=builder /etc/ld.so.conf /etc/ld.so.conf
+
 RUN ldconfig
 
 COPY --from=builder /yamcs/target/*.tar.gz gs_backend.tar.gz

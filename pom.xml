@@ -66,7 +66,17 @@
     <dependency>
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
-      <version>4.26.0</version>
+      <version>4.29.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java-util</artifactId>
+      <version>4.29.3</version>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-protobuf</artifactId>
+      <version>1.69.1</version>
     </dependency>
 
 
@@ -115,12 +125,16 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.xolstice.maven.plugins</groupId>
-        <artifactId>protobuf-maven-plugin</artifactId>
-        <version>0.6.1</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.2</version>
         <configuration>
-          <protocArtifact>com.google.protobuf:protoc:4.26.0:exe:${os.detected.classifier}</protocArtifact>
-          <pluginId>java</pluginId>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>ca.mrt.gs_backend.DashboardPersistence.DashboardPlugin</mainClass>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
     </plugins>

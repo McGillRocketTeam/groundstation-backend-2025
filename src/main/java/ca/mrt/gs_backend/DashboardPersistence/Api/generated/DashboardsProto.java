@@ -70,25 +70,25 @@ public final class DashboardsProto {
       "o\"\031\n\027GetAllDashboardsRequest\"5\n\024SaveDash" +
       "boardRequest\022\035\n\tdashboard\030\001 \002(\0132\n.Dashbo" +
       "ard\"&\n\026DeleteDashboardRequest\022\014\n\004path\030\001 " +
-      "\002(\t\"7\n\026UpdateDashboardRequest\022\035\n\tdashboa" +
-      "rd\030\001 \002(\0132\n.Dashboard\"O\n\tDashboard\022\020\n\010ico" +
-      "nName\030\001 \002(\t\022\014\n\004name\030\002 \002(\t\022\014\n\004path\030\003 \002(\t\022" +
-      "\024\n\005cards\030\004 \003(\0132\005.Card\"Z\n\004Card\022\t\n\001x\030\001 \002(\005" +
-      "\022\t\n\001y\030\002 \002(\005\022\r\n\005width\030\003 \002(\005\022\016\n\006height\030\004 \002" +
-      "(\005\022\r\n\005index\030\005 \002(\t\022\016\n\006config\030\006 \002(\t2\250\003\n\014Da" +
-      "shboardApi\022X\n\020GetAllDashboards\022\030.GetAllD" +
-      "ashboardsRequest\032\023.yamcs.api.HttpBody\"\025\212" +
-      "\222\003\021\n\017/api/dashboards\022d\n\rSaveDashboard\022\025." +
-      "SaveDashboardRequest\032\023.yamcs.api.HttpBod" +
-      "y\"\'\212\222\003#\032!/api/dashboards/{dashboardPath*" +
-      "*}\022c\n\017DeleteDashboard\022\027.DeleteDashboardR" +
-      "equest\032\026.google.protobuf.Empty\"\037\212\222\003\033\"\031/a" +
-      "pi/dashboards/dashboard\022`\n\017UpdateDashboa" +
-      "rd\022\027.UpdateDashboardRequest\032\023.yamcs.api." +
-      "HttpBody\"\037\212\222\003\033\022\031/api/dashboards/dashboar" +
-      "d\032\021\202\200\001\rDashboardsAPIBI\n4ca.mrt.gs_backen" +
-      "d.DashboardPersistence.Api.generatedB\017Da" +
-      "shboardsProtoP\001"
+      "\002(\t\"H\n\026UpdateDashboardRequest\022\035\n\tdashboa" +
+      "rd\030\001 \002(\0132\n.Dashboard\022\017\n\007oldPath\030\002 \002(\t\"O\n" +
+      "\tDashboard\022\020\n\010iconName\030\001 \002(\t\022\014\n\004name\030\002 \002" +
+      "(\t\022\014\n\004path\030\003 \002(\t\022\024\n\005cards\030\004 \003(\0132\005.Card\"Z" +
+      "\n\004Card\022\t\n\001x\030\001 \002(\005\022\t\n\001y\030\002 \002(\005\022\r\n\005width\030\003 " +
+      "\002(\005\022\016\n\006height\030\004 \002(\005\022\r\n\005index\030\005 \002(\t\022\016\n\006co" +
+      "nfig\030\006 \002(\t2\250\003\n\014DashboardApi\022X\n\020GetAllDas" +
+      "hboards\022\030.GetAllDashboardsRequest\032\023.yamc" +
+      "s.api.HttpBody\"\025\212\222\003\021\n\017/api/dashboards\022d\n" +
+      "\rSaveDashboard\022\025.SaveDashboardRequest\032\023." +
+      "yamcs.api.HttpBody\"\'\212\222\003#\032!/api/dashboard" +
+      "s/{dashboardPath**}\022c\n\017DeleteDashboard\022\027" +
+      ".DeleteDashboardRequest\032\026.google.protobu" +
+      "f.Empty\"\037\212\222\003\033\"\031/api/dashboards/dashboard" +
+      "\022`\n\017UpdateDashboard\022\027.UpdateDashboardReq" +
+      "uest\032\023.yamcs.api.HttpBody\"\037\212\222\003\033\022\031/api/da" +
+      "shboards/dashboard\032\021\202\200\001\rDashboardsAPIBI\n" +
+      "4ca.mrt.gs_backend.DashboardPersistence." +
+      "Api.generatedB\017DashboardsProtoP\001"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -120,7 +120,7 @@ public final class DashboardsProto {
     internal_static_UpdateDashboardRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_UpdateDashboardRequest_descriptor,
-        new java.lang.String[] { "Dashboard", });
+        new java.lang.String[] { "Dashboard", "OldPath", });
     internal_static_Dashboard_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_Dashboard_fieldAccessorTable = new

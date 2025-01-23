@@ -27,6 +27,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private UpdateDashboardRequest() {
+    oldPath_ = "";
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
@@ -69,6 +70,55 @@ private static final long serialVersionUID = 0L;
     return dashboard_ == null ? ca.mrt.gs_backend.DashboardPersistence.Api.generated.Dashboard.getDefaultInstance() : dashboard_;
   }
 
+  public static final int OLDPATH_FIELD_NUMBER = 2;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object oldPath_ = "";
+  /**
+   * <code>required string oldPath = 2;</code>
+   * @return Whether the oldPath field is set.
+   */
+  @java.lang.Override
+  public boolean hasOldPath() {
+    return ((bitField0_ & 0x00000002) != 0);
+  }
+  /**
+   * <code>required string oldPath = 2;</code>
+   * @return The oldPath.
+   */
+  @java.lang.Override
+  public java.lang.String getOldPath() {
+    java.lang.Object ref = oldPath_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      if (bs.isValidUtf8()) {
+        oldPath_ = s;
+      }
+      return s;
+    }
+  }
+  /**
+   * <code>required string oldPath = 2;</code>
+   * @return The bytes for oldPath.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getOldPathBytes() {
+    java.lang.Object ref = oldPath_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      oldPath_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -77,6 +127,10 @@ private static final long serialVersionUID = 0L;
     if (isInitialized == 0) return false;
 
     if (!hasDashboard()) {
+      memoizedIsInitialized = 0;
+      return false;
+    }
+    if (!hasOldPath()) {
       memoizedIsInitialized = 0;
       return false;
     }
@@ -94,6 +148,9 @@ private static final long serialVersionUID = 0L;
     if (((bitField0_ & 0x00000001) != 0)) {
       output.writeMessage(1, getDashboard());
     }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 2, oldPath_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -106,6 +163,9 @@ private static final long serialVersionUID = 0L;
     if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(1, getDashboard());
+    }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(2, oldPath_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -127,6 +187,11 @@ private static final long serialVersionUID = 0L;
       if (!getDashboard()
           .equals(other.getDashboard())) return false;
     }
+    if (hasOldPath() != other.hasOldPath()) return false;
+    if (hasOldPath()) {
+      if (!getOldPath()
+          .equals(other.getOldPath())) return false;
+    }
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -141,6 +206,10 @@ private static final long serialVersionUID = 0L;
     if (hasDashboard()) {
       hash = (37 * hash) + DASHBOARD_FIELD_NUMBER;
       hash = (53 * hash) + getDashboard().hashCode();
+    }
+    if (hasOldPath()) {
+      hash = (37 * hash) + OLDPATH_FIELD_NUMBER;
+      hash = (53 * hash) + getOldPath().hashCode();
     }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
@@ -284,6 +353,7 @@ private static final long serialVersionUID = 0L;
         dashboardBuilder_.dispose();
         dashboardBuilder_ = null;
       }
+      oldPath_ = "";
       return this;
     }
 
@@ -324,6 +394,10 @@ private static final long serialVersionUID = 0L;
             : dashboardBuilder_.build();
         to_bitField0_ |= 0x00000001;
       }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.oldPath_ = oldPath_;
+        to_bitField0_ |= 0x00000002;
+      }
       result.bitField0_ |= to_bitField0_;
     }
 
@@ -342,6 +416,11 @@ private static final long serialVersionUID = 0L;
       if (other.hasDashboard()) {
         mergeDashboard(other.getDashboard());
       }
+      if (other.hasOldPath()) {
+        oldPath_ = other.oldPath_;
+        bitField0_ |= 0x00000002;
+        onChanged();
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -350,6 +429,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public final boolean isInitialized() {
       if (!hasDashboard()) {
+        return false;
+      }
+      if (!hasOldPath()) {
         return false;
       }
       if (!getDashboard().isInitialized()) {
@@ -381,6 +463,11 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000001;
               break;
             } // case 10
+            case 18: {
+              oldPath_ = input.readBytes();
+              bitField0_ |= 0x00000002;
+              break;
+            } // case 18
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -517,6 +604,86 @@ private static final long serialVersionUID = 0L;
         dashboard_ = null;
       }
       return dashboardBuilder_;
+    }
+
+    private java.lang.Object oldPath_ = "";
+    /**
+     * <code>required string oldPath = 2;</code>
+     * @return Whether the oldPath field is set.
+     */
+    public boolean hasOldPath() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <code>required string oldPath = 2;</code>
+     * @return The oldPath.
+     */
+    public java.lang.String getOldPath() {
+      java.lang.Object ref = oldPath_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          oldPath_ = s;
+        }
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>required string oldPath = 2;</code>
+     * @return The bytes for oldPath.
+     */
+    public com.google.protobuf.ByteString
+        getOldPathBytes() {
+      java.lang.Object ref = oldPath_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        oldPath_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>required string oldPath = 2;</code>
+     * @param value The oldPath to set.
+     * @return This builder for chaining.
+     */
+    public Builder setOldPath(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      oldPath_ = value;
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>required string oldPath = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearOldPath() {
+      oldPath_ = getDefaultInstance().getOldPath();
+      bitField0_ = (bitField0_ & ~0x00000002);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>required string oldPath = 2;</code>
+     * @param value The bytes for oldPath to set.
+     * @return This builder for chaining.
+     */
+    public Builder setOldPathBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      oldPath_ = value;
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return this;
     }
 
     // @@protoc_insertion_point(builder_scope:UpdateDashboardRequest)
