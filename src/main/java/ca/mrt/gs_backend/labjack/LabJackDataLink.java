@@ -4,6 +4,8 @@ import com.sun.jna.ptr.IntByReference;
 import libs.LJM;
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
+import org.yamcs.YamcsServer;
+import org.yamcs.cmdhistory.CommandHistoryPublisher;
 import org.yamcs.commanding.ArgumentValue;
 import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.mdb.Mdb;
@@ -316,7 +318,7 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
     public boolean sendCommand(PreparedCommand preparedCommand) {
         if(!isConnected){
             log.warn("Attempting to send LabJack commands while not being connected to a LabJack");
-            return false;
+//            return false;
         }
         var arguments = preparedCommand.getArgAssignment();
         int pinNum = -1;
@@ -329,6 +331,9 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
             }
         }
 
+        var ackPublisher = YamcsServer.getServer().getProcessor("gs_backend", "realtime").getCommandHistoryPublisher();
+        ackPublisher.publishAck(preparedCommand.getCommandId(), "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+
         if(preparedCommand.getCommandName().endsWith("write_digital_pin")){
             LabJackUtil.setDigitalPin(deviceHandle, pinNum, ((int) valueToWrite.getEngValue().getSint64Value()));
             log.info("Wrote: " + valueToWrite + " to digital pin " + pinNum);
@@ -336,6 +341,7 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
             LabJackUtil.setDACPin(deviceHandle, pinNum, valueToWrite.getEngValue().getFloatValue());
             log.info("Wrote: " + valueToWrite + " to DAC pin " + pinNum);
         }
+
         return true;
     }
 }
