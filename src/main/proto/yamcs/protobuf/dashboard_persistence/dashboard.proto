@@ -3,7 +3,7 @@ syntax = "proto2";
 package yamcs.protobuf.prometheus;
 
 option java_package = "ca.mrt.dashboard_persistence.api";
-option java_outer_classname = "PrometheusProto";
+option java_outer_classname = "DashboardProto";
 option java_multiple_files = true;
 
 import "yamcs/api/annotations.proto";
