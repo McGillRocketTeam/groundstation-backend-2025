@@ -1,8 +1,6 @@
-package ca.mrt.gs_backend.DashboardPersistence.Services;
+package ca.mrt.dashboard_persistence.services;
 
-import ca.mrt.gs_backend.DashboardPersistence.Models.Card;
-import com.google.gson.JsonObject;
-import netscape.javascript.JSObject;
+import ca.mrt.dashboard_persistence.models.Card;
 
 import java.util.HashMap;
 

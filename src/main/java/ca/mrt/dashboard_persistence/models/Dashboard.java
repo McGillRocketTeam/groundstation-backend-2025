@@ -1,4 +1,4 @@
-package ca.mrt.gs_backend.DashboardPersistence.Models;
+package ca.mrt.dashboard_persistence.models;
 
 import lombok.Data;
 

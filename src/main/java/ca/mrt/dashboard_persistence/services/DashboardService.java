@@ -1,8 +1,8 @@
-package ca.mrt.gs_backend.DashboardPersistence.Services;
+package ca.mrt.dashboard_persistence.services;
 
-import ca.mrt.gs_backend.DashboardPersistence.Models.Card;
-import ca.mrt.gs_backend.DashboardPersistence.Models.Dashboard;
-import ca.mrt.gs_backend.DashboardPersistence.MongoHandler;
+import ca.mrt.dashboard_persistence.MongoHandler;
+import ca.mrt.dashboard_persistence.models.Card;
+import ca.mrt.dashboard_persistence.models.Dashboard;
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
@@ -11,7 +11,6 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;

@@ -1,10 +1,9 @@
-package ca.mrt.gs_backend.DashboardPersistence.Controller;
+package ca.mrt.dashboard_persistence.controller;
 
-import ca.mrt.gs_backend.DashboardPersistence.Services.DashboardService;
+import ca.mrt.dashboard_persistence.services.DashboardService;
 import org.yamcs.logging.Log;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class DashboardController {
 
@@ -26,7 +25,5 @@ public class DashboardController {
     public void init(){
         dashboardService.init();
     }
-
-
 
 }

@@ -1,19 +1,21 @@
-package ca.mrt.gs_backend.DashboardPersistence.Api;
+package ca.mrt.dashboard_persistence;
 
-
-import ca.mrt.gs_backend.DashboardPersistence.Api.generated.*;
-import ca.mrt.gs_backend.DashboardPersistence.Controller.DashboardController;
+import ca.mrt.dashboard_persistence.api.*;
+import ca.mrt.dashboard_persistence.controller.DashboardController;
+import ca.mrt.dashboard_persistence.models.Card;
+import ca.mrt.dashboard_persistence.models.Dashboard;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.Empty;
 import org.yamcs.api.HttpBody;
 import org.yamcs.api.Observer;
 import org.yamcs.http.Context;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-
-public class DashboardApi extends AbstractDashboardAPI<Context> {
+/**
+ * Responds to HTTP requests with current metrics in any of the Prometheus exposition formats.
+ */
+public class DashboardApi extends AbstractDashboardApi<Context> {
     DashboardController controller;
 
     public DashboardApi() {
@@ -22,7 +24,7 @@ public class DashboardApi extends AbstractDashboardAPI<Context> {
     }
 
     @Override
-    public void getAllDashboards(GetAllDashboardsRequest request, Observer<HttpBody> observer) {
+    public void getAllDashboards(Context ctx, GetAllDashboardsRequest request, Observer<HttpBody> observer) {
         String dashboards = controller.getAllDashboards();
         ByteString data = ByteString.copyFromUtf8(dashboards);
         HttpBody response = HttpBody.newBuilder()
@@ -33,8 +35,8 @@ public class DashboardApi extends AbstractDashboardAPI<Context> {
     }
 
     @Override
-    public void saveDashboard(SaveDashboardRequest request, Observer<HttpBody> observer) {
-        Dashboard dashboard = request.getDashboard();
+    public void saveDashboard(Context ctx, SaveDashboardRequest request, Observer<HttpBody> observer) {
+        ca.mrt.dashboard_persistence.api.Dashboard dashboard = request.getDashboard();
         controller.saveDashboard(controller.dashboardService.getDashboardAsMap(DashboardFromProto(dashboard)));
         String dashboards = controller.getAllDashboards();
         ByteString data = ByteString.copyFromUtf8(dashboards);
@@ -46,9 +48,9 @@ public class DashboardApi extends AbstractDashboardAPI<Context> {
     }
 
     @Override
-    public void updateDashboard(UpdateDashboardRequest request, Observer<HttpBody> observer) {
+    public void updateDashboard(Context ctx, UpdateDashboardRequest request, Observer<HttpBody> observer) {
         String oldPath = request.getOldPath();
-        Dashboard dashboard = request.getDashboard();
+        ca.mrt.dashboard_persistence.api.Dashboard dashboard = request.getDashboard();
         controller.updateDashboard(oldPath, controller.dashboardService.getDashboardAsMap(DashboardFromProto(dashboard)));
         String dashboards = controller.getAllDashboards();
         ByteString data = ByteString.copyFromUtf8(dashboards);
@@ -60,7 +62,7 @@ public class DashboardApi extends AbstractDashboardAPI<Context> {
     }
 
     @Override
-    public void deleteDashboard(DeleteDashboardRequest request, Observer<HttpBody> observer) {
+    public void deleteDashboard(Context ctx, DeleteDashboardRequest request, Observer<Empty> observer) {
         controller.deleteDashboard(request.getPath());
         String dashboards = controller.getAllDashboards();
         ByteString data = ByteString.copyFromUtf8(dashboards);
@@ -68,20 +70,21 @@ public class DashboardApi extends AbstractDashboardAPI<Context> {
                 .setContentType("application/json")
                 .setData(data)
                 .build();
-        observer.complete(response);
+        observer.complete(Empty.getDefaultInstance());
     }
 
-    public ca.mrt.gs_backend.DashboardPersistence.Models.Dashboard DashboardFromProto(Dashboard dashboard) {
-        ca.mrt.gs_backend.DashboardPersistence.Models.Dashboard dashboardModel = new ca.mrt.gs_backend.DashboardPersistence.Models.Dashboard();
+    public Dashboard DashboardFromProto(ca.mrt.dashboard_persistence.api.Dashboard dashboard) {
+        Dashboard dashboardModel = new Dashboard();
         dashboardModel.setName(dashboard.getName());
         dashboardModel.setIconName(dashboard.getIconName());
         dashboardModel.setPath(dashboard.getPath());
-        List<ca.mrt.gs_backend.DashboardPersistence.Models.Card> cardList = dashboard.getCardsList().stream().map(card -> CardFromProto(card)).toList();
+        List<Card> cardList = dashboard.getCardsList().stream().map(this::CardFromProto).toList();
+        dashboardModel.setLayout(cardList);
         return dashboardModel;
     }
 
-    public ca.mrt.gs_backend.DashboardPersistence.Models.Card CardFromProto(Card card) {
-        ca.mrt.gs_backend.DashboardPersistence.Models.Card cardModel = new ca.mrt.gs_backend.DashboardPersistence.Models.Card();
+    public Card CardFromProto(ca.mrt.dashboard_persistence.api.Card card) {
+        Card cardModel = new Card();
         cardModel.setIndex(card.getIndex());
         cardModel.setHeight(card.getHeight());
         cardModel.setWidth(card.getWidth());

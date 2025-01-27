@@ -1,7 +1,6 @@
-package ca.mrt.gs_backend.DashboardPersistence.Models;
-import lombok.Data;
+package ca.mrt.dashboard_persistence.models;
 
-import java.util.HashMap;
+import lombok.Data;
 
 
 @Data

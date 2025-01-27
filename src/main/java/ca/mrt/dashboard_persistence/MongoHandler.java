@@ -1,7 +1,5 @@
-package ca.mrt.gs_backend.DashboardPersistence;
+package ca.mrt.dashboard_persistence;
 
-
-import com.mongodb.Mongo;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;

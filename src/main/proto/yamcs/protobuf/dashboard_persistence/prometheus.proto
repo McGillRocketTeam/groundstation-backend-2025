@@ -1,22 +1,23 @@
 syntax = "proto2";
 
-option java_package = "ca.mrt.gs_backend.DashboardPersistence.Api.generated";
-option java_outer_classname = "DashboardsProto";
+package yamcs.protobuf.prometheus;
+
+option java_package = "ca.mrt.dashboard_persistence.api";
+option java_outer_classname = "PrometheusProto";
 option java_multiple_files = true;
 
-import "Protobuf/yamcs/annotations.proto";
-import "Protobuf/yamcs/httpbody.proto";
+import "yamcs/api/annotations.proto";
+import "yamcs/api/httpbody.proto";
 import "google/protobuf/empty.proto";
-
 
 service DashboardApi {
 
   option (yamcs.api.label) = "DashboardsAPI";
   // Retrieves all dashboards
   rpc GetAllDashboards(GetAllDashboardsRequest) returns (yamcs.api.HttpBody) {
-        option (yamcs.api.route) = {
-        get: "/api/dashboards"
-      };
+    option (yamcs.api.route) = {
+      get: "/api/dashboards"
+    };
   }
 
   rpc SaveDashboard(SaveDashboardRequest) returns (yamcs.api.HttpBody)  {
