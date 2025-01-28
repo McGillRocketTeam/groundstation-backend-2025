@@ -12,9 +12,6 @@ import org.yamcs.http.Context;
 
 import java.util.List;
 
-/**
- * Responds to HTTP requests with current metrics in any of the Prometheus exposition formats.
- */
 public class DashboardApi extends AbstractDashboardApi<Context> {
     DashboardController controller;
 
@@ -24,7 +21,7 @@ public class DashboardApi extends AbstractDashboardApi<Context> {
     }
 
     @Override
-    public void getAllDashboards(Context ctx, GetAllDashboardsRequest request, Observer<HttpBody> observer) {
+    public void getAllDashboards(Context ctx, Empty request, Observer<HttpBody> observer) {
         String dashboards = controller.getAllDashboards();
         ByteString data = ByteString.copyFromUtf8(dashboards);
         HttpBody response = HttpBody.newBuilder()

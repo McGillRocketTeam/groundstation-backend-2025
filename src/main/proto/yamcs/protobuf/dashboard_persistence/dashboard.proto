@@ -14,7 +14,7 @@ service DashboardApi {
 
   option (yamcs.api.label) = "DashboardsAPI";
   // Retrieves all dashboards
-  rpc GetAllDashboards(GetAllDashboardsRequest) returns (yamcs.api.HttpBody) {
+  rpc GetAllDashboards(google.protobuf.Empty) returns (yamcs.api.HttpBody) {
     option (yamcs.api.route) = {
       get: "/api/dashboards"
     };
@@ -37,11 +37,6 @@ service DashboardApi {
       put: "/api/dashboards/dashboard"
     };
   }
-
-}
-
-// Request message for GetAllDashboards
-message GetAllDashboardsRequest {
 
 }
 

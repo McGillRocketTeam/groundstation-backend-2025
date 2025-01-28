@@ -95,10 +95,7 @@
             <configuration>
               <writeDescriptorSet>true</writeDescriptorSet>
               <descriptorSetOutputDirectory>${project.build.directory}/generated-resources/protobuf</descriptorSetOutputDirectory>
-              <!-- Include imports and source information -->
               <descriptorSetFileName>${project.artifactId}.protobin</descriptorSetFileName>
-              <includeDependenciesInDescriptorSet>true</includeDependenciesInDescriptorSet>
-              <includeSourceInfoInDescriptorSet>true</includeSourceInfoInDescriptorSet>
             </configuration>
           </execution>
           <!-- Tell Maven to bundle Yamcs into a tar.gz file
