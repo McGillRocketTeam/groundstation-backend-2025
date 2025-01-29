@@ -3,10 +3,11 @@ package ca.mrt.dashboard_persistence.services;
 import ca.mrt.dashboard_persistence.models.Card;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class CardService {
 
-    public Card createCardFromMap(HashMap<String, Object> map) {
+    public Card createCardFromMap(Map<String, Object> map) {
         Card card = new Card();
         card.setY(Integer.parseInt(map.get("y").toString()));
         card.setX(Integer.parseInt(map.get("x").toString()));
@@ -17,8 +18,8 @@ public class CardService {
         return card;
     }
 
-    public HashMap<String, Object> getCardAsMap(Card card) {
-        HashMap<String, Object> map = new HashMap<>();
+    public Map<String, Object> getCardAsMap(Card card) {
+        Map<String, Object> map = new HashMap<>();
         map.put("y", card.getY());
         map.put("x", card.getX());
         map.put("h", card.getHeight());

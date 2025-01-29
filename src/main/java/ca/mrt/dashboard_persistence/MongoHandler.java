@@ -6,7 +6,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class MongoHandler {
      MongoClient mongoClient = null;
@@ -36,7 +36,7 @@ public class MongoHandler {
 
     }
 
-    public Document createDocument(HashMap<String, Object> map) {
+    public Document createDocument(Map<String, Object> map) {
         return new Document(map);
     }
 

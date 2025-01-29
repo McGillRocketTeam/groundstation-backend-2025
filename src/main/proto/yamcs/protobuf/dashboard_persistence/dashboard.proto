@@ -20,17 +20,16 @@ service DashboardApi {
     };
   }
 
-  rpc SaveDashboard(SaveDashboardRequest) returns (yamcs.api.HttpBody)  {
+  rpc SaveDashboard(SaveDashboardRequest) returns (google.protobuf.Empty)  {
     option (yamcs.api.route) = {
       post: "/api/dashboards"
       body: "*"
     };
   }
 
-  rpc DeleteDashboard(DeleteDashboardRequest) returns (google.protobuf.Empty)  {
+  rpc DeleteDashboard(GetDashboardRequest) returns (google.protobuf.Empty)  {
     option (yamcs.api.route) = {
-      delete: "/api/dashboards/dashboard"
-      body: "*"
+      delete: "/api/dashboards/{dashboardPath}"
     };
   }
 
@@ -41,14 +40,20 @@ service DashboardApi {
     };
   }
 
+  rpc GetDashboard(GetDashboardRequest) returns (yamcs.api.HttpBody) {
+    option (yamcs.api.route) = {
+      get: "/api/dashboards/{dashboardPath}"
+    };
+  }
+
+}
+
+message GetDashboardRequest {
+  required string dashboardPath = 1;
 }
 
 message SaveDashboardRequest {
   required Dashboard dashboard = 1;
-}
-
-message DeleteDashboardRequest {
-  required string path = 1;
 }
 
 message UpdateDashboardRequest {
