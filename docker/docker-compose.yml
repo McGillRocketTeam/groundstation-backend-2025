@@ -1,4 +1,4 @@
-
+#may not be able to access YAMCS website with default docker settings. Fix: Open docker desktop -> navigate to settings -> resources -> networks -> enable host networking
 services:
   backend:
     image: "ghcr.io/mcgillrocketteam/groundstation-backend-2025:master"
@@ -15,9 +15,6 @@ services:
     volumes:
       - yamcs-telemetry:/yamcs/gs_backend/yamcs-data
     privileged: true
-    ports:
-      - "8090:8090"
-      - "10015:10015/udp"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     network_mode: host
@@ -42,7 +39,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: admin
+      MONGO_INITDB_DATABASE: yamcs
     volumes:
         - mongodb_data:/data/db
     networks:
