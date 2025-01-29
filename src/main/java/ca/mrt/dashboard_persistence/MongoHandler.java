@@ -15,12 +15,10 @@ public class MongoHandler {
 
 
     public MongoDatabase getDatabase(String db) {
-        if (mongoClient == null )
-        {
+        if (mongoClient == null ) {
             mongoClient = MongoClients.create("mongodb://root:root@localhost:27017/?authSource=admin");
         }
-        MongoDatabase database = mongoClient.getDatabase(db);
-        return database;
+        return mongoClient.getDatabase(db);
     }
 
     /**
