@@ -75,16 +75,16 @@ public class DashboardApi extends AbstractDashboardApi<Context> {
         dashboardModel.setName(dashboard.getName());
         dashboardModel.setIconName(dashboard.getIconName());
         dashboardModel.setPath(dashboard.getPath());
-        List<Card> cardList = dashboard.getCardsList().stream().map(this::CardFromProto).toList();
+        List<Card> cardList = dashboard.getLayoutList().stream().map(this::CardFromProto).toList();
         dashboardModel.setLayout(cardList);
         return dashboardModel;
     }
 
     public Card CardFromProto(ca.mrt.dashboard_persistence.api.Card card) {
         Card cardModel = new Card();
-        cardModel.setIndex(card.getIndex());
-        cardModel.setHeight(card.getHeight());
-        cardModel.setWidth(card.getWidth());
+        cardModel.setIndex(card.getI());
+        cardModel.setHeight(card.getH());
+        cardModel.setWidth(card.getW());
         cardModel.setY(card.getY());
         cardModel.setX(card.getX());
         cardModel.setConfig(card.getConfig());
