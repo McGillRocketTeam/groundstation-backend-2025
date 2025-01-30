@@ -39,10 +39,10 @@ dataLinks:
     port: 10025
     commandPostprocessorClassName: ca.mrt.gs_backend.MyCommandPostprocessor
 
-  - name: fc-522
+  - name: fc-903
     class: ca.mrt.gs_backend.serialcomm.FCLink
     stream: tm_flight_computers
-    frequency: "522.5"
+    frequency: "903"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: labJack

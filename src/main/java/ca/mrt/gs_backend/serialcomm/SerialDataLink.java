@@ -104,6 +104,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         });
 
         activePorts.add(serialPort.getSystemPortName());
+        currConnectedPort = serialPort;
     }
 
     private boolean processAck(String ackText){
