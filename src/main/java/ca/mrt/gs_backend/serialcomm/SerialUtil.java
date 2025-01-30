@@ -66,9 +66,8 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
             return;
         }
 
-        checkInactivePortsAgainCounter += 10;
+        checkInactivePortsAgainCounter++;
         for(SerialPort serialPort : SerialPort.getCommPorts()){
-            System.out.println(serialPort.getSystemPortName());
             if(!existingSerialPorts.contains(serialPort.getSystemPortName()) || checkInactivePortsAgainCounter > 5){
                 existingSerialPorts.add(serialPort.getSystemPortName());
 
@@ -176,8 +175,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
             Future<String> future = executor.submit(task);
 
             try {
-                String result = future.get(100, TimeUnit.MILLISECONDS); // Timeout of 2 seconds
-                System.out.println(result);
+                future.get(100, TimeUnit.MILLISECONDS); // Timeout of 2 seconds
             } catch (TimeoutException e) {
                 log.warn("Timeout: writing ping took too long");
                 future.cancel(true); // Cancel the task if it exceeds the timeout

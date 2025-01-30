@@ -41,7 +41,7 @@ dataLinks:
 
   - name: fc-903
     class: ca.mrt.gs_backend.serialcomm.FCLink
-    stream: tm_flight_computers
+    tmStream: tm_flight_computers
     frequency: "903"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
