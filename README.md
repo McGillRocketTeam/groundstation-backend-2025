@@ -1,3 +1,5 @@
+NOTE: do not clone repo into a path containing spaces
+
 # Yamcs QuickStart
 
 This repository holds the source code to start a basic Yamcs application that monitors a simulated spacecraft in low earth orbit.

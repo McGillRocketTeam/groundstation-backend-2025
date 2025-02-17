@@ -12,9 +12,7 @@ import org.yamcs.logging.Log;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 //todo look into using serialPort.getPortDescription() for logging since it gives the name of the device connected, verify this works on mac
 
@@ -64,13 +62,11 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
 
     @Override
     public void run() {
-
         if(SerialDataLink.activePorts.size() == SerialDataLink.uniqueIdentifierToLink.size()){
             return;
         }
 
         checkInactivePortsAgainCounter++;
-
         for(SerialPort serialPort : SerialPort.getCommPorts()){
             if(!existingSerialPorts.contains(serialPort.getSystemPortName()) || checkInactivePortsAgainCounter > 5){
                 existingSerialPorts.add(serialPort.getSystemPortName());
@@ -92,7 +88,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
                             + " but no serial data link exists with its unique identifier of: " + uniqueIdentifier);
                     continue;
                 }
-
+                log.info("Connecting to " + uniqueIdentifier);
                 serialDataLink.connectToPort(serialPort);
             }
         }
@@ -169,7 +165,25 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
         try {
             Thread.sleep(500); //unsure if this is necessary, test without
             byte[] pingMessage = "ping".getBytes(StandardCharsets.UTF_8);
-            serialPort.writeBytes(pingMessage, pingMessage.length);
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+
+            Callable<String> task = () -> {
+                serialPort.writeBytes(pingMessage, pingMessage.length);
+                return "Task Completed";
+            };
+
+            Future<String> future = executor.submit(task);
+
+            try {
+                future.get(100, TimeUnit.MILLISECONDS); // Timeout of 2 seconds
+            } catch (TimeoutException e) {
+                log.warn("Timeout: writing ping took too long");
+                future.cancel(true); // Cancel the task if it exceeds the timeout
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            } finally {
+                executor.shutdown();
+            }
 
             log.info("Port " + serialPort.getSystemPortName() + " pinged");
 
@@ -187,6 +201,10 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
         serialPort.removeDataListener();
         serialPort.closePort();
 
-        return uniqueIdentifier[0];
+        if(uniqueIdentifier[0] == null){
+            return null;
+        }
+
+        return uniqueIdentifier[0].split("\\.")[0];
     }
 }
