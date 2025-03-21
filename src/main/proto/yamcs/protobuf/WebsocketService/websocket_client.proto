@@ -3,7 +3,7 @@ syntax = "proto2";
 package ca.mrt.WebsocketService.api;
 
 option java_package = "ca.mrt.WebsocketService.api";
-option java_outer_classname = "WebsocketService";
+option java_outer_classname = "WebsocketProto";
 option java_multiple_files = true;
 
 import "yamcs/api/annotations.proto";
@@ -12,10 +12,29 @@ import "google/protobuf/empty.proto";
 service WebsocketLinkApi {
   option (yamcs.api.label) = "WebsocketLinkApi";
 
+  rpc Subscribe (SubscribeRequest) returns (SubscribeResponse) {
+    option (yamcs.api.websocket) = { topic: "subscribe" };
+  }
+
 
 }
 
-message LinkUpdate {
-  required string updatedData = 1;
-  required int32 linkId = 2;
+
+message SubscribeRequest {
+  required string instance = 1;
+  required string processor = 2;
+  repeated string parameter_names = 3;
+}
+
+
+message SubscribeResponse {
+  repeated ParameterValue parameter_values = 1;
+}
+
+
+message ParameterValue {
+  required string name = 1;
+  required string value = 2;
+  required int64 generation_time = 3;
+  required int64 reception_time = 4;
 }
