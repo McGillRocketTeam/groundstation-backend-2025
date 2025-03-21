@@ -29,7 +29,7 @@ public class WebsocketLinkPlugin  implements Plugin {
             throw new PluginException(e);
         }
 
-        httpServer.addApi(new WebsocketLinkApiImpl());
+        httpServer.addApi(new WebsocketLinkApiImpl(new WebsocketController()));
         log.info("Successfully added Websocket API");
     }
 }
