@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package ca.mrt.WebsocketService.api;
+
+option java_package = "ca.mrt.WebsocketService.api";
+option java_outer_classname = "WebsocketService";
+option java_multiple_files = true;
+
+import "yamcs/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service WebsocketLinkApi {
+  option (yamcs.api.label) = "WebsocketLinkApi";
+
+
+}
+
+message LinkUpdate {
+  required string updatedData = 1;
+  required int32 linkId = 2;
+}

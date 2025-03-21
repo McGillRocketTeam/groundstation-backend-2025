@@ -47,6 +47,7 @@ public class MyPacketPreprocessor extends AbstractPacketPreprocessor {
     @Override
     public TmPacket process(TmPacket packet) {
 
+
         byte[] bytes = packet.getPacket();
         if (bytes.length < 6) { // Expect at least the length of CCSDS primary header
             eventProducer.sendWarning("SHORT_PACKET",
