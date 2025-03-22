@@ -247,8 +247,14 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             log.warn("Attempting to send serial device commands while not connected to this device");
             return false;
         }
+        //TODO maybe change ackStr to be something common to all FC acks because each different string creates a different col in db?
+        String ackStr = getAckStrFromCmd(preparedCommand);
+        Commanding.CommandId prevCmdId = ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
 
-        ackStrToMostRecentCmdId.put(getAckStrFromCmd(preparedCommand), preparedCommand.getCommandId());
+        if(prevCmdId != null){
+            ackPublisher.publishAck(prevCmdId, ackStr, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
+        }
+
 
         return writePort(preparedCommand.getCommandName());
     }
