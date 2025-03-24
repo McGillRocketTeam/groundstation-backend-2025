@@ -180,12 +180,6 @@
 			</StringParameterType>
 		</ParameterTypeSet>
 		<ParameterSet>
-			<Parameter name="packet_id" parameterTypeRef="uint8" shortDescription="Packet ID number"/>
-			<Parameter name="HAM_call_sign" parameterTypeRef="callsign" shortDescription="HAM call sign"/>
-			<Parameter name="rx_tx_ratio" parameterTypeRef="uint8" shortDescription="Radio rx/tx ratio"/>
-			<Parameter name="polling_rate" parameterTypeRef="uint16_ms" shortDescription="Polling rate"/>
-			<Parameter name="time_from_sw_reset" parameterTypeRef="uint32_s" shortDescription="Time from last sofware reset"/>
-			<Parameter name="battery_voltage" parameterTypeRef="uint8_V" shortDescription="Battery Voltage"/>
 			<Parameter name="FC_RPO" parameterTypeRef="bool" shortDescription="FC RPO sense signal"/>
 			<Parameter name="drogue_armed_SW" parameterTypeRef="bool" shortDescription="Drogue: logical armed"/>
 			<Parameter name="drogue_armed_HW" parameterTypeRef="bool" shortDescription="Drogue: electrical armed"/>
@@ -218,10 +212,21 @@
 			<Parameter name="vent_energizedGate_HW" parameterTypeRef="bool" shortDescription="Vent: electrical energized gate"/>
 			<Parameter name="vent_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="Vent: electrical energized current"/>
 			<Parameter name="vent_continuity_HW" parameterTypeRef="bool" shortDescription="Vent: electrical continuity"/>
-			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi" shortDescription="Combustion chamber pressure (prop bottom)"/>
-			<Parameter name="tank_temp" parameterTypeRef="uint8_C" shortDescription="Tank temperature (prop bottom)"/>
 			<Parameter name="tank_pressure" parameterTypeRef="uint16_psi" shortDescription="Tank pressure (prop top)"/>
 			<Parameter name="vent_temp" parameterTypeRef="uint8_C" shortDescription="Vent valve temperature (prop top)"/>
+			<Parameter name="flight_stage" parameterTypeRef="flightStageType" shortDescription="Flight stage"/>
+			<Parameter name="alt_altitude" parameterTypeRef="float_ft" shortDescription="Altitude from ground (calculated from pressure)"/>
+			<Parameter name="vertical_speed" parameterTypeRef="int32_mps" shortDescription="Vertical speed"/>
+			<Parameter name="gps_latitude" parameterTypeRef="float" shortDescription="GPS latitude"/>
+			<Parameter name="gps_longitude" parameterTypeRef="float" shortDescription="GPS longitude"/>
+			<Parameter name="gps_altitude" parameterTypeRef="float" shortDescription="GPS altitude"/>
+			<Parameter name="acceleration_x" parameterTypeRef="int16_mpsps" shortDescription="Acceleration x"/>
+			<Parameter name="acceleration_y" parameterTypeRef="int16_mpsps" shortDescription="Acceleration Y"/>
+			<Parameter name="acceleration_z" parameterTypeRef="int16_mpsps" shortDescription="Acceleration Z"/>
+			<Parameter name="angle_yaw" parameterTypeRef="int16" shortDescription="Angular yaw"/>
+			<Parameter name="angle_pitch" parameterTypeRef="int16" shortDescription="Angular pitch"/>
+			<Parameter name="angle_roll" parameterTypeRef="int16" shortDescription="Angular roll"/>
+			<Parameter name="battery_voltage" parameterTypeRef="uint8_V" shortDescription="Battery Voltage"/>
 			<Parameter name="pl_ok" parameterTypeRef="bool" shortDescription="Payload: Initialized and ready"/>
 			<Parameter name="pl_sampling_state" parameterTypeRef="bool" shortDescription="Payload: Sampling state"/>
 			<Parameter name="pl_vibration_freq_x" parameterTypeRef="UNK_PAYLOAD_UNIT_HZ" shortDescription="Payload: Vibration frequency x"/>
@@ -235,29 +240,19 @@
 			<Parameter name="pl_target_temp" parameterTypeRef="UNK_PAYLOAD_UNIT_C" shortDescription="Payload: Target temerature"/>
 			<Parameter name="pl_sample_temp" parameterTypeRef="UNK_PAYLOAD_UNIT_C" shortDescription="Payload: Actual Sample temperautre"/>
 			<Parameter name="pl_battery_voltage" parameterTypeRef="uint16_V" shortDescription="Payload: Battery Voltage"/>
-			<Parameter name="flight_stage" parameterTypeRef="flightStageType" shortDescription="Flight stage"/>
-			<Parameter name="alt_altitude" parameterTypeRef="float_ft" shortDescription="Altitude from ground (calculated from pressure)"/>
-			<Parameter name="vertical_speed" parameterTypeRef="int32_mps" shortDescription="Vertical speed"/>
-			<Parameter name="gps_latitude" parameterTypeRef="float" shortDescription="GPS latitude"/>
-			<Parameter name="gps_longitude" parameterTypeRef="float" shortDescription="GPS longitude"/>
-			<Parameter name="gps_altitude" parameterTypeRef="float" shortDescription="GPS altitude"/>
+			<Parameter name="CTSFlag" parameterTypeRef="uint8" shortDescription="Clear to send"/>
+			<Parameter name="packet_id" parameterTypeRef="uint8" shortDescription="Packet ID number"/>
+			<Parameter name="HAM_call_sign" parameterTypeRef="callsign" shortDescription="HAM call sign"/>
 			<Parameter name="gps_time_last_update" parameterTypeRef="float" shortDescription="GPS time from last update"/>
-			<Parameter name="acceleration_x" parameterTypeRef="int16_mpsps" shortDescription="Acceleration x"/>
-			<Parameter name="acceleration_y" parameterTypeRef="int16_mpsps" shortDescription="Acceleration Y"/>
-			<Parameter name="acceleration_z" parameterTypeRef="int16_mpsps" shortDescription="Acceleration Z"/>
-			<Parameter name="angle_yaw" parameterTypeRef="int16" shortDescription="Angular yaw"/>
-			<Parameter name="angle_pitch" parameterTypeRef="int16" shortDescription="Angular pitch"/>
-			<Parameter name="angle_roll" parameterTypeRef="int16" shortDescription="Angular roll"/>
+			<Parameter name="tank_temp" parameterTypeRef="uint8_C" shortDescription="Tank temperature (prop bottom)"/>
+			<Parameter name="polling_rate" parameterTypeRef="uint16_ms" shortDescription="Polling rate"/>
+			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi" shortDescription="Combustion chamber pressure (prop bottom)"/>
+			<Parameter name="time_from_sw_reset" parameterTypeRef="uint32_s" shortDescription="Time from last sofware reset"/>
+			<Parameter name="rx_tx_ratio" parameterTypeRef="uint8" shortDescription="Radio rx/tx ratio"/>
 		</ParameterSet>
 		<ContainerSet>
 			<SequenceContainer name="FCPacket">
 				<EntryList>
-					<ParameterRefEntry parameterRef="packet_id" shortDescription="Packet ID number"/>
-					<ParameterRefEntry parameterRef="HAM_call_sign" shortDescription="HAM call sign"/>
-					<ParameterRefEntry parameterRef="rx_tx_ratio" shortDescription="Radio rx/tx ratio"/>
-					<ParameterRefEntry parameterRef="polling_rate" shortDescription="Polling rate"/>
-					<ParameterRefEntry parameterRef="time_from_sw_reset" shortDescription="Time from last sofware reset"/>
-					<ParameterRefEntry parameterRef="battery_voltage" shortDescription="Battery Voltage"/>
 					<ParameterRefEntry parameterRef="FC_RPO" shortDescription="FC RPO sense signal"/>
 					<ParameterRefEntry parameterRef="drogue_armed_SW" shortDescription="Drogue: logical armed"/>
 					<ParameterRefEntry parameterRef="drogue_armed_HW" shortDescription="Drogue: electrical armed"/>
@@ -290,10 +285,21 @@
 					<ParameterRefEntry parameterRef="vent_energizedGate_HW" shortDescription="Vent: electrical energized gate"/>
 					<ParameterRefEntry parameterRef="vent_energizedCurrent_HW" shortDescription="Vent: electrical energized current"/>
 					<ParameterRefEntry parameterRef="vent_continuity_HW" shortDescription="Vent: electrical continuity"/>
-					<ParameterRefEntry parameterRef="prop_cc_pressure" shortDescription="Combustion chamber pressure (prop bottom)"/>
-					<ParameterRefEntry parameterRef="tank_temp" shortDescription="Tank temperature (prop bottom)"/>
 					<ParameterRefEntry parameterRef="tank_pressure" shortDescription="Tank pressure (prop top)"/>
 					<ParameterRefEntry parameterRef="vent_temp" shortDescription="Vent valve temperature (prop top)"/>
+					<ParameterRefEntry parameterRef="flight_stage" shortDescription="Flight stage"/>
+					<ParameterRefEntry parameterRef="alt_altitude" shortDescription="Altitude from ground (calculated from pressure)"/>
+					<ParameterRefEntry parameterRef="vertical_speed" shortDescription="Vertical speed"/>
+					<ParameterRefEntry parameterRef="gps_latitude" shortDescription="GPS latitude"/>
+					<ParameterRefEntry parameterRef="gps_longitude" shortDescription="GPS longitude"/>
+					<ParameterRefEntry parameterRef="gps_altitude" shortDescription="GPS altitude"/>
+					<ParameterRefEntry parameterRef="acceleration_x" shortDescription="Acceleration x"/>
+					<ParameterRefEntry parameterRef="acceleration_y" shortDescription="Acceleration Y"/>
+					<ParameterRefEntry parameterRef="acceleration_z" shortDescription="Acceleration Z"/>
+					<ParameterRefEntry parameterRef="angle_yaw" shortDescription="Angular yaw"/>
+					<ParameterRefEntry parameterRef="angle_pitch" shortDescription="Angular pitch"/>
+					<ParameterRefEntry parameterRef="angle_roll" shortDescription="Angular roll"/>
+					<ParameterRefEntry parameterRef="battery_voltage" shortDescription="Battery Voltage"/>
 					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: Initialized and ready"/>
 					<ParameterRefEntry parameterRef="pl_sampling_state" shortDescription="Payload: Sampling state"/>
 					<ParameterRefEntry parameterRef="pl_vibration_freq_x" shortDescription="Payload: Vibration frequency x"/>
@@ -307,19 +313,15 @@
 					<ParameterRefEntry parameterRef="pl_target_temp" shortDescription="Payload: Target temerature"/>
 					<ParameterRefEntry parameterRef="pl_sample_temp" shortDescription="Payload: Actual Sample temperautre"/>
 					<ParameterRefEntry parameterRef="pl_battery_voltage" shortDescription="Payload: Battery Voltage"/>
-					<ParameterRefEntry parameterRef="flight_stage" shortDescription="Flight stage"/>
-					<ParameterRefEntry parameterRef="alt_altitude" shortDescription="Altitude from ground (calculated from pressure)"/>
-					<ParameterRefEntry parameterRef="vertical_speed" shortDescription="Vertical speed"/>
-					<ParameterRefEntry parameterRef="gps_latitude" shortDescription="GPS latitude"/>
-					<ParameterRefEntry parameterRef="gps_longitude" shortDescription="GPS longitude"/>
-					<ParameterRefEntry parameterRef="gps_altitude" shortDescription="GPS altitude"/>
+					<ParameterRefEntry parameterRef="CTSFlag" shortDescription="Clear to send"/>
+					<ParameterRefEntry parameterRef="packet_id" shortDescription="Packet ID number"/>
+					<ParameterRefEntry parameterRef="HAM_call_sign" shortDescription="HAM call sign"/>
 					<ParameterRefEntry parameterRef="gps_time_last_update" shortDescription="GPS time from last update"/>
-					<ParameterRefEntry parameterRef="acceleration_x" shortDescription="Acceleration x"/>
-					<ParameterRefEntry parameterRef="acceleration_y" shortDescription="Acceleration Y"/>
-					<ParameterRefEntry parameterRef="acceleration_z" shortDescription="Acceleration Z"/>
-					<ParameterRefEntry parameterRef="angle_yaw" shortDescription="Angular yaw"/>
-					<ParameterRefEntry parameterRef="angle_pitch" shortDescription="Angular pitch"/>
-					<ParameterRefEntry parameterRef="angle_roll" shortDescription="Angular roll"/>
+					<ParameterRefEntry parameterRef="tank_temp" shortDescription="Tank temperature (prop bottom)"/>
+					<ParameterRefEntry parameterRef="polling_rate" shortDescription="Polling rate"/>
+					<ParameterRefEntry parameterRef="prop_cc_pressure" shortDescription="Combustion chamber pressure (prop bottom)"/>
+					<ParameterRefEntry parameterRef="time_from_sw_reset" shortDescription="Time from last sofware reset"/>
+					<ParameterRefEntry parameterRef="rx_tx_ratio" shortDescription="Radio rx/tx ratio"/>
 				</EntryList>
 			</SequenceContainer>
 		</ContainerSet>
