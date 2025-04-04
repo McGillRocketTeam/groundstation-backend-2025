@@ -13,6 +13,7 @@ public interface DataPacketInformation {
     String getInformationAsCSV();
     void getFromJSONArray(JsonArray jsonArray);
     String getAsFormattedString();
+    void getFromByteArray(byte[] bytes);
 
 
     /**

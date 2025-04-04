@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
  */
 @Data
 public class LabjackT7Packet implements DataPacketInformation {
-    private List<Float> AINPins = new ArrayList(14);
+    private List<Float> AINPins = new ArrayList(128);
 
     private List<PinState> FIOPins = new ArrayList(8);
     private List<PinState> EIOPins = new ArrayList(8);
@@ -40,6 +40,14 @@ public class LabjackT7Packet implements DataPacketInformation {
 
     }
 
+    public PinState fromBool (boolean value) {
+        if (value) {
+            return PinState.high;
+        } else {
+            return PinState.low;
+        }
+    }
+
     @Override
     public String getAsFormattedString() {
 
@@ -55,6 +63,21 @@ public class LabjackT7Packet implements DataPacketInformation {
         builder.append("\nMIO PINS : \n");
         builder.append(MIOPins.stream().map(f ->  "MIO PIN : " + MIOPins.indexOf(f) + " : " +  f.toString()).collect(Collectors.joining(",")));
         return builder.toString();
+    }
+
+    @Override
+    public void getFromByteArray(byte[] bytes) {
+        ByteBuffer buffer = ByteBuffer.wrap(bytes);
+        IntStream.range(0, AINPins.size()).forEach(i -> AINPins.add(buffer.getFloat()));
+        byte fioPin = buffer.get();
+        IntStream.range(0, FIOPins.size()).forEach(i -> FIOPins.add(fromBool((fioPin & (1<<i)) != 0)));
+        byte eioPin = buffer.get();
+        IntStream.range(0, EIOPins.size()).forEach(i -> EIOPins.add(fromBool((eioPin & (1<<i)) != 0)));
+        byte cioMioPins = buffer.get();
+        IntStream.range(0, CIOPins.size()).forEach(i -> CIOPins.add(fromBool((cioMioPins & (1<<i)) != 0)));
+        IntStream.range(0, AINPins.size()).forEach(i -> MIOPins.add(fromBool((cioMioPins & (1<<(i+4))) != 0)));
+
+
     }
 
 
