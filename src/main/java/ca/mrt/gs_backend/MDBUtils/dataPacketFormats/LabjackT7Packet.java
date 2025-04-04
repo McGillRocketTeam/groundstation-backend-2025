@@ -17,8 +17,8 @@ import java.util.stream.IntStream;
  */
 @Data
 public class LabjackT7Packet implements DataPacketInformation {
-
     private List<Float> AINPins = new ArrayList(14);
+
     private List<PinState> FIOPins = new ArrayList(8);
     private List<PinState> EIOPins = new ArrayList(8);
     private List<PinState> CIOPins = new ArrayList(4);
@@ -38,6 +38,23 @@ public class LabjackT7Packet implements DataPacketInformation {
         builder.append(MIOPins.stream().map(f -> f.toString()).collect(Collectors.joining(",")));
         return builder.toString();
 
+    }
+
+    @Override
+    public String getAsFormattedString() {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("PACKET INFORMATION : \n AIN PINS : \n");
+        builder.append(AINPins.stream().map(f ->  "AIN PIN : " + AINPins.indexOf(f) + " : " +  f.toString()).collect(Collectors.joining("\n")));
+        builder.append("\nFIO PINS : \n");
+        builder.append(FIOPins.stream().map(f ->  "FIO PIN : " + FIOPins.indexOf(f) + " : " +  f.toString()).collect(Collectors.joining(",")));
+        builder.append("\nEIO PINS : \n");
+        builder.append(EIOPins.stream().map(f ->  "EIO PIN : " + EIOPins.indexOf(f) + " : " +  f.toString()).collect(Collectors.joining(",")));
+        builder.append("\nCIO PINS : \n");
+        builder.append(CIOPins.stream().map(f ->  "CIO PIN : " + CIOPins.indexOf(f) + " : " +  f.toString()).collect(Collectors.joining(",")));
+        builder.append("\nMIO PINS : \n");
+        builder.append(MIOPins.stream().map(f ->  "MIO PIN : " + MIOPins.indexOf(f) + " : " +  f.toString()).collect(Collectors.joining(",")));
+        return builder.toString();
     }
 
 

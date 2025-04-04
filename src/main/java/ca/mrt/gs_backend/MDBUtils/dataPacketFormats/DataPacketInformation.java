@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 public interface DataPacketInformation {
     String getInformationAsCSV();
     void getFromJSONArray(JsonArray jsonArray);
+    String getAsFormattedString();
 
 
     /**
