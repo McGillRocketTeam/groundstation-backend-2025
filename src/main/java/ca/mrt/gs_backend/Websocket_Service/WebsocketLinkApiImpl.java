@@ -27,17 +27,17 @@ public class WebsocketLinkApiImpl extends AbstractWebsocketLinkApi {
 
     @Override
     public void subscribe(Object ctx, SubscribeRequest request, Observer observer) {
-        Subscriber subscriber = new Subscriber(ctx, observer, request.getParameterNamesList());
+        Subscriber subscriber = new Subscriber(ctx, observer, request.getLinkName());
         subscribers.add(subscriber);
         sendInitialParameterValues(subscriber);
     }
 
     private void sendInitialParameterValues(Subscriber subscriber) {
         // Retrieve and send initial parameter values to the subscriber
-        for (String paramName : subscriber.parameterNames) {
-            String paramValue = getParameterValue(subscriber.ctx, paramName);
+            String linkName = subscriber.linkName;
+            String paramValue = getParameterValue(subscriber.ctx, linkName);
             ParameterValue parameterValue = ParameterValue.newBuilder()
-                    .setName(paramName)
+                    .setName(linkName)
                     .setValue(paramValue)
                     .setGenerationTime(System.currentTimeMillis())
                     .setReceptionTime(System.currentTimeMillis())
@@ -46,13 +46,12 @@ public class WebsocketLinkApiImpl extends AbstractWebsocketLinkApi {
                     .addParameterValues(parameterValue)
                     .build();
             subscriber.observer.next(response);
-        }
     }
 
-    public void onParameterUpdate(String paramName, String newValue) {
+    public void onParameterUpdate(String linkName, String newValue) {
         long currentTime = System.currentTimeMillis();
         ParameterValue parameterValue = ParameterValue.newBuilder()
-                .setName(paramName)
+                .setName(linkName)
                 .setValue(newValue)
                 .setGenerationTime(currentTime)
                 .setReceptionTime(currentTime)
@@ -63,7 +62,7 @@ public class WebsocketLinkApiImpl extends AbstractWebsocketLinkApi {
 
 
         for (Subscriber subscriber : subscribers) {
-            if (subscriber.parameterNames.contains(paramName)) {
+            if (subscriber.linkName.equals(linkName)) {
                 subscriber.observer.next(response);
             }
         }

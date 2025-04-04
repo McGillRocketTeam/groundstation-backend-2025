@@ -4,6 +4,8 @@ import org.yamcs.Plugin;
 import org.yamcs.PluginException;
 import org.yamcs.YConfiguration;
 import org.yamcs.YamcsServer;
+import org.yamcs.api.Api;
+import org.yamcs.http.Context;
 import org.yamcs.http.HttpServer;
 import org.yamcs.logging.Log;
 
@@ -11,6 +13,7 @@ import java.io.IOException;
 
 public class WebsocketLinkPlugin  implements Plugin {
     private static final Log log = new Log(WebsocketLinkPlugin.class);
+    private WebsocketController websocketController;
 
     @Override
     public void onLoad(YConfiguration config) throws PluginException {
@@ -28,8 +31,12 @@ public class WebsocketLinkPlugin  implements Plugin {
         } catch (IOException e) {
             throw new PluginException(e);
         }
-
-        httpServer.addApi(new WebsocketLinkApiImpl(new WebsocketController()));
+        websocketController = new WebsocketController();
+        httpServer.addApi((Api<Context>) new WebsocketLinkApiImpl(websocketController));
         log.info("Successfully added Websocket API");
+    }
+
+    public WebsocketController getWebsocketController() {
+        return websocketController;
     }
 }

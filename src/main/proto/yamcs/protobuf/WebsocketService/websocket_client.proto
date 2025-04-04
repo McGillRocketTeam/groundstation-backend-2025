@@ -7,7 +7,6 @@ option java_outer_classname = "WebsocketProto";
 option java_multiple_files = true;
 
 import "yamcs/api/annotations.proto";
-import "google/protobuf/empty.proto";
 
 service WebsocketLinkApi {
   option (yamcs.api.label) = "WebsocketLinkApi";
@@ -22,8 +21,7 @@ service WebsocketLinkApi {
 
 message SubscribeRequest {
   required string instance = 1;
-  required string processor = 2;
-  repeated string parameter_names = 3;
+  required string link_name = 3;
 }
 
 

@@ -1,5 +1,7 @@
 package ca.mrt.gs_backend.serialcomm;
 
+import ca.mrt.gs_backend.Websocket_Service.WebsocketController;
+import ca.mrt.gs_backend.Websocket_Service.WebsocketLinkPlugin;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortEvent;
 import com.fazecast.jSerialComm.SerialPortMessageListener;
@@ -42,6 +44,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private SerialPort currConnectedPort;
     private long timeOfLastPacket = System.currentTimeMillis();
     private CommandHistoryPublisher ackPublisher;
+    private WebsocketController websocketController;
 
     /**
      * For ground stations connected to FCs, the unique identifier is their radio frequency
@@ -161,6 +164,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         while(isRunningAndEnabled()){
             if(!packetQueue.isEmpty()){
                 TmPacket tmPacket = packetQueue.poll();
+                websocketController.onParamUpdate(uniqueIdentifier, tmPacket.getPacket());
                 processPacket(tmPacket);
             }
         }
@@ -181,6 +185,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             uniqueIdentifier = "control_box";
         }
 
+
         if(uniqueIdentifierToLink.put(uniqueIdentifier, this) != null){
             throw new ConfigurationException("Cannot have duplicate unique identifiers (can't have 2 control boxes, 2 FCs with same frequency, etc.)");
         }
@@ -188,6 +193,9 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         if(!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.matches("^\\d+.\\d+$")){
             throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number representing a frequency");
         }
+        WebsocketLinkPlugin plugin  = YamcsServer.getServer().getPluginManager().getPlugin(WebsocketLinkPlugin.class);
+        websocketController = plugin.getWebsocketController();
+        websocketController.addLinkName(uniqueIdentifier);
     }
     @Override
     public void doEnable(){

@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ca.mrt.gs_backend.Websocket_Service.WebsocketController;
+import ca.mrt.gs_backend.Websocket_Service.WebsocketLinkPlugin;
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
+import org.yamcs.YamcsServer;
 import org.yamcs.tctm.AbstractPacketPreprocessor;
 import org.yamcs.utils.TimeEncoding;
 
@@ -46,7 +49,8 @@ public class MyPacketPreprocessor extends AbstractPacketPreprocessor {
 
     @Override
     public TmPacket process(TmPacket packet) {
-
+        WebsocketLinkPlugin plugin  = YamcsServer.getServer().getPluginManager().getPlugin(WebsocketLinkPlugin.class);
+        WebsocketController controller = plugin.getWebsocketController();
 
         byte[] bytes = packet.getPacket();
         if (bytes.length < 6) { // Expect at least the length of CCSDS primary header
