@@ -69,7 +69,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             @Override
             public byte[] getMessageDelimiter() {
                 //TODO verify if packets end with \n or \r or \n\r
-                return new byte[]{'\n'};
+                return new byte[]{'<','L','E','O','?','>'};
+                //<LEO?>
             }
 
             @Override
@@ -90,14 +91,17 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                     disconnectFromCurrPort();
                 }
                 timeOfLastPacket = System.currentTimeMillis();
-                dataIn(1, serialPortEvent.getReceivedData().length);
+                var temp = (new String(serialPortEvent.getReceivedData()));
+                String dataStr = temp.substring(0, temp.length()-6);
+                dataIn(1, dataStr.length());
 
-                String dataStr = (new String(serialPortEvent.getReceivedData())).strip();
+                log.info(String.valueOf(dataStr.length()));
+
                 if(processAck(dataStr)){ //incoming message is an ack
                     return;
                 }
 
-                TmPacket tmPacket = new TmPacket(getCurrentTime(), serialPortEvent.getReceivedData());
+                TmPacket tmPacket = new TmPacket(getCurrentTime(), dataStr.getBytes(StandardCharsets.UTF_8));
 
                 packetQueue.add(packetPreprocessor.process(tmPacket));
             }
