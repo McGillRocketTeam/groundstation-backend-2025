@@ -95,13 +95,15 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                 String dataStr = temp.substring(0, temp.length()-6);
                 dataIn(1, dataStr.length());
 
-                log.info(String.valueOf(dataStr.length()));
+                log.info(String.valueOf(serialPortEvent.getReceivedData().length));
 
                 if(processAck(dataStr)){ //incoming message is an ack
                     return;
                 }
+                byte[] trimmed_array = new byte[86];
+                System.arraycopy(serialPortEvent.getReceivedData(),0,trimmed_array,0,trimmed_array.length);
 
-                TmPacket tmPacket = new TmPacket(getCurrentTime(), dataStr.getBytes(StandardCharsets.UTF_8));
+                TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
 
                 packetQueue.add(packetPreprocessor.process(tmPacket));
             }

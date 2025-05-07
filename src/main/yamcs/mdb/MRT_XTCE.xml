@@ -4,129 +4,129 @@
 			 xsi:schemaLocation="https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd ">
 	<TelemetryMetaData>
 		<ParameterTypeSet>
+			<IntegerParameterType name="pad" >
+				<IntegerDataEncoding sizeInBits="5"/>
+			</IntegerParameterType>
 
 			<IntegerParameterType name="uint8" signed="false">
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" bitOrder="mostSignificantBitFirst"/>
 			</IntegerParameterType>
 			<IntegerParameterType name="uint8_V" signed="false">
 				<UnitSet>
 					<Unit>V</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 			<IntegerParameterType name="uint16_V" signed="false">
 				<UnitSet>
 					<Unit>V</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 
 			<IntegerParameterType name="uint8_C" signed="false">
 				<UnitSet>
 					<Unit>°C</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" byteOrder="leastSignificantByteFirst"/>
+			</IntegerParameterType>
+			<IntegerParameterType name="uint16_C" signed="false">
+				<UnitSet>
+					<Unit>°C</Unit>
+				</UnitSet>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+			</IntegerParameterType>
+
+			<IntegerParameterType name="pad5bits" signed="false">
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="5" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 
 
-
 			<IntegerParameterType name="uint16" signed="false">
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 			<IntegerParameterType name="uint16_psi" signed="false">
 				<UnitSet>
 					<Unit>psi</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 			<IntegerParameterType name="uint16_ms" signed="false">
 				<UnitSet>
 					<Unit>ms</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 
 
 			<IntegerParameterType name="uint32" signed="false">
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="32"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 			<IntegerParameterType name="uint32_s" signed="false">
 				<UnitSet>
 					<Unit>s</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="32"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 
 
 			<IntegerParameterType name="int8">
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="8"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="8" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 
 
 			<IntegerParameterType name="int16">
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
-			<IntegerParameterType name="int16_mpsps">
+			<IntegerParameterType name="int16_mpsps" >
 				<UnitSet>
 					<Unit>m</Unit>
 					<Unit power="-2">s</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 			<IntegerParameterType name="int16_mg">
 				<UnitSet>
 					<Unit>mG</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 
 
 			<IntegerParameterType name="int32">
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="32"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 			<IntegerParameterType name="int32_mps">
 				<UnitSet>
 					<Unit>m</Unit>
 					<Unit power="-1">s</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="32"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
 
 
 			<FloatParameterType name="float">
 				<UnitSet/>
-				<FloatDataEncoding sizeInBits="32"/>
+				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
 			</FloatParameterType>
 			<FloatParameterType name="float_ft">
 				<UnitSet>
 					<Unit>ft</Unit>
 				</UnitSet>
-				<FloatDataEncoding sizeInBits="32"/>
+				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
 			</FloatParameterType>
-			<FloatParameterType name="UNK_PAYLOAD_UNIT_HZ">
+			<IntegerParameterType name="uint16_Hz" signed="false">
 				<UnitSet>
 					<Unit>Hz</Unit>
 				</UnitSet>
-				<FloatDataEncoding sizeInBits="32"/>
-			</FloatParameterType>
-			<FloatParameterType name="UNK_PAYLOAD_UNIT_V">
-				<UnitSet>
-					<Unit>V</Unit>
-				</UnitSet>
-				<FloatDataEncoding sizeInBits="32"/>
-			</FloatParameterType>
-			<FloatParameterType name="UNK_PAYLOAD_UNIT_MS">
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+			</IntegerParameterType>
+			<IntegerParameterType name="uint32_ms" signed="false">
 				<UnitSet>
 					<Unit>ms</Unit>
 				</UnitSet>
-				<FloatDataEncoding sizeInBits="32"/>
-			</FloatParameterType>
-			<FloatParameterType name="UNK_PAYLOAD_UNIT_C">
-				<UnitSet>
-					<Unit>°C</Unit>
-				</UnitSet>
-				<FloatDataEncoding sizeInBits="32"/>
-			</FloatParameterType>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+			</IntegerParameterType>
 
 			<AggregateParameterType name="xyzFloat">
 				<MemberList>
@@ -147,7 +147,7 @@
 			</AggregateParameterType>
 			<EnumeratedParameterType name="flightStageType">
 				<UnitSet/>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" byteOrder="leastSignificantByteFirst"/>
 				<EnumerationList>
 					<Enumeration value="99" label="Pre-Pad, error in initialization"/>
 					<Enumeration value="0" label="Pad, filling and readying for launch"/>
@@ -192,6 +192,8 @@
 			<Parameter name="FC_RPO" parameterTypeRef="bool" shortDescription="FC RPO sense signal"/>
 			<Parameter name="pl_ok" parameterTypeRef="bool" shortDescription="FC RPO sense signal"/>
 			<Parameter name="CTSFlag" parameterTypeRef="uint8" shortDescription="FC RPO sense signal"/>
+
+			<Parameter name="pading" parameterTypeRef="pad"/>
 
 			<Parameter name="drogue_armed_SW" parameterTypeRef="bool" shortDescription="drogueEmatch: logical armed"/>
 			<Parameter name="drogue_armed_HW" parameterTypeRef="bool" shortDescription="drogueEmatch: logical armed"/>
@@ -255,16 +257,16 @@
 			<Parameter name="tank_top_pressure" parameterTypeRef="uint16_psi" shortDescription="Tank pressure (prop top)"/>
 			<Parameter name="vent_temp" parameterTypeRef="uint8_C" shortDescription="Vent valve temperature (prop top)"/>
 			<Parameter name="pl_sampling_state" parameterTypeRef="bool" shortDescription="Payload: Sampling state"/>
-			<Parameter name="pl_vibration_freq_x" parameterTypeRef="UNK_PAYLOAD_UNIT_HZ" shortDescription="Payload: Vibration frequency x"/>
-			<Parameter name="pl_vibration_freq_y" parameterTypeRef="UNK_PAYLOAD_UNIT_HZ" shortDescription="Payload: Vibration frequency y"/>
-			<Parameter name="pl_vibration_freq_z" parameterTypeRef="UNK_PAYLOAD_UNIT_HZ" shortDescription="Payload: Vibration frequency z"/>
-			<Parameter name="pl_vibration_amplitude_x" parameterTypeRef="UNK_PAYLOAD_UNIT_V" shortDescription="Payload: Vibration amplitude x"/>
-			<Parameter name="pl_vibration_amplitude_y" parameterTypeRef="UNK_PAYLOAD_UNIT_V" shortDescription="Payload: Vibration amplitude y"/>
-			<Parameter name="pl_vibration_amplitude_z" parameterTypeRef="UNK_PAYLOAD_UNIT_V" shortDescription="Payload: Vibration amplitude z"/>
-			<Parameter name="pl_time_since_start" parameterTypeRef="UNK_PAYLOAD_UNIT_MS" shortDescription="Payload: Time since start of sampling"/>
+			<Parameter name="pl_vibration_freq_x" parameterTypeRef="uint16_Hz" shortDescription="Payload: Vibration frequency x"/>
+			<Parameter name="pl_vibration_freq_y" parameterTypeRef="uint16_Hz" shortDescription="Payload: Vibration frequency y"/>
+			<Parameter name="pl_vibration_freq_z" parameterTypeRef="uint16_Hz" shortDescription="Payload: Vibration frequency z"/>
+			<Parameter name="pl_vibration_amplitude_x" parameterTypeRef="uint16_V" shortDescription="Payload: Vibration amplitude x"/>
+			<Parameter name="pl_vibration_amplitude_y" parameterTypeRef="uint16_V" shortDescription="Payload: Vibration amplitude y"/>
+			<Parameter name="pl_vibration_amplitude_z" parameterTypeRef="uint16_V" shortDescription="Payload: Vibration amplitude z"/>
+			<Parameter name="pl_time_since_start" parameterTypeRef="uint32_ms" shortDescription="Payload: Time since start of sampling"/>
 			<Parameter name="pl_active_temp_ctrl_state" parameterTypeRef="bool" shortDescription="Payload: Active temperature control state"/>
-			<Parameter name="pl_target_temp" parameterTypeRef="UNK_PAYLOAD_UNIT_C" shortDescription="Payload: Target temerature"/>
-			<Parameter name="pl_sample_temp" parameterTypeRef="UNK_PAYLOAD_UNIT_C" shortDescription="Payload: Actual Sample temperautre"/>
+			<Parameter name="pl_target_temp" parameterTypeRef="uint8_C" shortDescription="Payload: Target temerature"/>
+			<Parameter name="pl_sample_temp" parameterTypeRef="uint16_C" shortDescription="Payload: Actual Sample temperautre"/>
 			<Parameter name="pl_muon_state" parameterTypeRef="bool" shortDescription="Payload: Muon detector state"/>
 			<Parameter name="pl_muon_data" parameterTypeRef="uint16" shortDescription="Payload: Muon detector data"/>
 			<Parameter name="flight_stage" parameterTypeRef="flightStageType" shortDescription="Flight stage"/>
@@ -346,8 +348,6 @@
 					<ParameterRefEntry parameterRef="battery_voltage" shortDescription="Battery Voltage"/>
 
 					<!-- Payload Packet (22 bytes) -->
-					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: OK status bit"/>
-					<ParameterRefEntry parameterRef="pl_sampling_state" shortDescription="Payload: Sampling state"/>
 					<ParameterRefEntry parameterRef="pl_vibration_freq_x" shortDescription="Payload: Vibration frequency x"/>
 					<ParameterRefEntry parameterRef="pl_vibration_freq_y" shortDescription="Payload: Vibration frequency y"/>
 					<ParameterRefEntry parameterRef="pl_vibration_freq_z" shortDescription="Payload: Vibration frequency z"/>
@@ -355,11 +355,15 @@
 					<ParameterRefEntry parameterRef="pl_vibration_amplitude_y" shortDescription="Payload: Vibration amplitude y"/>
 					<ParameterRefEntry parameterRef="pl_vibration_amplitude_z" shortDescription="Payload: Vibration amplitude z"/>
 					<ParameterRefEntry parameterRef="pl_time_since_start" shortDescription="Payload: Time since start of sampling"/>
-					<ParameterRefEntry parameterRef="pl_active_temp_ctrl_state" shortDescription="Payload: Active temperature control state"/>
 					<ParameterRefEntry parameterRef="pl_target_temp" shortDescription="Payload: Target temerature"/>
 					<ParameterRefEntry parameterRef="pl_sample_temp" shortDescription="Payload: Actual Sample temperautre"/>
 					<ParameterRefEntry parameterRef="pl_battery_voltage" shortDescription="Battery Voltage"/>
-
+<!--					<Pad sizeInBits="5"/>-->
+					<ParameterRefEntry parameterRef="pading" />
+					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: OK status bit" />
+					<ParameterRefEntry parameterRef="pl_sampling_state" shortDescription="Payload: Sampling state"/>
+					<ParameterRefEntry parameterRef="pl_active_temp_ctrl_state" shortDescription="Payload: Active temperature control state"/>
+					<!-- The 3 booleans are bit packed we need to add an offset so everything remains byte aligned			-->
 
 
 					<!-- Variable Packet (14 bytes) -->
