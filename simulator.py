@@ -25,6 +25,44 @@ def get_mode_from_user():
         print("Invalid choice. Defaulting to Constant mode.")
         return 'constant'
 
+def send_lj(simulator):
+    tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+# Example bytes array extended to 515 bytes
+    exampleBytes = bytearray([
+                             0xA3, 0x5F, 0xC2, 0x7D, 0x48, 0x9E, 0x34, 0xAB,
+                             0x7E, 0xD9, 0xF1, 0x63, 0x2C, 0x8A, 0x4F, 0x92,
+                             0x37, 0xE4, 0x5D, 0x86, 0x3A, 0xBE, 0x99, 0xCD,
+                             0x22, 0xF8, 0x13, 0xA9, 0x76, 0xE1, 0x44, 0x5F,
+                             0xD3, 0x8C, 0x21, 0x6E, 0xA7, 0x94, 0xB8, 0x35,
+                             0xDF, 0x09, 0xAC, 0x52, 0x71, 0x6B, 0xE3, 0x14,
+                             0xC6, 0x8F, 0x5A, 0xD2, 0x47, 0x1B, 0xE8, 0x92,
+                             0x39, 0xAF, 0x6D, 0xC4, 0x28, 0xF7, 0x13, 0x9B,
+                             0x6E, 0x84, 0xD5, 0x72, 0x4A, 0x3E, 0x9C, 0x81,
+                             0x6F, 0x57, 0xAC, 0x39, 0xE4, 0x98, 0x52, 0x7F,
+                             0xB3, 0x4D, 0xC8, 0x25, 0x6A, 0xF1, 0x93, 0x7E,
+                             0x42, 0xDF, 0x18, 0xB6, 0x3C, 0xF0, 0xA0, 0xF8
+                         ] * 5)[:515]  # Repeat pattern to reach exactly 515 bytes
+
+    while True:
+        if simulator.mode == 'constant':
+            data_to_send = exampleBytes
+        elif simulator.mode == 'variable-value':
+            data_to_send = bytearray((byte + random.randint(-5, 5)) % 256 for byte in exampleBytes)
+        elif simulator.mode == 'variable-time':
+            data_to_send = bytearray((byte + random.randint(-5, 5)) % 256 for byte in exampleBytes)
+            sleep(random.uniform(0.2, 2))
+        else:
+            data_to_send = exampleBytes
+
+        tm_socket.sendto(data_to_send, ('127.0.0.1', 10016))
+        sleep(1)
+        simulator.tm_counter += 1
+
+        if simulator.mode != 'variable-time':
+            sleep(1)
+
+
 def send_tm(simulator):
     tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     exampleBytes = bytearray([
@@ -77,6 +115,7 @@ class Simulator():
         self.tc_counter = 0
         self.tm_thread = None
         self.tc_thread = None
+        self.lj_thread = None
         self.last_tc = None
         self.mode = mode
 
@@ -87,6 +126,10 @@ class Simulator():
         self.tc_thread = Thread(target=receive_tc, args=(self,))
         self.tc_thread.daemon = True
         self.tc_thread.start()
+        self.lj_thread = Thread(target=send_lj, args=(self,))
+        self.lj_thread.daemon = True
+        self.lj_thread.start()
+
 
     def print_status(self):
         cmdhex = None

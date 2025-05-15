@@ -26,10 +26,17 @@ services:
   - class: ca.mrt.gs_backend.serialcomm.SerialUtil
 
 dataLinks:
+  #for simulator
   - name: udp-in
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_flight_computers
     port: 10015
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+
+  - name: lj-sim-in
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tm_labJack
+    port: 10016
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: udp-out
