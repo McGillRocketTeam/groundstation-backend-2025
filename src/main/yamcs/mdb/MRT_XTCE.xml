@@ -358,7 +358,6 @@
 					<ParameterRefEntry parameterRef="pl_target_temp" shortDescription="Payload: Target temerature"/>
 					<ParameterRefEntry parameterRef="pl_sample_temp" shortDescription="Payload: Actual Sample temperautre"/>
 					<ParameterRefEntry parameterRef="pl_battery_voltage" shortDescription="Battery Voltage"/>
-<!--					<Pad sizeInBits="5"/>-->
 					<ParameterRefEntry parameterRef="pading" />
 					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: OK status bit" />
 					<ParameterRefEntry parameterRef="pl_sampling_state" shortDescription="Payload: Sampling state"/>
@@ -461,49 +460,79 @@
 					<BaseContainer containerRef="CCSDSPacket"/>
 				</CommandContainer>
 			</MetaCommand>
-			<MetaCommand name="Reboot">
-				<BaseMetaCommand metaCommandRef="MyProjectPacket">
-					<ArgumentAssignmentList>
-						<ArgumentAssignment argumentName="Packet_ID" argumentValue="1"/>
-					</ArgumentAssignmentList>
-				</BaseMetaCommand>
-				<CommandContainer name="Reboot">
-					<EntryList/>
-					<BaseContainer containerRef="MyProjectPacket"/>
-				</CommandContainer>
-				<DefaultSignificance consequenceLevel="vital"/>
+			<MetaCommand name="arm_recovery" shortDescription="ea">
 			</MetaCommand>
-			<MetaCommand name="SwitchVoltageOn" shortDescription="Switches a battery on">
-				<BaseMetaCommand metaCommandRef="MyProjectPacket">
-					<ArgumentAssignmentList>
-						<ArgumentAssignment argumentName="Packet_ID" argumentValue="2"/>
-					</ArgumentAssignmentList>
-				</BaseMetaCommand>
-				<ArgumentList>
-					<Argument argumentTypeRef="Battery_Type" name="Battery" shortDescription="Number of the battery"/>
-				</ArgumentList>
-				<CommandContainer name="SwitchVoltageOn">
-					<EntryList>
-						<ArgumentRefEntry argumentRef="Battery"/>
-					</EntryList>
-					<BaseContainer containerRef="MyProjectPacket"/>
-				</CommandContainer>
+			<MetaCommand name="disarm_recovery" shortDescription="ed">
 			</MetaCommand>
-			<MetaCommand name="SwitchVoltageOff" shortDescription="Switches a battery off">
-				<BaseMetaCommand metaCommandRef="MyProjectPacket">
-					<ArgumentAssignmentList>
-						<ArgumentAssignment argumentName="Packet_ID" argumentValue="3"/>
-					</ArgumentAssignmentList>
-				</BaseMetaCommand>
-				<ArgumentList>
-					<Argument argumentTypeRef="Battery_Type" name="Battery" shortDescription="Number of the battery"/>
-				</ArgumentList>
-				<CommandContainer name="SwitchVoltageOff">
-					<EntryList>
-						<ArgumentRefEntry argumentRef="Battery"/>
-					</EntryList>
-					<BaseContainer containerRef="MyProjectPacket"/>
-				</CommandContainer>
+			<MetaCommand name="reset_from_start_(PAD_mode)" shortDescription="er">
+			</MetaCommand>
+			<MetaCommand name="main_ejection" shortDescription="eM">
+			</MetaCommand>
+			<MetaCommand name="drogue_ejection" shortDescription="eD">
+			</MetaCommand>
+			<MetaCommand name="landed" shortDescription="el">
+			</MetaCommand>
+			<MetaCommand name="emergency_stop" shortDescription="pe">
+			</MetaCommand>
+			<MetaCommand name="emergency_cancel" shortDescription="pc">
+			</MetaCommand>
+			<MetaCommand name="vent_valve_energize" shortDescription="p0">
+			</MetaCommand>
+			<MetaCommand name="vent_valve_de-energize" shortDescription="p1">
+			</MetaCommand>
+			<MetaCommand name="run_valve_arming" shortDescription="p2">
+			</MetaCommand>
+			<MetaCommand name="run_valve_disarming" shortDescription="p3">
+			</MetaCommand>
+			<MetaCommand name="UFD_valve_energize" shortDescription="p4">
+			</MetaCommand>
+			<MetaCommand name="UFD_valve_de-energize" shortDescription="p5">
+			</MetaCommand>
+			<MetaCommand name="propulsion_on" shortDescription="pi">
+			</MetaCommand>
+			<MetaCommand name="propulsion_off" shortDescription="po">
+			</MetaCommand>
+			<MetaCommand name="launch_(pilot_valve_open)" shortDescription="pl">
+			</MetaCommand>
+			<MetaCommand name="reset_prop_boards_valves_state" shortDescription="pr">
+			</MetaCommand>
+			<MetaCommand name="payload_start_sampling" shortDescription="bs">
+			</MetaCommand>
+			<MetaCommand name="payload_stop_sampling" shortDescription="bt">
+			</MetaCommand>
+			<MetaCommand name="payload_scrub" shortDescription="bo">
+			</MetaCommand>
+			<MetaCommand name="payload_landed_(for_testing)" shortDescription="bl">
+			</MetaCommand>
+			<MetaCommand name="video_recorder_power_on" shortDescription="v1">
+			</MetaCommand>
+			<MetaCommand name="video_recorder_start" shortDescription="v2">
+			</MetaCommand>
+			<MetaCommand name="video_recorder_stop" shortDescription="v3">
+			</MetaCommand>
+			<MetaCommand name="start_timer" shortDescription="hs">
+			</MetaCommand>
+			<MetaCommand name="stop_timer" shortDescription="ho">
+			</MetaCommand>
+			<MetaCommand name="manual_flight_termination" shortDescription="ha">
+			</MetaCommand>
+			<MetaCommand name="parachute_ejection" shortDescription="hp">
+			</MetaCommand>
+			<MetaCommand name="balloon_actuator_release" shortDescription="hr">
+			</MetaCommand>
+			<MetaCommand name="balloon_actuator_lock" shortDescription="hl">
+			</MetaCommand>
+			<MetaCommand name="parachute_actuator_lock" shortDescription="hc">
+			</MetaCommand>
+			<MetaCommand name="parachute_actuator_unlock" shortDescription="ho">
+			</MetaCommand>
+			<MetaCommand name="first_timer_start_(termination_timer)" shortDescription="hs">
+			</MetaCommand>
+			<MetaCommand name="first_timer_stop" shortDescription="ht">
+			</MetaCommand>
+			<MetaCommand name="second_timer_start_(parachute)" shortDescription="hm">
+			</MetaCommand>
+			<MetaCommand name="second_timer_stop" shortDescription="hn">
 			</MetaCommand>
 		</MetaCommandSet>
 	</CommandMetaData>

@@ -20,6 +20,8 @@ realtime:
       # If container entries fit outside the binary packet, setting this to true causes the error
       # to be ignored, otherwise an exception will be printed in Yamcs log output
       ignoreOutOfContainerEntries: false
+    allowContainerlessCommands: true
+    checkParameterValidityRanges: true
     # Record all the parameters that have initial values at the start of the processor
     recordInitialValues: true
     # Record the local values
