@@ -256,6 +256,6 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
         ackStrToMostRecentCmdId.put(getAckStrFromCmd(preparedCommand), preparedCommand.getCommandId());
 
-        return writePort(preparedCommand.getMetaCommand().getShortDescription());
+        return writePort(preparedCommand.getMetaCommand().getShortDescription().split(" ")[0]);
     }
 }

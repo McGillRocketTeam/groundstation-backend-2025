@@ -460,41 +460,41 @@
 					<BaseContainer containerRef="CCSDSPacket"/>
 				</CommandContainer>
 			</MetaCommand>
-			<MetaCommand name="arm_recovery" shortDescription="ea">
+			<MetaCommand name="arm_recovery" shortDescription="ea ACK1_0">
 			</MetaCommand>
-			<MetaCommand name="disarm_recovery" shortDescription="ed">
+			<MetaCommand name="disarm_recovery" shortDescription="ed ACK1_1">
 			</MetaCommand>
-			<MetaCommand name="reset_from_start_(PAD_mode)" shortDescription="er">
+			<MetaCommand name="reset_from_start_(PAD_mode)" shortDescription="er ACK">
 			</MetaCommand>
-			<MetaCommand name="main_ejection" shortDescription="eM">
+			<MetaCommand name="main_ejection" shortDescription="eM ACK1_4">
 			</MetaCommand>
-			<MetaCommand name="drogue_ejection" shortDescription="eD">
+			<MetaCommand name="drogue_ejection" shortDescription="eD ACK1_3">
 			</MetaCommand>
-			<MetaCommand name="landed" shortDescription="el">
+			<MetaCommand name="landed" shortDescription="el ACK1_2">
 			</MetaCommand>
-			<MetaCommand name="emergency_stop" shortDescription="pe">
+			<MetaCommand name="emergency_stop" shortDescription="pe ACK2_8">
 			</MetaCommand>
-			<MetaCommand name="emergency_cancel" shortDescription="pc">
+			<MetaCommand name="emergency_cancel" shortDescription="pc ACK2_9">
 			</MetaCommand>
-			<MetaCommand name="vent_valve_energize" shortDescription="p0">
+			<MetaCommand name="vent_valve_energize" shortDescription="p0 ACK2_0">
 			</MetaCommand>
-			<MetaCommand name="vent_valve_de-energize" shortDescription="p1">
+			<MetaCommand name="vent_valve_de-energize" shortDescription="p1 ACK2_1">
 			</MetaCommand>
-			<MetaCommand name="run_valve_arming" shortDescription="p2">
+			<MetaCommand name="run_valve_arming" shortDescription="p2 ACK2_2">
 			</MetaCommand>
-			<MetaCommand name="run_valve_disarming" shortDescription="p3">
+			<MetaCommand name="run_valve_disarming" shortDescription="p3 ACK2_3">
 			</MetaCommand>
-			<MetaCommand name="UFD_valve_energize" shortDescription="p4">
+			<MetaCommand name="UFD_valve_energize" shortDescription="p4 ACK2_4">
 			</MetaCommand>
-			<MetaCommand name="UFD_valve_de-energize" shortDescription="p5">
+			<MetaCommand name="UFD_valve_de-energize" shortDescription="p5 ACK2_5">
 			</MetaCommand>
-			<MetaCommand name="propulsion_on" shortDescription="pi">
+			<MetaCommand name="propulsion_on" shortDescription="pi ACK2_6">
 			</MetaCommand>
-			<MetaCommand name="propulsion_off" shortDescription="po">
+			<MetaCommand name="propulsion_off" shortDescription="po ACK2_7">
 			</MetaCommand>
-			<MetaCommand name="launch_(pilot_valve_open)" shortDescription="pl">
+			<MetaCommand name="launch_(pilot_valve_open)" shortDescription="pl ACK2_10">
 			</MetaCommand>
-			<MetaCommand name="reset_prop_boards_valves_state" shortDescription="pr">
+			<MetaCommand name="reset_prop_boards_valves_state" shortDescription="pr ACK2_11">
 			</MetaCommand>
 			<MetaCommand name="payload_start_sampling" shortDescription="bs">
 			</MetaCommand>
