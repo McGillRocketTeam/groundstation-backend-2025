@@ -460,7 +460,7 @@
 					<BaseContainer containerRef="CCSDSPacket"/>
 				</CommandContainer>
 			</MetaCommand>
-			<MetaCommand name="arm_recovery" shortDescription="ea ACK1_0">
+			<MetaCommand name="ejection_arm" shortDescription="ea ACK1_0">
 			</MetaCommand>
 			<MetaCommand name="disarm_recovery" shortDescription="ed ACK1_1">
 			</MetaCommand>

@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Jake
@@ -50,6 +53,9 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private String uniqueIdentifier;
     private final Queue<TmPacket> packetQueue = new ConcurrentLinkedQueue<>();
     private final Map<String, Commanding.CommandId> ackStrToMostRecentCmdId = new HashMap<>();
+
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
 
     protected void connectToPort(SerialPort serialPort){
         if(isCurrentlyConnected()){
@@ -114,7 +120,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     }
 
     private boolean processAck(String ackText){
-        String ackName = ackText.split(":")[0];
+        String ackName = ackText.trim();
         if(!ackStrToMostRecentCmdId.containsKey(ackName)){
             return false;
         }
@@ -122,8 +128,9 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         if(ackPublisher == null){
             ackPublisher = YamcsServer.getServer().getProcessor("gs_backend", "realtime").getCommandHistoryPublisher();
         }
-
-        ackPublisher.publishAck(ackStrToMostRecentCmdId.get(ackText), ackText, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+        var cmdId = ackStrToMostRecentCmdId.get(ackName);
+        ackPublisher.publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+        ackStrToMostRecentCmdId.remove(ackName);
         return true;
     }
 
@@ -253,9 +260,23 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             log.warn("Attempting to send serial device commands while not connected to this device");
             return false;
         }
+        String cmdStr = preparedCommand.getMetaCommand().getShortDescription().split(" ")[0];
+        String ackStr = getAckStrFromCmd(preparedCommand);
 
-        ackStrToMostRecentCmdId.put(getAckStrFromCmd(preparedCommand), preparedCommand.getCommandId());
+        ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
+        scheduler.schedule(() -> {
+            log.warn("Didn't receive ack for cmd: " + cmdStr);
 
-        return writePort(preparedCommand.getMetaCommand().getShortDescription().split(" ")[0]);
+            if(ackPublisher == null){
+                ackPublisher = YamcsServer.getServer().getProcessor("gs_backend", "realtime").getCommandHistoryPublisher();
+            }
+
+            var cmdId = ackStrToMostRecentCmdId.get(ackStr);
+            ackPublisher.publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
+            ackStrToMostRecentCmdId.remove(ackStr);
+
+        }, 10, TimeUnit.SECONDS);
+
+        return writePort(cmdStr);
     }
 }
