@@ -32,6 +32,12 @@ dataLinks:
 #    port: 10015
 #    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
+  - name: lj-sim-in
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tm_labJack
+    port: 10016
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+
   - name: udp-out
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_udp

@@ -22,6 +22,17 @@
   <dependencies>
     <!-- Yamcs core framework -->
     <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongo-java-driver</artifactId>
+      <version>3.12.8</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.30</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.yamcs</groupId>
       <artifactId>yamcs-core</artifactId>
       <version>${yamcsVersion}</version>
@@ -47,6 +58,15 @@
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>${project.build.directory}/generated-resources/protobuf</directory>
+      </resource>
+    </resources>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -69,8 +89,14 @@
           <!-- Detect plugins, if any -->
           <execution>
             <goals>
+              <goal>protoc</goal>
               <goal>detect</goal>
             </goals>
+            <configuration>
+              <writeDescriptorSet>true</writeDescriptorSet>
+              <descriptorSetOutputDirectory>${project.build.directory}/generated-resources/protobuf</descriptorSetOutputDirectory>
+              <descriptorSetFileName>${project.artifactId}.protobin</descriptorSetFileName>
+            </configuration>
           </execution>
           <!-- Tell Maven to bundle Yamcs into a tar.gz file
                when the 'mvn package' command is run -->
