@@ -187,8 +187,6 @@
 			<Parameter name="polling_rate" parameterTypeRef="uint16_ms" shortDescription="Polling rate"/>
 			<Parameter name="time_from_sw_reset" parameterTypeRef="uint32_s" shortDescription="Time from last sofware reset"/>
 			<Parameter name="battery_voltage" parameterTypeRef="uint8_V" shortDescription="Battery Voltage"/>
-			<Parameter name="ejec_tank_pressure" parameterTypeRef="uint16_psi" shortDescription="Ejection tank pressure"/>
-			<Parameter name="ejec_tank_temperature" parameterTypeRef="uint8_C" shortDescription="Ejection tank temperature"/>
 			<Parameter name="FC_RPO" parameterTypeRef="bool" shortDescription="FC RPO sense signal"/>
 			<Parameter name="pl_ok" parameterTypeRef="bool" shortDescription="FC RPO sense signal"/>
 			<Parameter name="CTSFlag" parameterTypeRef="uint8" shortDescription="FC RPO sense signal"/>
@@ -202,31 +200,13 @@
 			<Parameter name="drogue_energizedGate_HW" parameterTypeRef="bool" shortDescription="drogue: electrical energized gate"/>
 			<Parameter name="drogue_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="drogue: electrical energized current"/>
 			<Parameter name="drogue_continuity_HW" parameterTypeRef="bool" shortDescription="drogue: electrical continuity"/>
-			<Parameter name="drogueValve_armed_SW" parameterTypeRef="bool" shortDescription="drogueValve: logical armed"/>
-			<Parameter name="drogueValve_armed_HW" parameterTypeRef="bool" shortDescription="drogueValve: electrical armed"/>
-			<Parameter name="drogueValve_energized_SW" parameterTypeRef="bool" shortDescription="drogueValve: logical energized"/>
-			<Parameter name="drogueValve_energizedGate_HW" parameterTypeRef="bool" shortDescription="drogueValve: electrical energized gate"/>
-			<Parameter name="drogueValve_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="drogueValve: electrical energized current"/>
-			<Parameter name="drogueValve_continuity_HW" parameterTypeRef="bool" shortDescription="drogueValve: electrical continuity"/>
 			<Parameter name="main_armed_SW" parameterTypeRef="bool" shortDescription="Main: logical armed"/>
 			<Parameter name="main_armed_HW" parameterTypeRef="bool" shortDescription="Main: electrical armed"/>
 			<Parameter name="main_energized_SW" parameterTypeRef="bool" shortDescription="Main: logical energized"/>
 			<Parameter name="main_energizedGate_HW" parameterTypeRef="bool" shortDescription="Main: electrical energized gate"/>
 			<Parameter name="main_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="Main: electrical energized current"/>
 			<Parameter name="main_continuity_HW" parameterTypeRef="bool" shortDescription="Nitrogen fill valve: logical armed"/>
-			<Parameter name="nitroFill_armed_SW" parameterTypeRef="bool" shortDescription="drogueValve: logical armed"/>
-			<Parameter name="nitroFill_armed_HW" parameterTypeRef="bool" shortDescription="Nitrogen fill valve: electrical armed"/>
-			<Parameter name="nitroFill_energized_SW" parameterTypeRef="bool" shortDescription="Nitrogen fill valve: logical energized"/>
-			<Parameter name="nitroFill_energizedGate_HW" parameterTypeRef="bool" shortDescription="Nitrogen fill valve: electrical energized gate"/>
-			<Parameter name="nitroFill_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="Nitrogen fill valve: electrical energized current"/>
-			<Parameter name="nitroFill_continuity_HW" parameterTypeRef="bool" shortDescription="Nitrogen fill valve: electrical continuity"/>
 			<Parameter name="prop_energized_elec" parameterTypeRef="bool" shortDescription="Electrical energized propulsion boards"/>
-			<Parameter name="mov_armed_SW" parameterTypeRef="bool" shortDescription="MOV: logical armed"/>
-			<Parameter name="mov_armed_HW" parameterTypeRef="bool" shortDescription="MOV: electrical armed"/>
-			<Parameter name="mov_energized_SW" parameterTypeRef="bool" shortDescription="MOV: logical energized"/>
-			<Parameter name="mov_energizedGate_HW" parameterTypeRef="bool" shortDescription="MOV: electrical energized gate"/>
-			<Parameter name="mov_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="MOV: electrical energized current"/>
-			<Parameter name="mov_continuity_HW" parameterTypeRef="bool" shortDescription="MOV: electrical continuity"/>
 			<Parameter name="ufd_armed_SW" parameterTypeRef="bool" shortDescription="F/DOV normally closed: logical armed"/>
 			<Parameter name="ufd_armed_HW" parameterTypeRef="bool" shortDescription="F/DOV normally closed: electrical armed"/>
 			<Parameter name="ufd_energized_SW" parameterTypeRef="bool" shortDescription="F/DOV normally closed: logical energized"/>
@@ -245,16 +225,9 @@
 			<Parameter name="vent_energizedGate_HW" parameterTypeRef="bool" shortDescription="Vent: electrical energized gate"/>
 			<Parameter name="vent_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="Vent: electrical energized current"/>
 			<Parameter name="vent_continuity_HW" parameterTypeRef="bool" shortDescription="Vent: electrical continuity"/>
-			<Parameter name="pressurant_armed_SW" parameterTypeRef="bool" shortDescription="Pressurant: logical armed"/>
-			<Parameter name="pressurant_armed_HW" parameterTypeRef="bool" shortDescription="Pressurant: electrical armed"/>
-			<Parameter name="pressurant_energized_SW" parameterTypeRef="bool" shortDescription="Pressurant: logical energized"/>
-			<Parameter name="pressurant_energizedGate_HW" parameterTypeRef="bool" shortDescription="Pressurant: electrical energized gate"/>
-			<Parameter name="pressurant_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="Pressurant: electrical energized current"/>
-			<Parameter name="pressurant_continuity_HW" parameterTypeRef="bool" shortDescription="Pressurant: electrical continuity"/>
 			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi" shortDescription="Combustion chamber pressure (prop bottom)"/>
 			<Parameter name="tank_pressure" parameterTypeRef="uint16_psi" shortDescription="Tank bottom pressure"/>
 			<Parameter name="tank_temp" parameterTypeRef="uint8_C" shortDescription="Tank temperature (prop bottom)"/>
-			<Parameter name="tank_top_pressure" parameterTypeRef="uint16_psi" shortDescription="Tank pressure (prop top)"/>
 			<Parameter name="vent_temp" parameterTypeRef="uint8_C" shortDescription="Vent valve temperature (prop top)"/>
 			<Parameter name="pl_sampling_state" parameterTypeRef="bool" shortDescription="Payload: Sampling state"/>
 			<Parameter name="pl_vibration_freq_x" parameterTypeRef="uint16_Hz" shortDescription="Payload: Vibration frequency x"/>
@@ -267,8 +240,6 @@
 			<Parameter name="pl_active_temp_ctrl_state" parameterTypeRef="bool" shortDescription="Payload: Active temperature control state"/>
 			<Parameter name="pl_target_temp" parameterTypeRef="uint8_C" shortDescription="Payload: Target temerature"/>
 			<Parameter name="pl_sample_temp" parameterTypeRef="uint16_C" shortDescription="Payload: Actual Sample temperautre"/>
-			<Parameter name="pl_muon_state" parameterTypeRef="bool" shortDescription="Payload: Muon detector state"/>
-			<Parameter name="pl_muon_data" parameterTypeRef="uint16" shortDescription="Payload: Muon detector data"/>
 			<Parameter name="flight_stage" parameterTypeRef="flightStageType" shortDescription="Flight stage"/>
 			<Parameter name="alt_altitude" parameterTypeRef="float_ft" shortDescription="Altitude from ground (calculated from pressure)"/>
 			<Parameter name="vertical_speed" parameterTypeRef="int32_mps" shortDescription="Vertical speed"/>
@@ -283,10 +254,6 @@
 			<Parameter name="angle_pitch" parameterTypeRef="int16" shortDescription="Angular pitch"/>
 			<Parameter name="angle_roll" parameterTypeRef="int16" shortDescription="Angular roll"/>
 			<Parameter name="pl_battery_voltage" parameterTypeRef="uint16_V" shortDescription="Battery Voltage"/>
-
-			<Parameter name="mag_orientation_north_x" parameterTypeRef="int16_mg" shortDescription="Magnetic orientation x (north)"/>
-			<Parameter name="mag_orientation_north_y" parameterTypeRef="int16_mg" shortDescription="Magnetic orientation y (east)"/>
-			<Parameter name="mag_orientation_north_z" parameterTypeRef="int16_mg" shortDescription="Magnetic orientation z (sky)"/>
 		</ParameterSet>
 		<ContainerSet>
 			<SequenceContainer name="FCPacket">

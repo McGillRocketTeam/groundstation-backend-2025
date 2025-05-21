@@ -40,11 +40,12 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
     protected static Map<String, SerialDataLink> uniqueIdentifierToLink = new HashMap<>();
     protected static Set<String> activePorts = new HashSet<>();
+    private static CommandHistoryPublisher ackPublisher;
+
 
     //todo maybe change this to an Optional
     private SerialPort currConnectedPort;
     private long timeOfLastPacket = System.currentTimeMillis();
-    private CommandHistoryPublisher ackPublisher;
 
     /**
      * For ground stations connected to FCs, the unique identifier is their radio frequency
@@ -53,8 +54,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private String uniqueIdentifier;
     private final Queue<TmPacket> packetQueue = new ConcurrentLinkedQueue<>();
     private final Map<String, Commanding.CommandId> ackStrToMostRecentCmdId = new HashMap<>();
-
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
 
 
     protected void connectToPort(SerialPort serialPort){
@@ -125,16 +126,14 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             return false;
         }
 
-        if(ackPublisher == null){
-            ackPublisher = YamcsServer.getServer().getProcessor("gs_backend", "realtime").getCommandHistoryPublisher();
-        }
         var cmdId = ackStrToMostRecentCmdId.get(ackName);
-        ackPublisher.publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+        getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
         ackStrToMostRecentCmdId.remove(ackName);
         return true;
     }
 
     protected abstract String getAckStrFromCmd(PreparedCommand command);
+    protected abstract String getCmdStrFromCmd(PreparedCommand command);
 
     private void disconnectFromCurrPort(){
         if(!isCurrentlyConnected()){
@@ -237,7 +236,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         return currConnectedPort != null;
     }
 
-    protected boolean writePort(String text){
+    protected boolean writePort(String text, Commanding.CommandId cmdId){
         if(!isCurrentlyConnected()){
             return false;
         }
@@ -249,34 +248,57 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         } catch (IOException e) {
             log.error("Failed to write " + text + " to " + currConnectedPort.getSystemPortName());
             log.error(e.getMessage());
+            getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.NOK);
             return false;
         }
+
+        getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+
         return true;
     }
 
-    @Override
-    public boolean sendCommand(PreparedCommand preparedCommand){
-        if(!isCurrentlyConnected()){
-            log.warn("Attempting to send serial device commands while not connected to this device");
-            return false;
-        }
-        String cmdStr = preparedCommand.getMetaCommand().getShortDescription().split(" ")[0];
-        String ackStr = getAckStrFromCmd(preparedCommand);
+    public static boolean sendCommandToAllFCs(PreparedCommand preparedCommand){
+        boolean sentOne = false;
 
-        ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
-        scheduler.schedule(() -> {
-            log.warn("Didn't receive ack for cmd: " + cmdStr);
+        for (SerialDataLink serialDataLink : SerialDataLink.uniqueIdentifierToLink.values()){
+            if(!serialDataLink.isCurrentlyConnected()){
+                serialDataLink.log.warn("Attempting to send serial device commands while not connected to this device");
+                continue;
+            }
+            String cmdStr = serialDataLink.getCmdStrFromCmd(preparedCommand);
+            String ackStr = serialDataLink.getAckStrFromCmd(preparedCommand);
 
-            if(ackPublisher == null){
-                ackPublisher = YamcsServer.getServer().getProcessor("gs_backend", "realtime").getCommandHistoryPublisher();
+            if(!serialDataLink.writePort(cmdStr, preparedCommand.getCommandId())){
+                continue;
             }
 
-            var cmdId = ackStrToMostRecentCmdId.get(ackStr);
-            ackPublisher.publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
-            ackStrToMostRecentCmdId.remove(ackStr);
+            sentOne = true;
 
-        }, 10, TimeUnit.SECONDS);
+            serialDataLink.ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
+            serialDataLink.scheduler.schedule(() -> {
+                serialDataLink.log.warn("Didn't receive ack for cmd: " + cmdStr);
 
-        return writePort(cmdStr);
+                var cmdId = serialDataLink.ackStrToMostRecentCmdId.get(ackStr);
+                getAckPublisher().publishAck(cmdId, "custom ack", serialDataLink.timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
+                serialDataLink.ackStrToMostRecentCmdId.remove(ackStr);
+
+            }, 10, TimeUnit.SECONDS);
+
+
+        }
+
+        return sentOne;
+    }
+
+     @Override
+    public boolean sendCommand(PreparedCommand preparedCommand){
+        return sendCommandToAllFCs(preparedCommand);
+    }
+
+    private static CommandHistoryPublisher getAckPublisher(){
+        if(ackPublisher == null){
+            ackPublisher = YamcsServer.getServer().getProcessor("gs_backend", "realtime").getCommandHistoryPublisher();
+        }
+        return ackPublisher;
     }
 }
