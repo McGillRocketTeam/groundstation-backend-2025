@@ -288,12 +288,13 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
          ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
          scheduler.schedule(() -> {
-             log.warn("Didn't receive ack for cmd: " + cmdStr);
+             if (ackStrToMostRecentCmdId.containsKey(ackStr)){
+                 log.warn("Didn't receive ack for cmd: " + cmdStr);
 
-             var cmdId = ackStrToMostRecentCmdId.get(ackStr);
-             getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
-             ackStrToMostRecentCmdId.remove(ackStr);
-
+                 var cmdId = ackStrToMostRecentCmdId.get(ackStr);
+                 getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
+                 ackStrToMostRecentCmdId.remove(ackStr);
+             }
          }, 10, TimeUnit.SECONDS);
          return true;
 

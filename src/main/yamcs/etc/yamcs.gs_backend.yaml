@@ -48,14 +48,14 @@ dataLinks:
   - name: fc-903
     class: ca.mrt.gs_backend.serialcomm.FCLink
     tmStream: tm_flight_computer_903
-    tcStream: tc_flight_computers
+    tcStream: tc_flight_computer_903
     frequency: "903"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: fc-433
     class: ca.mrt.gs_backend.serialcomm.FCLink
     tmStream: tm_flight_computer_433
-    tcStream: tc_flight_computers
+    tcStream: tc_flight_computer_433
     frequency: "433"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
@@ -106,8 +106,11 @@ streamConfig:
     - name: "tc_labJack"
       processor: "realtime"
       tcPatterns: ["/LabJackT7/.*"]
-    - name: "tc_flight_computers"
+    - name: "tc_flight_computer_433"
       processor: "realtime"
-      tcPatterns: ["/FC.*"]
+      tcPatterns: ["/FC433.*"]
+    - name: "tc_flight_computer_903"
+      processor: "realtime"
+      tcPatterns: ["/FC903.*"]
     - name: "tc_udp"
       processor: "realtime"
