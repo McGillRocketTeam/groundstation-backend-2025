@@ -41,7 +41,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     protected static Map<String, SerialDataLink> uniqueIdentifierToLink = new HashMap<>();
     protected static Set<String> activePorts = new HashSet<>();
     private static CommandHistoryPublisher ackPublisher;
-
+    private static Set<SerialListener> listeners = new HashSet<>();
 
     //todo maybe change this to an Optional
     private SerialPort currConnectedPort;
@@ -55,6 +55,16 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private final Queue<TmPacket> packetQueue = new ConcurrentLinkedQueue<>();
     private final Map<String, Commanding.CommandId> ackStrToMostRecentCmdId = new HashMap<>();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+
+
+    public static void addListener(SerialListener listener){
+        listeners.add(listener);
+    }
+
+    public static boolean removeListener(SerialListener listener){
+        return listeners.remove(listener);
+    }
 
 
 
@@ -103,6 +113,10 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                 dataIn(1, dataStr.length());
 
                 log.info(String.valueOf(serialPortEvent.getReceivedData().length));
+
+                for(SerialListener listener : listeners){
+                    listener.notifyUpdate(dataStr);
+                }
 
                 if(processAck(dataStr)){ //incoming message is an ack
                     return;
@@ -257,43 +271,33 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         return true;
     }
 
-    public static boolean sendCommandToAllFCs(PreparedCommand preparedCommand){
-        boolean sentOne = false;
-
-        for (SerialDataLink serialDataLink : SerialDataLink.uniqueIdentifierToLink.values()){
-            if(!serialDataLink.isCurrentlyConnected()){
-                serialDataLink.log.warn("Attempting to send serial device commands while not connected to this device");
-                continue;
-            }
-            String cmdStr = serialDataLink.getCmdStrFromCmd(preparedCommand);
-            String ackStr = serialDataLink.getAckStrFromCmd(preparedCommand);
-
-            if(!serialDataLink.writePort(cmdStr, preparedCommand.getCommandId())){
-                continue;
-            }
-
-            sentOne = true;
-
-            serialDataLink.ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
-            serialDataLink.scheduler.schedule(() -> {
-                serialDataLink.log.warn("Didn't receive ack for cmd: " + cmdStr);
-
-                var cmdId = serialDataLink.ackStrToMostRecentCmdId.get(ackStr);
-                getAckPublisher().publishAck(cmdId, "custom ack", serialDataLink.timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
-                serialDataLink.ackStrToMostRecentCmdId.remove(ackStr);
-
-            }, 10, TimeUnit.SECONDS);
-
-
-        }
-
-        return sentOne;
-    }
-
      @Override
     public boolean sendCommand(PreparedCommand preparedCommand){
-        return sendCommandToAllFCs(preparedCommand);
-    }
+         if(!isCurrentlyConnected()){
+             log.warn("Attempting to send serial device commands while not connected to this device");
+             return false;
+         }
+         String cmdStr = getCmdStrFromCmd(preparedCommand);
+         String ackStr = getAckStrFromCmd(preparedCommand);
+
+         if(!writePort(cmdStr, preparedCommand.getCommandId())){
+             log.error("Failed to write to port: " + cmdStr);
+             return false;
+         }
+
+
+         ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
+         scheduler.schedule(() -> {
+             log.warn("Didn't receive ack for cmd: " + cmdStr);
+
+             var cmdId = ackStrToMostRecentCmdId.get(ackStr);
+             getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
+             ackStrToMostRecentCmdId.remove(ackStr);
+
+         }, 10, TimeUnit.SECONDS);
+         return true;
+
+     }
 
     private static CommandHistoryPublisher getAckPublisher(){
         if(ackPublisher == null){
