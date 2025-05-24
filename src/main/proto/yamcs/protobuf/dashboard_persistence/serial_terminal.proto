@@ -1,0 +1,31 @@
+syntax = "proto2";
+
+package ca.mrt.serial_terminal.api;
+
+option java_package = "ca.mrt.serial_terminal.api";
+option java_outer_classname = "SerialTerminalProto";
+option java_multiple_files = true;
+
+import "yamcs/api/annotations.proto";
+import "yamcs/api/httpbody.proto";
+import "google/protobuf/empty.proto";
+
+service SerialTerminalAPI {
+
+  option (yamcs.api.label) = "SerialTerminalAPI";
+
+  rpc SubsribeSerialTerminal(SubscribeSerialTerminalRequest) returns (stream SerialTerminalData) {
+    option (yamcs.api.websocket) = {
+      topic: "serial_terminal"
+    };
+  }
+
+}
+
+message SubscribeSerialTerminalRequest {
+  repeated string dataLinks = 1;
+}
+
+message SerialTerminalData {
+  required string messages = 1;
+}
