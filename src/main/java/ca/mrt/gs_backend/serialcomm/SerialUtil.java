@@ -149,6 +149,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
             @Override
             public void serialEvent(SerialPortEvent serialPortEvent) {
                 String receivedMessage = new String(serialPortEvent.getReceivedData(), StandardCharsets.UTF_8);
+                log.info(receivedMessage);
 
                 if(receivedMessage.startsWith("ping_ack")){
                     String[] pingParams = receivedMessage.trim().split(":")[1].split(",");
@@ -164,11 +165,12 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
 
         try {
             Thread.sleep(500); //unsure if this is necessary, test without
-            byte[] pingMessage = "ping".getBytes(StandardCharsets.UTF_8);
+            byte[] pingMessage = "radio ping\n".getBytes(StandardCharsets.UTF_8);
             ExecutorService executor = Executors.newSingleThreadExecutor();
 
             Callable<String> task = () -> {
                 serialPort.writeBytes(pingMessage, pingMessage.length);
+//                log.info("ping written");
                 return "Task Completed";
             };
 
@@ -196,10 +198,13 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        while(stopwatch.elapsed(TimeUnit.SECONDS) < 5 && uniqueIdentifier[0] == null);
+        while(stopwatch.elapsed(TimeUnit.SECONDS) < 10 && uniqueIdentifier[0] == null);
 
         serialPort.removeDataListener();
         serialPort.closePort();
+//        log.info("closing port");
+
+//        log.info(uniqueIdentifier[0]);
 
         if(uniqueIdentifier[0] == null){
             return null;

@@ -26,18 +26,17 @@ services:
   - class: ca.mrt.gs_backend.serialcomm.SerialUtil
 
 dataLinks:
-  #for simulator
-  - name: udp-in
-    class: org.yamcs.tctm.UdpTmDataLink
-    stream: tm_flight_computers
-    port: 10015
-    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
-
   - name: lj-sim-in
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_labJack
     port: 10016
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+
+#  - name: udp-in
+#    class: org.yamcs.tctm.UdpTmDataLink
+#    stream: tm_flight_computers
+#    port: 10015
+#    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: udp-out
     class: org.yamcs.tctm.UdpTcDataLink
@@ -48,8 +47,16 @@ dataLinks:
 
   - name: fc-903
     class: ca.mrt.gs_backend.serialcomm.FCLink
-    tmStream: tm_flight_computers
+    tmStream: tm_flight_computer_903
+    tcStream: tc_flight_computers
     frequency: "903"
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+
+  - name: fc-433
+    class: ca.mrt.gs_backend.serialcomm.FCLink
+    tmStream: tm_flight_computer_433
+    tcStream: tc_flight_computers
+    frequency: "433"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: labJack
@@ -62,13 +69,13 @@ mdb:
   # Configuration of the active loaders
   # Valid loaders are: sheet, xtce or fully qualified name of the class
   - type: emptyNode
-    spec: "FC1"
+    spec: "FC903"
     subLoaders:
       - type: xtce
         args:
           file: mdb/MRT_XTCE.xml
   - type: emptyNode
-    spec: "FC2"
+    spec: "FC433"
     subLoaders:
       - type: xtce
         args:
@@ -82,13 +89,15 @@ mdb:
 # Configuration for streams created at server startup
 streamConfig:
   tm:
-    - name: "tm_flight_computers"
+    - name: "tm_flight_computer_903"
       processor: "realtime"
-      rootContainer: "/FC1/FlightComputer/FCPacket"
+      rootContainer: "/FC903/FlightComputer/FCPacket"
+    - name: "tm_flight_computer_433"
+      processor: "realtime"
+      rootContainer: "/FC433/FlightComputer/FCPacket"
     - name: "tm_labJack"
       processor: "realtime"
       rootContainer: "/LabJackT7/LabJackPacket"
-#    - name: "tm_dump"
   cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
   event: ["events_realtime", "events_dump"]
   param: ["pp_realtime", "pp_dump", "sys_param", "proc_param"]
@@ -97,7 +106,8 @@ streamConfig:
     - name: "tc_labJack"
       processor: "realtime"
       tcPatterns: ["/LabJackT7/.*"]
-    - name: "tc_udp"
+    - name: "tc_flight_computers"
       processor: "realtime"
       tcPatterns: ["/FC.*"]
-
+    - name: "tc_udp"
+      processor: "realtime"
