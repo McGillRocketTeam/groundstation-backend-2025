@@ -18,6 +18,11 @@ public class FCLink extends SerialDataLink{
 
     @Override
     protected String getCmdStrFromCmd(PreparedCommand command) {
-        return command.getMetaCommand().getShortDescription().split(" ")[0];
+        StringBuilder cmd = new StringBuilder(command.getMetaCommand().getShortDescription().split(" ")[0]);
+
+        for(var arg : command.getArgAssignment().entrySet()){
+            cmd.append(",").append(arg.getValue().getEngValue());
+        }
+        return cmd.toString();
     }
 }

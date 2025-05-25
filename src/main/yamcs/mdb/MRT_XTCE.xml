@@ -346,87 +346,15 @@
 	</TelemetryMetaData>
 	<CommandMetaData>
 		<ArgumentTypeSet>
-			<IntegerArgumentType name="CCSDS_Version_Type" signed="false">
+			<IntegerArgumentType name="temp_enum" signed="false">
 				<UnitSet/>
-				<IntegerDataEncoding sizeInBits="3"/>
-			</IntegerArgumentType>
-			<BooleanArgumentType name="CCSDS_Type_Type" zeroStringValue="TM" oneStringValue="TC">
-				<UnitSet/>
-				<IntegerDataEncoding sizeInBits="1"/>
-			</BooleanArgumentType>
-			<BooleanArgumentType name="CCSDS_Sec_Hdr_Flag_Type" zeroStringValue="NotPresent" oneStringValue="Present">
-				<UnitSet/>
-				<IntegerDataEncoding sizeInBits="1"/>
-			</BooleanArgumentType>
-			<IntegerArgumentType name="CCSDS_APID_Type" signed="false">
-				<UnitSet/>
-				<IntegerDataEncoding sizeInBits="11"/>
-			</IntegerArgumentType>
-			<EnumeratedArgumentType name="CCSDS_Group_Flags_Type">
-				<UnitSet/>
-				<IntegerDataEncoding sizeInBits="2"/>
-				<EnumerationList>
-					<Enumeration value="0" label="Continuation"/>
-					<Enumeration value="1" label="First"/>
-					<Enumeration value="2" label="Last"/>
-					<Enumeration value="3" label="Standalone"/>
-				</EnumerationList>
-			</EnumeratedArgumentType>
-			<IntegerArgumentType name="Packet_ID_Type" signed="false">
-				<UnitSet/>
-				<IntegerDataEncoding sizeInBits="16"/>
-			</IntegerArgumentType>
-			<IntegerArgumentType name="Battery_Type" signed="false">
-				<UnitSet/>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"/>
+				<IntegerDataEncoding sizeInBits="8"/>
 				<ValidRangeSet>
-					<ValidRange minInclusive="1" maxInclusive="3"/>
+					<ValidRange maxInclusive="7" minInclusive="0"/>
 				</ValidRangeSet>
 			</IntegerArgumentType>
 		</ArgumentTypeSet>
 		<MetaCommandSet>
-			<MetaCommand name="CCSDSPacket" abstract="true">
-				<ArgumentList>
-					<Argument argumentTypeRef="CCSDS_Version_Type" name="CCSDS_Version"/>
-					<Argument argumentTypeRef="CCSDS_Type_Type" name="CCSDS_Type"/>
-					<Argument argumentTypeRef="CCSDS_Sec_Hdr_Flag_Type" name="CCSDS_Sec_Hdr_Flag"/>
-					<Argument argumentTypeRef="CCSDS_APID_Type" name="CCSDS_APID"/>
-					<Argument argumentTypeRef="CCSDS_Group_Flags_Type" name="CCSDS_Group_Flags"/>
-				</ArgumentList>
-				<CommandContainer name="CCSDSPacket">
-					<EntryList>
-						<ArgumentRefEntry argumentRef="CCSDS_Version"/>
-						<ArgumentRefEntry argumentRef="CCSDS_Type"/>
-						<ArgumentRefEntry argumentRef="CCSDS_Sec_Hdr_Flag"/>
-						<ArgumentRefEntry argumentRef="CCSDS_APID"/>
-						<ArgumentRefEntry argumentRef="CCSDS_Group_Flags"/>
-						<!-- Final value is set by post-processor after the command is submitted. -->
-						<FixedValueEntry name="CCSDS_Source_Sequence_Count" binaryValue="0000" sizeInBits="14"/>
-						<!-- Final value is set by post-processor after the command is submitted. -->
-						<FixedValueEntry name="CCSDS_Packet_Length" binaryValue="0000" sizeInBits="16"/>
-					</EntryList>
-				</CommandContainer>
-			</MetaCommand>
-			<MetaCommand name="MyProjectPacket" abstract="true">
-				<BaseMetaCommand metaCommandRef="CCSDSPacket">
-					<ArgumentAssignmentList>
-						<ArgumentAssignment argumentName="CCSDS_Version" argumentValue="0"/>
-						<ArgumentAssignment argumentName="CCSDS_Type" argumentValue="TC"/>
-						<ArgumentAssignment argumentName="CCSDS_Sec_Hdr_Flag" argumentValue="NotPresent"/>
-						<ArgumentAssignment argumentName="CCSDS_APID" argumentValue="101"/>
-						<ArgumentAssignment argumentName="CCSDS_Group_Flags" argumentValue="Standalone"/>
-					</ArgumentAssignmentList>
-				</BaseMetaCommand>
-				<ArgumentList>
-					<Argument argumentTypeRef="Packet_ID_Type" name="Packet_ID"/>
-				</ArgumentList>
-				<CommandContainer name="MyProjectPacket">
-					<EntryList>
-						<ArgumentRefEntry argumentRef="Packet_ID"/>
-					</EntryList>
-					<BaseContainer containerRef="CCSDSPacket"/>
-				</CommandContainer>
-			</MetaCommand>
 			<MetaCommand name="ejection_arm" shortDescription="ea ACK1_0">
 			</MetaCommand>
 			<MetaCommand name="disarm_recovery" shortDescription="ed ACK1_1">
@@ -475,7 +403,11 @@
 			</MetaCommand>
 			<MetaCommand name="payload_stop_cooling" shortDescription="bd ACK5_255">
 			</MetaCommand>
-			<MetaCommand name="payload_set_temp" shortDescription="beX ACK5_255">
+			<MetaCommand name="payload_set_temp" shortDescription="be ACK5_255">
+				<ArgumentList>
+					<Argument name="temp_enum" argumentTypeRef="temp_enum">
+					</Argument>
+				</ArgumentList>
 			</MetaCommand>
 			<MetaCommand name="payload_launch_mode" shortDescription="bb ACK5_255">
 			</MetaCommand>
