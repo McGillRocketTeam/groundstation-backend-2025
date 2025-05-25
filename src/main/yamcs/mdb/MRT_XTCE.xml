@@ -463,43 +463,55 @@
 			</MetaCommand>
 			<MetaCommand name="reset_prop_boards_valves_state" shortDescription="pr ACK2_11">
 			</MetaCommand>
-			<MetaCommand name="payload_start_sampling" shortDescription="bs">
+			<MetaCommand name="payload_start_sampling" shortDescription="bs ACK5_1">
 			</MetaCommand>
-			<MetaCommand name="payload_stop_sampling" shortDescription="bt">
+			<MetaCommand name="payload_stop_sampling" shortDescription="bt ACK5_2">
 			</MetaCommand>
-			<MetaCommand name="payload_scrub" shortDescription="bo">
+			<MetaCommand name="payload_scrub" shortDescription="bo ACK5_0">
 			</MetaCommand>
-			<MetaCommand name="payload_landed_(for_testing)" shortDescription="bl">
+			<MetaCommand name="payload_landed_(for_testing)" shortDescription="bl ACK5_3">
 			</MetaCommand>
-			<MetaCommand name="video_recorder_power_on" shortDescription="v1">
+			<MetaCommand name="payload_start_cooling" shortDescription="bc ACK5_255">
 			</MetaCommand>
-			<MetaCommand name="video_recorder_start" shortDescription="v2">
+			<MetaCommand name="payload_stop_cooling" shortDescription="bd ACK5_255">
 			</MetaCommand>
-			<MetaCommand name="video_recorder_stop" shortDescription="v3">
+			<MetaCommand name="payload_set_temp" shortDescription="beX ACK5_255">
 			</MetaCommand>
-			<MetaCommand name="start_timer" shortDescription="hs">
+			<MetaCommand name="payload_launch_mode" shortDescription="bb ACK5_255">
 			</MetaCommand>
-			<MetaCommand name="stop_timer" shortDescription="ho">
+			<MetaCommand name="payload_pad_mode" shortDescription="bp ACK5_255">
 			</MetaCommand>
-			<MetaCommand name="manual_flight_termination" shortDescription="ha">
+			<MetaCommand name="video_recorder_power_on" shortDescription="v1 ACK3_0">
 			</MetaCommand>
-			<MetaCommand name="parachute_ejection" shortDescription="hp">
+			<MetaCommand name="video_recorder_start" shortDescription="v2 ACK3_1">
 			</MetaCommand>
-			<MetaCommand name="balloon_actuator_release" shortDescription="hr">
+			<MetaCommand name="video_recorder_stop" shortDescription="v3 ACK3_2">
 			</MetaCommand>
-			<MetaCommand name="balloon_actuator_lock" shortDescription="hl">
+			<MetaCommand name="video_recorder_power_off" shortDescription="v4 ACK3_3">
 			</MetaCommand>
-			<MetaCommand name="parachute_actuator_lock" shortDescription="hc">
+			<MetaCommand name="start_timer" shortDescription="hs ACK6_3">
 			</MetaCommand>
-			<MetaCommand name="parachute_actuator_unlock" shortDescription="ho">
+			<MetaCommand name="stop_timer" shortDescription="ho ACK6_4">
 			</MetaCommand>
-			<MetaCommand name="first_timer_start_(termination_timer)" shortDescription="hs">
+			<MetaCommand name="manual_flight_termination" shortDescription="ha NA">
 			</MetaCommand>
-			<MetaCommand name="first_timer_stop" shortDescription="ht">
+			<MetaCommand name="parachute_ejection" shortDescription="hp ACK6_255">
 			</MetaCommand>
-			<MetaCommand name="second_timer_start_(parachute)" shortDescription="hm">
+			<MetaCommand name="balloon_actuator_release" shortDescription="hr ACK6_1">
 			</MetaCommand>
-			<MetaCommand name="second_timer_stop" shortDescription="hn">
+			<MetaCommand name="balloon_actuator_lock" shortDescription="hl ACK6_2">
+			</MetaCommand>
+			<MetaCommand name="parachute_actuator_lock" shortDescription="hc ACK6_255">
+			</MetaCommand>
+			<MetaCommand name="parachute_actuator_unlock" shortDescription="ho NA">
+			</MetaCommand>
+			<MetaCommand name="first_timer_start_(termination_timer)" shortDescription="hs NA">
+			</MetaCommand>
+			<MetaCommand name="first_timer_stop" shortDescription="ht ACK6_255">
+			</MetaCommand>
+			<MetaCommand name="second_timer_start_(parachute)" shortDescription="hm ACK6_255">
+			</MetaCommand>
+			<MetaCommand name="second_timer_stop" shortDescription="hn ACK6_255">
 			</MetaCommand>
 		</MetaCommandSet>
 	</CommandMetaData>
