@@ -355,7 +355,7 @@
 			</IntegerArgumentType>
 		</ArgumentTypeSet>
 		<MetaCommandSet>
-			<MetaCommand name="ejection_arm" shortDescription="ea ACK1_0">
+			<MetaCommand name="arm_recovery" shortDescription="ea ACK1_0">
 			</MetaCommand>
 			<MetaCommand name="disarm_recovery" shortDescription="ed ACK1_1">
 			</MetaCommand>
@@ -375,13 +375,13 @@
 			</MetaCommand>
 			<MetaCommand name="vent_valve_de-energize" shortDescription="p1 ACK2_1">
 			</MetaCommand>
-			<MetaCommand name="run_valve_arming" shortDescription="p2 ACK2_2">
+			<MetaCommand name="MOV_arming" shortDescription="p2 ACK2_2">
 			</MetaCommand>
-			<MetaCommand name="run_valve_disarming" shortDescription="p3 ACK2_3">
+			<MetaCommand name="MOV_disarming" shortDescription="p3 ACK2_3">
 			</MetaCommand>
-			<MetaCommand name="UFD_valve_energize" shortDescription="p4 ACK2_4">
+			<MetaCommand name="FDOV_energize" shortDescription="p4 ACK2_4">
 			</MetaCommand>
-			<MetaCommand name="UFD_valve_de-energize" shortDescription="p5 ACK2_5">
+			<MetaCommand name="FDOV_de-energize" shortDescription="p5 ACK2_5">
 			</MetaCommand>
 			<MetaCommand name="propulsion_on" shortDescription="pi ACK2_6">
 			</MetaCommand>
