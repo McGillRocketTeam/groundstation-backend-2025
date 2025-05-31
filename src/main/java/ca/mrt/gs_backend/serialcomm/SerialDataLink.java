@@ -41,7 +41,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     protected static Map<String, SerialDataLink> uniqueIdentifierToLink = new HashMap<>();
     protected static Set<String> activePorts = new HashSet<>();
     private static CommandHistoryPublisher ackPublisher;
-    private static Set<SerialListener> listeners = new HashSet<>();
+    private Set<SerialListener> listeners = new HashSet<>();
 
     //todo maybe change this to an Optional
     private SerialPort currConnectedPort;
@@ -58,11 +58,11 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
 
 
-    public static void addListener(SerialListener listener){
+    public void addListener(SerialListener listener){
         listeners.add(listener);
     }
 
-    public static boolean removeListener(SerialListener listener){
+    public boolean removeListener(SerialListener listener){
         return listeners.remove(listener);
     }
 
@@ -244,6 +244,10 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             return "Control Box";
         }
         return (uniqueIdentifier + "Hz");
+    }
+
+    public static SerialDataLink getLinkByIdentifier(String identifier){
+        return uniqueIdentifierToLink.get(identifier);
     }
 
     public boolean isCurrentlyConnected(){

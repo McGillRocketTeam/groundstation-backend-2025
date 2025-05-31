@@ -27,5 +27,6 @@ message SubscribeSerialTerminalRequest {
 }
 
 message SerialTerminalData {
-  required string messages = 1;
+  required string link = 1;
+  required string message = 2;
 }
