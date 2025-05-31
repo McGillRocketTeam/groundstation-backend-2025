@@ -32,11 +32,11 @@ dataLinks:
     port: 10016
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
-#  - name: udp-in
-#    class: org.yamcs.tctm.UdpTmDataLink
-#    stream: tm_flight_computers
-#    port: 10015
-#    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+  - name: udp-in
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tm_flight_computer_903
+    port: 10015
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: udp-out
     class: org.yamcs.tctm.UdpTcDataLink
