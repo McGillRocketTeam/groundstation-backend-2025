@@ -20,6 +20,18 @@ service SerialTerminalAPI {
     };
   }
 
+  rpc WriteSerialTerminal(WriteSerialTerminalRequest) returns (google.protobuf.Empty)  {
+    option (yamcs.api.route) = {
+      post: "/api/serial_terminal"
+      body: "*"
+    };
+  }
+
+}
+
+message WriteSerialTerminalRequest {
+  required string message = 1;
+  repeated string dataLinks = 2;
 }
 
 message SubscribeSerialTerminalRequest {

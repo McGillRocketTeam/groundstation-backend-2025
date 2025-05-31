@@ -5,6 +5,8 @@ import ca.mrt.gs_backend.serialcomm.SerialListener;
 import ca.mrt.serial_terminal.api.AbstractSerialTerminalAPI;
 import ca.mrt.serial_terminal.api.SerialTerminalData;
 import ca.mrt.serial_terminal.api.SubscribeSerialTerminalRequest;
+import ca.mrt.serial_terminal.api.WriteSerialTerminalRequest;
+import com.google.protobuf.Empty;
 import org.yamcs.api.Observer;
 import org.yamcs.http.Context;
 import org.yamcs.http.NotFoundException;
@@ -19,16 +21,11 @@ public class SerialTerminalAPI extends AbstractSerialTerminalAPI<Context> {
     @Override
     public void subsribeSerialTerminal(Context ctx, SubscribeSerialTerminalRequest request, Observer<SerialTerminalData> observer) {
 
-        SerialListener listener = newData -> {
-            SerialTerminalData serialTerminalData = SerialTerminalData.newBuilder()
-                    .setMessage(newData)
-                    .build();
-            observer.next(serialTerminalData);
-        };
+
 
         List<Runnable> cancelListenerList = new ArrayList<>();
 
-        Pattern pattern = Pattern.compile("FC(\\d+)");
+        Pattern pattern = Pattern.compile("fc-(\\d+)");
 
         for (String link : request.getDataLinksList()) {
 
@@ -37,6 +34,14 @@ public class SerialTerminalAPI extends AbstractSerialTerminalAPI<Context> {
                 String identifer = link.equals("control_box") ? "control_box" : matcher.group(1);
                 SerialDataLink dataLink = SerialDataLink.getLinkByIdentifier(identifer);
                 if (dataLink != null) {
+                    SerialListener listener = newData -> {
+                        SerialTerminalData serialTerminalData = SerialTerminalData.newBuilder()
+                                .setMessage(newData)
+                                .setLink(dataLink.getName())
+                                .build();
+                        observer.next(serialTerminalData);
+                    };
+
                     dataLink.addListener(listener);
                     cancelListenerList.add(() -> dataLink.removeListener(listener));
                 } else {
@@ -52,5 +57,26 @@ public class SerialTerminalAPI extends AbstractSerialTerminalAPI<Context> {
                 runnable.run();
             }
         });
+    }
+
+    @Override
+    public void writeSerialTerminal(Context ctx, WriteSerialTerminalRequest request, Observer<Empty> observer) {
+        Pattern pattern = Pattern.compile("fc-(\\d+)");
+
+        for (String link : request.getDataLinksList()) {
+
+            Matcher matcher = pattern.matcher(link);
+            if (matcher.find() || link.equals("control_box")) {
+                String identifer = link.equals("control_box") ? "control_box" : matcher.group(1);
+                SerialDataLink dataLink = SerialDataLink.getLinkByIdentifier(identifer);
+                if (dataLink != null) {
+                    dataLink.writePort(request.getMessage(), null);
+                } else {
+                    observer.completeExceptionally(new NotFoundException("Could not find serial data link from write serial terminal request " + link));
+                }
+            } else {
+                observer.completeExceptionally(new NotFoundException("Unrecognized data link format from write serial terminal request"));
+            }
+        }
     }
 }

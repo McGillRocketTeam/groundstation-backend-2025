@@ -36,12 +36,12 @@ import java.util.concurrent.TimeUnit;
  * The way in which these SerialDataLink instances are connected to the correct device on the correct serial port
  * is controlled by the {@link SerialUtil} class.
  */
-public abstract class SerialDataLink extends AbstractTcTmParamLink implements Runnable{
+public abstract class SerialDataLink extends AbstractTcTmParamLink implements Runnable {
 
     protected static Map<String, SerialDataLink> uniqueIdentifierToLink = new HashMap<>();
     protected static Set<String> activePorts = new HashSet<>();
     private static CommandHistoryPublisher ackPublisher;
-    private Set<SerialListener> listeners = new HashSet<>();
+    private final Set<SerialListener> listeners = new HashSet<>();
 
     //todo maybe change this to an Optional
     private SerialPort currConnectedPort;
@@ -57,36 +57,34 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
 
-
-    public void addListener(SerialListener listener){
+    public void addListener(SerialListener listener) {
         listeners.add(listener);
     }
 
-    public boolean removeListener(SerialListener listener){
+    public boolean removeListener(SerialListener listener) {
         return listeners.remove(listener);
     }
 
 
-
-    protected void connectToPort(SerialPort serialPort){
-        if(isCurrentlyConnected()){
+    protected void connectToPort(SerialPort serialPort) {
+        if (isCurrentlyConnected()) {
             log.error("Cannot connect to new serial port before disconnecting from existing port: "
                     + currConnectedPort.getSystemPortName());
             return;
         }
 
-        if(!serialPort.openPort()){
+        if (!serialPort.openPort()) {
             log.error("Failed to open new serial port: " + serialPort.getSystemPortName());
             return;
         }
 
-        serialPort.setComPortParameters(9600,8,1,0);
+        serialPort.setComPortParameters(9600, 8, 1, 0);
 
         serialPort.addDataListener(new SerialPortMessageListener() {
             @Override
             public byte[] getMessageDelimiter() {
                 //TODO verify if packets end with \n or \r or \n\r
-                return new byte[]{'<','L','E','O','?','>'};
+                return new byte[]{'<', 'L', 'E', 'O', '?', '>'};
                 //<LEO?>
             }
 
@@ -103,26 +101,26 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
             @Override
             public void serialEvent(SerialPortEvent serialPortEvent) {
-                if(serialPortEvent.getEventType() == SerialPort.LISTENING_EVENT_PORT_DISCONNECTED){
+                if (serialPortEvent.getEventType() == SerialPort.LISTENING_EVENT_PORT_DISCONNECTED) {
                     log.warn("Serial port " + currConnectedPort.getSystemPortName() + " disconnected");
                     disconnectFromCurrPort();
                 }
                 timeOfLastPacket = System.currentTimeMillis();
                 var temp = (new String(serialPortEvent.getReceivedData()));
-                String dataStr = temp.substring(0, temp.length()-6);
+                String dataStr = temp.substring(0, temp.length() - 6);
                 dataIn(1, dataStr.length());
 
                 log.info(String.valueOf(serialPortEvent.getReceivedData().length));
 
-                for(SerialListener listener : listeners){
+                for (SerialListener listener : listeners) {
                     listener.notifyUpdate(dataStr);
                 }
 
-                if(processAck(dataStr)){ //incoming message is an ack
+                if (processAck(dataStr)) { //incoming message is an ack
                     return;
                 }
                 byte[] trimmed_array = new byte[86];
-                System.arraycopy(serialPortEvent.getReceivedData(),0,trimmed_array,0,trimmed_array.length);
+                System.arraycopy(serialPortEvent.getReceivedData(), 0, trimmed_array, 0, trimmed_array.length);
 
                 TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
 
@@ -134,9 +132,9 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         currConnectedPort = serialPort;
     }
 
-    private boolean processAck(String ackText){
+    private boolean processAck(String ackText) {
         String ackName = ackText.trim();
-        if(!ackStrToMostRecentCmdId.containsKey(ackName)){
+        if (!ackStrToMostRecentCmdId.containsKey(ackName)) {
             return false;
         }
 
@@ -147,16 +145,17 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     }
 
     protected abstract String getAckStrFromCmd(PreparedCommand command);
+
     protected abstract String getCmdStrFromCmd(PreparedCommand command);
 
-    private void disconnectFromCurrPort(){
-        if(!isCurrentlyConnected()){
+    private void disconnectFromCurrPort() {
+        if (!isCurrentlyConnected()) {
             log.error("Cannot disconnect from port since no port is connected");
             return;
         }
 
         currConnectedPort.removeDataListener();
-        if(!currConnectedPort.closePort()){
+        if (!currConnectedPort.closePort()) {
             log.error("Cannot close port: " + currConnectedPort.getSystemPortName());
         }
         activePorts.remove(currConnectedPort.getSystemPortName());
@@ -175,7 +174,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
     @Override
     protected void doStop() {
-        if(isCurrentlyConnected()){
+        if (isCurrentlyConnected()) {
             disconnectFromCurrPort();
         }
         notifyStopped();
@@ -184,8 +183,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
     @Override
     public void run() {
-        while(isRunningAndEnabled()){
-            if(!packetQueue.isEmpty()){
+        while (isRunningAndEnabled()) {
+            if (!packetQueue.isEmpty()) {
                 TmPacket tmPacket = packetQueue.poll();
                 processPacket(tmPacket);
             }
@@ -195,32 +194,34 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     //TODO maybe change this to whether or not a serial connection is currently active
     @Override
     protected Status connectionStatus() {
-        return System.currentTimeMillis()-timeOfLastPacket < 5000 ? Status.OK : Status.UNAVAIL;
+        return System.currentTimeMillis() - timeOfLastPacket < 5000 ? Status.OK : Status.UNAVAIL;
     }
 
     @Override
     public void init(String instance, String name, YConfiguration config) throws ConfigurationException {
         super.init(instance, name, config);
-        if(config.containsKey("frequency")){
+        if (config.containsKey("frequency")) {
             uniqueIdentifier = config.getString("frequency");
         } else {
             uniqueIdentifier = "control_box";
         }
 
-        if(uniqueIdentifierToLink.put(uniqueIdentifier, this) != null){
+        if (uniqueIdentifierToLink.put(uniqueIdentifier, this) != null) {
             throw new ConfigurationException("Cannot have duplicate unique identifiers (can't have 2 control boxes, 2 FCs with same frequency, etc.)");
         }
 
-        if(!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.matches("^\\d+.\\d+$")){
+        if (!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.matches("^\\d+.\\d+$")) {
             throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number representing a frequency");
         }
     }
+
     @Override
-    public void doEnable(){
+    public void doEnable() {
         Thread thread = new Thread(this);
         thread.setName(getClass().getSimpleName() + "-" + linkName + "-" + uniqueIdentifier);
         thread.start();
     }
+
     @Override
     public void doDisable() {
         if (isCurrentlyConnected()) {
@@ -232,30 +233,30 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     public String getDetailedStatus() {
         if (isDisabled()) {
             return "DISABLED";
-        } else if(isCurrentlyConnected()){
-            return "OK,"+ getIdentifier() +" receiving on port " + currConnectedPort.getSystemPortName();
+        } else if (isCurrentlyConnected()) {
+            return "OK," + getIdentifier() + " receiving on port " + currConnectedPort.getSystemPortName();
         } else {
-            return "UNAVAILABLE, "+ getIdentifier() +" not connected to any port";
+            return "UNAVAILABLE, " + getIdentifier() + " not connected to any port";
         }
     }
 
-    private String getIdentifier(){
-        if(uniqueIdentifier.equals("control_box")){
+    private String getIdentifier() {
+        if (uniqueIdentifier.equals("control_box")) {
             return "Control Box";
         }
         return (uniqueIdentifier + "Hz");
     }
 
-    public static SerialDataLink getLinkByIdentifier(String identifier){
+    public static SerialDataLink getLinkByIdentifier(String identifier) {
         return uniqueIdentifierToLink.get(identifier);
     }
 
-    public boolean isCurrentlyConnected(){
+    public boolean isCurrentlyConnected() {
         return currConnectedPort != null;
     }
 
-    protected boolean writePort(String text, Commanding.CommandId cmdId){
-        if(!isCurrentlyConnected()){
+    public boolean writePort(String text, Commanding.CommandId cmdId) {
+        if (!isCurrentlyConnected()) {
             return false;
         }
 
@@ -266,46 +267,50 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         } catch (IOException e) {
             log.error("Failed to write " + text + " to " + currConnectedPort.getSystemPortName());
             log.error(e.getMessage());
-            getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.NOK);
+            if (cmdId != null) {
+                getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.NOK);
+            }
             return false;
         }
 
-        getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+        if (cmdId != null) {
+            getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+        }
 
         return true;
     }
 
-     @Override
-    public boolean sendCommand(PreparedCommand preparedCommand){
-         if(!isCurrentlyConnected()){
-             log.warn("Attempting to send serial device commands while not connected to this device");
-             return false;
-         }
-         String cmdStr = getCmdStrFromCmd(preparedCommand);
-         String ackStr = getAckStrFromCmd(preparedCommand);
+    @Override
+    public boolean sendCommand(PreparedCommand preparedCommand) {
+        if (!isCurrentlyConnected()) {
+            log.warn("Attempting to send serial device commands while not connected to this device");
+            return false;
+        }
+        String cmdStr = getCmdStrFromCmd(preparedCommand);
+        String ackStr = getAckStrFromCmd(preparedCommand);
 
-         if(!writePort(cmdStr, preparedCommand.getCommandId())){
-             log.error("Failed to write to port: " + cmdStr);
-             return false;
-         }
+        if (!writePort(cmdStr, preparedCommand.getCommandId())) {
+            log.error("Failed to write to port: " + cmdStr);
+            return false;
+        }
 
 
-         ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
-         scheduler.schedule(() -> {
-             if (ackStrToMostRecentCmdId.containsKey(ackStr)){
-                 log.warn("Didn't receive ack for cmd: " + cmdStr);
+        ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
+        scheduler.schedule(() -> {
+            if (ackStrToMostRecentCmdId.containsKey(ackStr)) {
+                log.warn("Didn't receive ack for cmd: " + cmdStr);
 
-                 var cmdId = ackStrToMostRecentCmdId.get(ackStr);
-                 getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
-                 ackStrToMostRecentCmdId.remove(ackStr);
-             }
-         }, 10, TimeUnit.SECONDS);
-         return true;
+                var cmdId = ackStrToMostRecentCmdId.get(ackStr);
+                getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
+                ackStrToMostRecentCmdId.remove(ackStr);
+            }
+        }, 10, TimeUnit.SECONDS);
+        return true;
 
-     }
+    }
 
-    private static CommandHistoryPublisher getAckPublisher(){
-        if(ackPublisher == null){
+    private static CommandHistoryPublisher getAckPublisher() {
+        if (ackPublisher == null) {
             ackPublisher = YamcsServer.getServer().getProcessor("gs_backend", "realtime").getCommandHistoryPublisher();
         }
         return ackPublisher;
