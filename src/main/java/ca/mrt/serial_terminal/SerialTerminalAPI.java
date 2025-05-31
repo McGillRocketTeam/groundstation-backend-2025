@@ -21,7 +21,7 @@ public class SerialTerminalAPI extends AbstractSerialTerminalAPI<Context> {
 
         SerialListener listener = newData -> {
             SerialTerminalData serialTerminalData = SerialTerminalData.newBuilder()
-                    .setMessages(newData)
+                    .setMessage(newData)
                     .build();
             observer.next(serialTerminalData);
         };
