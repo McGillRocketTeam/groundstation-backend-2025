@@ -151,7 +151,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
                 String receivedMessage = new String(serialPortEvent.getReceivedData(), StandardCharsets.UTF_8);
                 log.info(receivedMessage);
 
-                if(receivedMessage.startsWith("ping_ack")){
+                if(receivedMessage.contains("ping_ack")){
                     String[] pingParams = receivedMessage.trim().split(":")[1].split(",");
 
                     if(pingParams[0].equals("control_box")){
