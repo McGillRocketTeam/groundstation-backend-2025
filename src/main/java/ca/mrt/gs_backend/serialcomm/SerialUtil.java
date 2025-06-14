@@ -24,7 +24,7 @@ import java.util.concurrent.*;
  * This class keeps track of all existing comports {@link #existingSerialPorts} which have been tested for device connectivity previously but
  * could not be mapped to a SerialDataLink instance.
  * <p>
- * Every 20s it checks for new comports which have not been pinged yet. Every 100s it re-pings all previously pinged
+ * Every 10s it checks for new comports which have not been pinged yet. Every 30s it re-pings all previously pinged
  * comports to check if any new device was connected. Whenever it 'checks' a comport, it pings and awaits a response.
  * If it receives a response of the correct format, its able to identify if the comport has an FC or a control box connected
  * and if it is an FC, the radio frequency that the FC is on. From this, it will attempt to find a {@link SerialDataLink} instance
@@ -48,7 +48,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
     @Override
     protected void doStart() {
         executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(this, 0, 20, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(this, 0, 10, TimeUnit.SECONDS);
         notifyStarted();
     }
 
@@ -68,7 +68,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
 
         checkInactivePortsAgainCounter++;
         for(SerialPort serialPort : SerialPort.getCommPorts()){
-            if(!existingSerialPorts.contains(serialPort.getSystemPortName()) || checkInactivePortsAgainCounter > 5){
+            if(!existingSerialPorts.contains(serialPort.getSystemPortName()) || checkInactivePortsAgainCounter > 3){
                 existingSerialPorts.add(serialPort.getSystemPortName());
 
                 if(SerialDataLink.activePorts.contains(serialPort.getSystemPortName())){
