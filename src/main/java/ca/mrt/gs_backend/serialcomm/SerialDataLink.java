@@ -107,16 +107,18 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                 }
                 timeOfLastPacket = System.currentTimeMillis();
                 var temp = (new String(serialPortEvent.getReceivedData()));
-                String dataStr = temp.substring(0, temp.length() - 6);
+                String dataStr = temp.substring(0, temp.length() - 6).strip();
                 dataIn(1, dataStr.length());
 
-                log.info(String.valueOf(serialPortEvent.getReceivedData().length));
+                log.info(dataStr);
+//                log.info(String.valueOf(serialPortEvent.getReceivedData().length));
 
                 for (SerialListener listener : listeners) {
                     listener.notifyUpdate(dataStr);
                 }
 
                 if (processAck(dataStr)) { //incoming message is an ack
+                    log.info("Received ack: " + dataStr);
                     return;
                 }
                 byte[] trimmed_array = new byte[86];

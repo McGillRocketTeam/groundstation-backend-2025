@@ -70,7 +70,7 @@ public class SerialTerminalAPI extends AbstractSerialTerminalAPI<Context> {
                 String identifer = link.equals("control_box") ? "control_box" : matcher.group(1);
                 SerialDataLink dataLink = SerialDataLink.getLinkByIdentifier(identifer);
                 if (dataLink != null) {
-                    dataLink.writePort(request.getMessage(), null);
+                    dataLink.writePort(request.getMessage().strip(), null);
                 } else {
                     observer.completeExceptionally(new NotFoundException("Could not find serial data link from write serial terminal request " + link));
                 }
@@ -78,5 +78,6 @@ public class SerialTerminalAPI extends AbstractSerialTerminalAPI<Context> {
                 observer.completeExceptionally(new NotFoundException("Unrecognized data link format from write serial terminal request"));
             }
         }
+        observer.complete();
     }
 }
