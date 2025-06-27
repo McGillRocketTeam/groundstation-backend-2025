@@ -9,8 +9,12 @@ import org.yamcs.YConfiguration;
 import org.yamcs.YamcsServer;
 import org.yamcs.cmdhistory.CommandHistoryPublisher;
 import org.yamcs.commanding.PreparedCommand;
+import org.yamcs.mdb.Mdb;
+import org.yamcs.mdb.MdbFactory;
 import org.yamcs.protobuf.Commanding;
 import org.yamcs.tctm.AbstractTcTmParamLink;
+import org.yamcs.xtce.MetaCommand;
+import org.yamcs.xtce.XtceDb;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -84,7 +88,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             @Override
             public byte[] getMessageDelimiter() {
                 //TODO verify if packets end with \n or \r or \n\r
-                return new byte[]{'<', 'L', 'E', 'O', '?', '>'};
+                return getDelimiter();
                 //<LEO?>
             }
 
@@ -107,14 +111,17 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                 }
                 timeOfLastPacket = System.currentTimeMillis();
                 var temp = (new String(serialPortEvent.getReceivedData()));
-                String dataStr = temp.substring(0, temp.length() - 6).strip();
-                dataIn(1, dataStr.length());
+                log.info(temp);
 
-                log.info(dataStr);
-//                log.info(String.valueOf(serialPortEvent.getReceivedData().length));
+                String dataStr = temp.replace(new String(getDelimiter()), "");
+                dataIn(1, dataStr.length());
 
                 for (SerialListener listener : listeners) {
                     listener.notifyUpdate(dataStr);
+                }
+
+                if (uniqueIdentifier.equals("control_box")) {
+                    return;
                 }
 
                 if (processAck(dataStr)) { //incoming message is an ack
@@ -137,7 +144,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private boolean processAck(String ackText) {
         String ackName = ackText.trim();
         if (!ackStrToMostRecentCmdId.containsKey(ackName)) {
-            return false;
+            return ackText.toUpperCase().contains("ACK");
         }
 
         var cmdId = ackStrToMostRecentCmdId.get(ackName);
@@ -149,6 +156,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     protected abstract String getAckStrFromCmd(PreparedCommand command);
 
     protected abstract String getCmdStrFromCmd(PreparedCommand command);
+
+    protected abstract byte[] getDelimiter();
 
     private void disconnectFromCurrPort() {
         if (!isCurrentlyConnected()) {
@@ -306,7 +315,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                 getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
                 ackStrToMostRecentCmdId.remove(ackStr);
             }
-        }, 10, TimeUnit.SECONDS);
+        }, 15, TimeUnit.SECONDS);
         return true;
 
     }

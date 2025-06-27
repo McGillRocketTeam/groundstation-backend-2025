@@ -75,6 +75,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
                     continue;
                 }
 
+                serialPort.setComPortParameters(9600,8,1,0);
                 String uniqueIdentifier = checkForValidPing(serialPort);
 
                 if(uniqueIdentifier == null){
@@ -124,14 +125,11 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
             return null;
         }
 
-        serialPort.setComPortParameters(9600,8,1,0);
-
         final String[] uniqueIdentifier = {null};
 
         serialPort.addDataListener(new SerialPortMessageListener() {
             @Override
             public byte[] getMessageDelimiter() {
-                //TODO verify if packets end with \n or \r or \n\r
                 return new byte[]{'\n'};
             }
 
@@ -164,20 +162,20 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
         });
 
         try {
-            Thread.sleep(500); //unsure if this is necessary, test without
-            byte[] pingMessage = "radio ping\n".getBytes(StandardCharsets.UTF_8);
+            Thread.sleep(2000); //this is needed for control box
+            byte[] pingMessage = "ping\r\n".getBytes(StandardCharsets.UTF_8);
             ExecutorService executor = Executors.newSingleThreadExecutor();
 
             Callable<String> task = () -> {
                 serialPort.writeBytes(pingMessage, pingMessage.length);
-//                log.info("ping written");
+                log.info("ping written");
                 return "Task Completed";
             };
 
             Future<String> future = executor.submit(task);
 
             try {
-                future.get(100, TimeUnit.MILLISECONDS); // Timeout of 2 seconds
+                future.get(2000, TimeUnit.MILLISECONDS); // Timeout of 2 seconds
             } catch (TimeoutException e) {
                 log.warn("Timeout: writing ping took too long");
                 future.cancel(true); // Cancel the task if it exceeds the timeout

@@ -11,7 +11,7 @@ import org.yamcs.logging.Log;
  */
 public class LabJackUtil {
     //total number of analog pins on the LabJack (T7)
-    public static final int NUM_ANALOG_PINS = 128;
+    public static final int NUM_ANALOG_PINS = 14;
 
     //total number of digital pins on the LabJack (T7)
     public static final int NUM_DIGITAL_PINS = 23;

@@ -2,6 +2,7 @@ package ca.mrt.gs_backend.labjack;
 
 import com.sun.jna.ptr.IntByReference;
 import libs.LJM;
+import lombok.Getter;
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
 import org.yamcs.commanding.ArgumentValue;
@@ -39,6 +40,8 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
+    @Getter
+    private static LabJackDataLink instance;
     private static final String CSV_FILENAME = "yamcs-data" + File.separator + "labjack_csv" + File.separator + "labj_" + (new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss")).format(new Date()) + ".csv";
     /*
     Determines how many packets are sent to be graphed by YAMCS out of the total number of packets collected.
@@ -59,7 +62,9 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
     private SequenceContainer sequenceContainer;
 
 
-
+    public LabJackDataLink(){
+        instance = this;
+    }
 
     /**
      * Attempts to connect to any LabJack device (via ethernet or USB)
@@ -330,12 +335,21 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
         }
 
         if(preparedCommand.getCommandName().endsWith("write_digital_pin")){
-            LabJackUtil.setDigitalPin(deviceHandle, pinNum, ((int) valueToWrite.getEngValue().getSint64Value()));
-            log.info("Wrote: " + valueToWrite + " to digital pin " + pinNum);
+            writeDigitalPin(pinNum, ((int) valueToWrite.getEngValue().getSint64Value()));
         }else if(preparedCommand.getCommandName().endsWith("write_DAC_pin")){
-            LabJackUtil.setDACPin(deviceHandle, pinNum, valueToWrite.getEngValue().getFloatValue());
-            log.info("Wrote: " + valueToWrite + " to DAC pin " + pinNum);
+            writeDACPin(pinNum, valueToWrite.getEngValue().getFloatValue());
         }
+
         return true;
+    }
+
+    public void writeDigitalPin(int pinNum, int voltage){
+        LabJackUtil.setDigitalPin(deviceHandle, pinNum, voltage);
+        log.info("Wrote: " + voltage + " to digital pin " + pinNum);
+    }
+
+    public void writeDACPin(int pinNum, float voltage){
+        LabJackUtil.setDACPin(deviceHandle, pinNum, voltage);
+        log.info("Wrote: " + voltage + " to DAC pin " + pinNum);
     }
 }

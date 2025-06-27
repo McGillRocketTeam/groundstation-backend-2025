@@ -59,6 +59,13 @@ dataLinks:
     frequency: "433"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
+  - name: control-box
+    class: ca.mrt.gs_backend.serialcomm.ControlBoxLink
+    tmStream: tm_flight_computer_433
+    tcStream: tc_control_box
+    frequency: "control_box"
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+
   - name: labJack
     class: ca.mrt.gs_backend.labjack.LabJackDataLink
     tmStream: tm_labJack
@@ -112,5 +119,9 @@ streamConfig:
     - name: "tc_flight_computer_903"
       processor: "realtime"
       tcPatterns: ["/FC903.*"]
+    - name: "tc_control_box"
+      processor: "realtime"
+      tcPatterns: [ "" ]
+
     - name: "tc_udp"
       processor: "realtime"
