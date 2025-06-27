@@ -264,38 +264,41 @@
 					<ParameterRefEntry parameterRef="HAM_call_sign" shortDescription="HAM call sign"/>
 
 					<!-- Boolean Packet (32 booleans) -->
-					<ParameterRefEntry parameterRef="FC_RPO" shortDescription="FC RPO sense signal"/>
-					<ParameterRefEntry parameterRef="drogue_armed_SW" shortDescription="drogueEmatch: logical armed"/>
-					<ParameterRefEntry parameterRef="drogue_armed_HW" shortDescription="drogueEmatch: electrical armed"/>
-					<ParameterRefEntry parameterRef="drogue_energized_SW" shortDescription="drogueEmatch: logical energized"/>
-					<ParameterRefEntry parameterRef="drogue_energizedGate_HW" shortDescription="drogueEmatch: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="drogue_energizedCurrent_HW" shortDescription="drogueEmatch: electrical energized current"/>
-					<ParameterRefEntry parameterRef="drogue_continuity_HW" shortDescription="drogueEmatch: electrical continuity"/>
 					<ParameterRefEntry parameterRef="main_armed_SW" shortDescription="Main: logical armed"/>
-					<ParameterRefEntry parameterRef="main_armed_HW" shortDescription="Main: electrical armed"/>
-					<ParameterRefEntry parameterRef="main_energized_SW" shortDescription="Main: logical energized"/>
-					<ParameterRefEntry parameterRef="main_energizedGate_HW" shortDescription="Main: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="main_energizedCurrent_HW" shortDescription="Main: electrical energized current"/>
-					<ParameterRefEntry parameterRef="main_continuity_HW" shortDescription="Nitrogen fill valve: logical armed"/>
-					<ParameterRefEntry parameterRef="prop_energized_elec" shortDescription="Electrical energized propulsion boards"/>
-					<ParameterRefEntry parameterRef="ufd_armed_SW" shortDescription="ufd: logical armed"/>
+					<ParameterRefEntry parameterRef="drogue_continuity_HW" shortDescription="drogueEmatch: electrical continuity"/>
+					<ParameterRefEntry parameterRef="drogue_energizedCurrent_HW" shortDescription="drogueEmatch: electrical energized current"/>
+					<ParameterRefEntry parameterRef="drogue_energizedGate_HW" shortDescription="drogueEmatch: electrical energized gate"/>
+					<ParameterRefEntry parameterRef="drogue_energized_SW" shortDescription="drogueEmatch: logical energized"/>
+					<ParameterRefEntry parameterRef="drogue_armed_HW" shortDescription="drogueEmatch: electrical armed"/>
+					<ParameterRefEntry parameterRef="drogue_armed_SW" shortDescription="drogueEmatch: logical armed"/>
+					<ParameterRefEntry parameterRef="FC_RPO" shortDescription="FC RPO sense signal"/>
+
 					<ParameterRefEntry parameterRef="ufd_armed_HW" shortDescription="ufd: electrical armed"/>
-					<ParameterRefEntry parameterRef="ufd_energized_SW" shortDescription="ufd: logical energized"/>
-					<ParameterRefEntry parameterRef="ufd_energizedGate_HW" shortDescription="ufd: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="ufd_energizedCurrent_HW" shortDescription="ufd: electrical energized current"/>
-					<ParameterRefEntry parameterRef="ufd_continuity_HW" shortDescription="ufd: electrical continuity"/>
-					<ParameterRefEntry parameterRef="run_armed_SW" shortDescription="run: logical armed"/>
-					<ParameterRefEntry parameterRef="run_armed_HW" shortDescription="run: electrical armed"/>
-					<ParameterRefEntry parameterRef="run_energized_SW" shortDescription="run: logical energized"/>
+					<ParameterRefEntry parameterRef="ufd_armed_SW" shortDescription="ufd: logical armed"/>
+					<ParameterRefEntry parameterRef="prop_energized_elec" shortDescription="Electrical energized propulsion boards"/>
+					<ParameterRefEntry parameterRef="main_continuity_HW" shortDescription="Nitrogen fill valve: logical armed"/>
+					<ParameterRefEntry parameterRef="main_energizedCurrent_HW" shortDescription="Main: electrical energized current"/>
+					<ParameterRefEntry parameterRef="main_energizedGate_HW" shortDescription="Main: electrical energized gate"/>
+					<ParameterRefEntry parameterRef="main_energized_SW" shortDescription="Main: logical energized"/>
+					<ParameterRefEntry parameterRef="main_armed_HW" shortDescription="Main: electrical armed"/>
+
 					<ParameterRefEntry parameterRef="run_energizedGate_HW" shortDescription="run: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="run_energizedCurrent_HW" shortDescription="run: electrical energized current"/>
-					<ParameterRefEntry parameterRef="run_continuity_HW" shortDescription="run: electrical continuity"/>
-					<ParameterRefEntry parameterRef="vent_armed_SW" shortDescription="Vent: logical armed"/>
-					<ParameterRefEntry parameterRef="vent_armed_HW" shortDescription="Vent: electrical armed"/>
-					<ParameterRefEntry parameterRef="vent_energized_SW" shortDescription="Vent: logical energized"/>
-					<ParameterRefEntry parameterRef="vent_energizedGate_HW" shortDescription="Vent: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="vent_energizedCurrent_HW" shortDescription="Vent: electrical energized current"/>
+					<ParameterRefEntry parameterRef="run_energized_SW" shortDescription="run: logical energized"/>
+					<ParameterRefEntry parameterRef="run_armed_HW" shortDescription="run: electrical armed"/>
+					<ParameterRefEntry parameterRef="run_armed_SW" shortDescription="run: logical armed"/>
+					<ParameterRefEntry parameterRef="ufd_continuity_HW" shortDescription="ufd: electrical continuity"/>
+					<ParameterRefEntry parameterRef="ufd_energizedCurrent_HW" shortDescription="ufd: electrical energized current"/>
+					<ParameterRefEntry parameterRef="ufd_energizedGate_HW" shortDescription="ufd: electrical energized gate"/>
+					<ParameterRefEntry parameterRef="ufd_energized_SW" shortDescription="ufd: logical energized"/>
+
 					<ParameterRefEntry parameterRef="vent_continuity_HW" shortDescription="Vent: electrical continuity"/>
+					<ParameterRefEntry parameterRef="vent_energizedCurrent_HW" shortDescription="Vent: electrical energized current"/>
+					<ParameterRefEntry parameterRef="vent_energizedGate_HW" shortDescription="Vent: electrical energized gate"/>
+					<ParameterRefEntry parameterRef="vent_energized_SW" shortDescription="Vent: logical energized"/>
+					<ParameterRefEntry parameterRef="vent_armed_HW" shortDescription="Vent: electrical armed"/>
+					<ParameterRefEntry parameterRef="vent_armed_SW" shortDescription="Vent: logical armed"/>
+					<ParameterRefEntry parameterRef="run_continuity_HW" shortDescription="run: electrical continuity"/>
+					<ParameterRefEntry parameterRef="run_energizedCurrent_HW" shortDescription="run: electrical energized current"/>
 
 					<!-- Flight Computer Packet (37 bytes) -->
 					<ParameterRefEntry parameterRef="tank_pressure" shortDescription="Tank bottom pressure"/>
