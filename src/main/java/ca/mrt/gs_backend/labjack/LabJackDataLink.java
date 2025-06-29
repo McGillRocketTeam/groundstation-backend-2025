@@ -47,7 +47,7 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
     Determines how many packets are sent to be graphed by YAMCS out of the total number of packets collected.
     E.g. for every GRAPH_FREQ number of packets collected, 1 packet is sent to YAMCS.
      */
-    private static final int GRAPH_FREQ = 10000;
+    private static final int GRAPH_FREQ = 1;
     private int packetCount = 0;
     //stores handle of currently connected LabJack device
     private int deviceHandle = 0;
@@ -112,15 +112,18 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
         double[] analogReadings = new double[LabJackUtil.NUM_ANALOG_PINS];
 
         for(int i = 0; i < LabJackUtil.NUM_ANALOG_PINS; i++){
-            if (i == 4) { //AIN4
+            if (i == 7) { //AIN4
                 // Mass flowmeter calibration (kg/s)
-                analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
-                // analogReadings[i] = 21.206 * LabJackUtil.readAnalogPin(deviceHandle, i) - 17.41;
+                // analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
+                analogReadings[i] = 21.206 * LabJackUtil.readAnalogPin(deviceHandle, i) - 17.41;
             }
-            else if (i == 5 | i == 6) { //AIN5-6
+            else if (i == 4) {
+                analogReadings[i] = 638.99 * LabJackUtil.readAnalogPin(deviceHandle, i) - 512.74 + 10.7;
+            }
+            else if (i == 5) { //AIN5-6
                 // Pressure transducer calibration (psi)
-                analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
-                //analogReadings[i] = 638.99 * LabJackUtil.readAnalogPin(deviceHandle, i) - 512.74;
+                // analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
+                analogReadings[i] = 638.99 * LabJackUtil.readAnalogPin(deviceHandle, i) - 512.74 + 4.7;
             }
             else {
                 analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
@@ -259,8 +262,8 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
             throw new RuntimeException(e);
         }
 
-        executorService = Executors.newScheduledThreadPool(2);
-        executorService.scheduleAtFixedRate(this::readAllPins, 100, 100, TimeUnit.MICROSECONDS);
+        executorService = Executors.newScheduledThreadPool(5);
+        executorService.scheduleAtFixedRate(this::readAllPins, 10, 10, TimeUnit.MICROSECONDS);
         executorService.scheduleWithFixedDelay(this::savePacketToCSV, 1000, 500, TimeUnit.MILLISECONDS);
     }
 
