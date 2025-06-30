@@ -112,22 +112,7 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
         double[] analogReadings = new double[LabJackUtil.NUM_ANALOG_PINS];
 
         for(int i = 0; i < LabJackUtil.NUM_ANALOG_PINS; i++){
-            if (i == 7) { //AIN4
-                // Mass flowmeter calibration (kg/s)
-                // analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
-                analogReadings[i] = 21.206 * LabJackUtil.readAnalogPin(deviceHandle, i) - 17.41;
-            }
-            else if (i == 4) {
-                analogReadings[i] = 638.99 * LabJackUtil.readAnalogPin(deviceHandle, i) - 512.74 + 10.7;
-            }
-            else if (i == 5) { //AIN5-6
-                // Pressure transducer calibration (psi)
-                // analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
-                analogReadings[i] = 638.99 * LabJackUtil.readAnalogPin(deviceHandle, i) - 512.74 + 4.7;
-            }
-            else {
-                analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
-            }
+            analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
         }
         byte[] analogBinaryData = createAnalogBinaryPacket(analogReadings);
 
