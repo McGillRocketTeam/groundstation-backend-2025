@@ -128,7 +128,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                     log.info("Received ack: " + dataStr);
                     return;
                 }
-                byte[] trimmed_array = new byte[86];
+                byte[] trimmed_array = new byte[94];
                 System.arraycopy(serialPortEvent.getReceivedData(), 0, trimmed_array, 0, trimmed_array.length);
 
                 TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);

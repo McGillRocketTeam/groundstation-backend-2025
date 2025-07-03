@@ -30,7 +30,7 @@
 				</UnitSet>
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" byteOrder="leastSignificantByteFirst"/>
 			</IntegerParameterType>
-			<IntegerParameterType name="uint16_C" signed="false">
+			<IntegerParameterType name="int16_C">
 				<UnitSet>
 					<Unit>°C</Unit>
 				</UnitSet>
@@ -239,7 +239,7 @@
 			<Parameter name="pl_time_since_start" parameterTypeRef="uint32_ms" shortDescription="Payload: Time since start of sampling"/>
 			<Parameter name="pl_active_temp_ctrl_state" parameterTypeRef="bool" shortDescription="Payload: Active temperature control state"/>
 			<Parameter name="pl_target_temp" parameterTypeRef="uint8_C" shortDescription="Payload: Target temerature"/>
-			<Parameter name="pl_sample_temp" parameterTypeRef="uint16_C" shortDescription="Payload: Actual Sample temperautre"/>
+			<Parameter name="pl_sample_temp" parameterTypeRef="int16_C" shortDescription="Payload: Actual Sample temperautre"/>
 			<Parameter name="flight_stage" parameterTypeRef="flightStageType" shortDescription="Flight stage"/>
 			<Parameter name="alt_altitude" parameterTypeRef="float_ft" shortDescription="Altitude from ground (calculated from pressure)"/>
 			<Parameter name="vertical_speed" parameterTypeRef="int32_mps" shortDescription="Vertical speed"/>
@@ -254,6 +254,15 @@
 			<Parameter name="angle_pitch" parameterTypeRef="int16" shortDescription="Angular pitch"/>
 			<Parameter name="angle_roll" parameterTypeRef="int16" shortDescription="Angular roll"/>
 			<Parameter name="pl_battery_voltage" parameterTypeRef="uint16_V" shortDescription="Battery Voltage"/>
+
+			<Parameter name="RSSI" parameterTypeRef="int32"/>
+			<Parameter name="SNR" parameterTypeRef="int32"/>
+
+			<Parameter name="adjusted_voltage" parameterTypeRef="float">
+				<ParameterProperties dataSource="derived" readOnly="true">
+				</ParameterProperties>
+			</Parameter>
+
 		</ParameterSet>
 		<ContainerSet>
 			<SequenceContainer name="FCPacket">
@@ -342,10 +351,27 @@
 					<ParameterRefEntry parameterRef="prop_cc_pressure" shortDescription="Combustion chamber pressure (prop bottom)"/>
 					<ParameterRefEntry parameterRef="time_from_sw_reset" shortDescription="Time from last software reset"/>
 					<ParameterRefEntry parameterRef="rx_tx_ratio" shortDescription="Radio rx/tx ratio"/>
+
+					<ParameterRefEntry parameterRef="RSSI"/>
+					<ParameterRefEntry parameterRef="SNR"/>
 				</EntryList>
 
 			</SequenceContainer>
 		</ContainerSet>
+		<AlgorithmSet>
+			<MathAlgorithm name="battery_voltage_algorithm">
+				<MathOperation outputParameterRef="adjusted_voltage">
+					<ParameterInstanceRefOperand parameterRef="battery_voltage"/>
+					<ValueOperand>10</ValueOperand>
+					<Operator>-</Operator>
+					<ValueOperand>2186</ValueOperand>
+					<Operator>/</Operator>
+					<TriggerSet>
+						<OnParameterUpdateTrigger parameterRef="battery_voltage"/>
+					</TriggerSet>
+				</MathOperation>
+			</MathAlgorithm>
+		</AlgorithmSet>
 	</TelemetryMetaData>
 	<CommandMetaData>
 		<ArgumentTypeSet>
