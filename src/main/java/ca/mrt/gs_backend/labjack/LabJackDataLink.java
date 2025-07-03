@@ -112,7 +112,8 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
         double[] analogReadings = new double[LabJackUtil.NUM_ANALOG_PINS];
 
         for(int i = 0; i < LabJackUtil.NUM_ANALOG_PINS; i++){
-            analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
+
+                analogReadings[i] = LabJackUtil.readAnalogPin(deviceHandle, i);
         }
         byte[] analogBinaryData = createAnalogBinaryPacket(analogReadings);
 
