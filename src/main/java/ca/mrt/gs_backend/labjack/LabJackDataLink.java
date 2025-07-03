@@ -345,12 +345,21 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
     }
 
     public void writeDigitalPin(int pinNum, int voltage){
-        LabJackUtil.setDigitalPin(deviceHandle, pinNum, voltage);
-        log.info("Wrote: " + voltage + " to digital pin " + pinNum);
+        try{
+            LabJackUtil.setDigitalPin(deviceHandle, pinNum, voltage);
+            log.info("Wrote: " + voltage + " to digital pin " + pinNum);
+        } catch (Exception e){
+            log.error("Failed to write " + voltage + " to digital pin " + pinNum);
+        }
     }
 
     public void writeDACPin(int pinNum, float voltage){
-        LabJackUtil.setDACPin(deviceHandle, pinNum, voltage);
-        log.info("Wrote: " + voltage + " to DAC pin " + pinNum);
+        try{
+            LabJackUtil.setDACPin(deviceHandle, pinNum, voltage);
+            log.info("Wrote: " + voltage + " to DAC pin " + pinNum);
+        } catch (Exception e){
+            log.error("Failed to write " + voltage + " to DAC pin " + pinNum);
+        }
+
     }
 }
