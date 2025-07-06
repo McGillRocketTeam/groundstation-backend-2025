@@ -229,6 +229,7 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
             }
         }
 
+
         initializeCSVWriterAndTasks();
     }
 
@@ -248,8 +249,12 @@ public class LabJackDataLink extends AbstractTcTmParamLink implements Runnable{
             throw new RuntimeException(e);
         }
 
+        for(int digital_pin = 0; digital_pin < LabJackUtil.NUM_DIGITAL_PINS; ++digital_pin){
+            writeDigitalPin(digital_pin, 0);
+        }
+
         executorService = Executors.newScheduledThreadPool(5);
-        executorService.scheduleAtFixedRate(this::readAllPins, 10, 10, TimeUnit.MICROSECONDS);
+        executorService.scheduleAtFixedRate(this::readAllPins, 25, 10, TimeUnit.MICROSECONDS);
         executorService.scheduleWithFixedDelay(this::savePacketToCSV, 1000, 500, TimeUnit.MILLISECONDS);
     }
 
