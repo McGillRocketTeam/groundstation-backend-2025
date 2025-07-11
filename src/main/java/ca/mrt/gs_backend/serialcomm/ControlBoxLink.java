@@ -95,6 +95,17 @@ public class ControlBoxLink extends SerialDataLink {
                     break;
                 case "IGN MINUS RELEASED":
                     break;
+                case "ACTUATOR B POWER PUSHED":
+                    LabJackDataLink.getInstance().writeDigitalPin(20, 1);
+                    break;
+                case "ACTUATOR B POWER RELEASED":
+                    break;
+                case "ACTUATOR B POLARITY PUSHED":
+                    LabJackDataLink.getInstance().writeDigitalPin(22, 1);
+                    break;
+                case "ACTUATOR B POLARITY RELEASED":
+                    break;
+
             }
         });
     }
