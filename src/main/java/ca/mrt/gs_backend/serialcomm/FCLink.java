@@ -1,7 +1,7 @@
 package ca.mrt.gs_backend.serialcomm;
 
+import ca.mrt.gs_backend.FCUtils;
 import org.yamcs.Spec;
-import org.yamcs.YamcsServer;
 import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.mdb.Mdb;
 import org.yamcs.mdb.MdbFactory;
@@ -13,24 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 public class FCLink extends SerialDataLink{
-    private static Map<String, List<MetaCommand>> fcStrToMetaCmd = new HashMap<>();
-
-    public static Map<String, List<MetaCommand>> getReverseMapping() {
-        if(!fcStrToMetaCmd.isEmpty()){
-            return fcStrToMetaCmd;
-        }
-
-        Mdb mdb = MdbFactory.getInstance("gs_backend");
-
-        var metaCommands = mdb.getMetaCommands();
-        metaCommands.stream().filter((cmd) -> cmd.getQualifiedName().contains("FlightComputer")).forEach((fcCmd) -> {
-            String cmdStr = fcCmd.getShortDescription().split(" ")[0];
-            List<MetaCommand> cmds = fcStrToMetaCmd.getOrDefault(cmdStr, new ArrayList<>());
-            cmds.add(fcCmd);
-            fcStrToMetaCmd.put(cmdStr, cmds);
-        });
-        return fcStrToMetaCmd;
-    }
 
     @Override
     public Spec getSpec() {
@@ -41,21 +23,16 @@ public class FCLink extends SerialDataLink{
 
     @Override
     protected String getAckStrFromCmd(PreparedCommand command) {
-        return command.getCmdName().equals("ping") ? "ping_ack" : command.getMetaCommand().getShortDescription().split(" ")[1];
+        return FCUtils.getAckStrFromCmd(command);
     }
 
     @Override
     protected String getCmdStrFromCmd(PreparedCommand command) {
-        StringBuilder cmd = new StringBuilder(command.getMetaCommand().getShortDescription().split(" ")[0]);
-
-        for(var arg : command.getArgAssignment().entrySet()){
-            cmd.append(",").append(arg.getValue().getEngValue());
-        }
-        return cmd.toString();
+        return FCUtils.getCmdStrFromCmd(command);
     }
 
     @Override
     protected byte[] getDelimiter(){
-        return new byte[]{'<', 'L', 'E', 'O', '?', '>'};
+        return FCUtils.getDelimiter();
     }
 }

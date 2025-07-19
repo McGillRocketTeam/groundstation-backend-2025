@@ -9,12 +9,8 @@ import org.yamcs.YConfiguration;
 import org.yamcs.YamcsServer;
 import org.yamcs.cmdhistory.CommandHistoryPublisher;
 import org.yamcs.commanding.PreparedCommand;
-import org.yamcs.mdb.Mdb;
-import org.yamcs.mdb.MdbFactory;
 import org.yamcs.protobuf.Commanding;
 import org.yamcs.tctm.AbstractTcTmParamLink;
-import org.yamcs.xtce.MetaCommand;
-import org.yamcs.xtce.XtceDb;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -45,7 +41,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     protected static Map<String, SerialDataLink> uniqueIdentifierToLink = new HashMap<>();
     protected static Set<String> activePorts = new HashSet<>();
     private static CommandHistoryPublisher ackPublisher;
-    private final Set<SerialListener> listeners = new HashSet<>();
+    private final Set<ca.mrt.gs_backend.serialcomm.Listener> listeners = new HashSet<>();
 
     //todo maybe change this to an Optional
     private SerialPort currConnectedPort;
@@ -61,11 +57,11 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
 
-    public void addListener(SerialListener listener) {
+    public void addListener(ca.mrt.gs_backend.serialcomm.Listener listener) {
         listeners.add(listener);
     }
 
-    public boolean removeListener(SerialListener listener) {
+    public boolean removeListener(ca.mrt.gs_backend.serialcomm.Listener listener) {
         return listeners.remove(listener);
     }
 
@@ -116,7 +112,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                 String dataStr = temp.replace(new String(getDelimiter()), "");
                 dataIn(1, dataStr.length());
 
-                for (SerialListener listener : listeners) {
+                for (ca.mrt.gs_backend.serialcomm.Listener listener : listeners) {
                     listener.notifyUpdate(dataStr);
                 }
 

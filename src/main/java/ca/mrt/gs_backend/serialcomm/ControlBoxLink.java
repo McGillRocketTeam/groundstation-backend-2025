@@ -1,5 +1,6 @@
 package ca.mrt.gs_backend.serialcomm;
 
+import ca.mrt.gs_backend.FCUtils;
 import ca.mrt.gs_backend.labjack.LabJackDataLink;
 import org.yamcs.YamcsServer;
 import org.yamcs.commanding.CommandReleaser;
@@ -15,17 +16,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ControlBoxLink extends SerialDataLink {
     private ScheduledExecutorService actuatorScheduler = Executors.newSingleThreadScheduledExecutor();
-    private Map<String, List<MetaCommand>> fcStrToCmdMap;
     private CommandingManager cmdManager;
     private CommandReleaser cmdReleaser;
-    private static int NUM_ACTUATOR_ALTERNATIONS = 4000;
 
     public ControlBoxLink() {
         addListener(newData -> {
-            if (fcStrToCmdMap == null) {
-                fcStrToCmdMap = FCLink.getReverseMapping();
-            }
-            if(cmdManager == null){
+            if (cmdManager == null) {
                 var processor = YamcsServer.getServer().getProcessor("gs_backend", "realtime");
                 cmdManager = processor.getCommandingManager();
                 cmdReleaser = processor.getCommandReleaser();
@@ -105,32 +101,13 @@ public class ControlBoxLink extends SerialDataLink {
                     break;
                 case "ACTUATOR B POLARITY RELEASED":
                     break;
-
             }
         });
     }
 
-    private void actuate(int digitalPin) {
 
-        actuatorScheduler.scheduleAtFixedRate(new Runnable() {
-                                                  int itrCnt = 0;
-                                                  int voltage = 0;
-
-                                                  @Override
-                                                  public void run() {
-                                                      voltage = voltage == 0 ? 1 : 0;
-
-                                                      LabJackDataLink.getInstance().writeDigitalPin(digitalPin, voltage);
-                                                      if (itrCnt++ >= NUM_ACTUATOR_ALTERNATIONS) {
-                                                          actuatorScheduler.shutdown();
-                                                      }
-                                                  }
-                                              }
-                , 0, 250000, TimeUnit.NANOSECONDS);
-    }
-
-    private void sendFCCmd(String fcCmd){
-        fcStrToCmdMap.get(fcCmd).forEach((metaCommand -> {
+    private void sendFCCmd(String fcCmd) {
+        FCUtils.getMetaCmds(fcCmd).forEach((metaCommand -> {
             var prepCmd = cmdManager.buildRawCommand(metaCommand, new byte[]{}, "yamcs-internal", 0, YamcsServer.getServer().getSecurityStore().getSystemUser());
             cmdReleaser.releaseCommand(prepCmd);
         }));

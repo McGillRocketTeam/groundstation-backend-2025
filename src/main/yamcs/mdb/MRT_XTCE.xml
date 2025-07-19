@@ -432,7 +432,7 @@
 			</MetaCommand>
 			<MetaCommand name="payload_stop_cooling" shortDescription="bd ACK5_255">
 			</MetaCommand>
-			<MetaCommand name="payload_set_temp" shortDescription="be ACK5_255">
+			<MetaCommand name="payload_set_temp" shortDescription="b ACK5_255">
 				<ArgumentList>
 					<Argument name="temp_enum" argumentTypeRef="temp_enum">
 					</Argument>

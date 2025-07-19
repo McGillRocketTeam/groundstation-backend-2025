@@ -1,7 +1,7 @@
 package ca.mrt.serial_terminal;
 
 import ca.mrt.gs_backend.serialcomm.SerialDataLink;
-import ca.mrt.gs_backend.serialcomm.SerialListener;
+import ca.mrt.gs_backend.serialcomm.Listener;
 import ca.mrt.serial_terminal.api.AbstractSerialTerminalAPI;
 import ca.mrt.serial_terminal.api.SerialTerminalData;
 import ca.mrt.serial_terminal.api.SubscribeSerialTerminalRequest;
@@ -34,7 +34,7 @@ public class SerialTerminalAPI extends AbstractSerialTerminalAPI<Context> {
                 String identifer = link.equals("control_box") ? "control_box" : matcher.group(1);
                 SerialDataLink dataLink = SerialDataLink.getLinkByIdentifier(identifer);
                 if (dataLink != null) {
-                    SerialListener listener = newData -> {
+                    Listener listener = newData -> {
                         SerialTerminalData serialTerminalData = SerialTerminalData.newBuilder()
                                 .setMessage(newData)
                                 .setLink(dataLink.getName())
