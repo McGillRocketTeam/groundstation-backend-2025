@@ -42,7 +42,7 @@ public class FCUtils {
         for(var arg : command.getArgAssignment().values()){
             cmd.append(",").append(arg.getEngValue());
         }
-        return cmd.toString();
+        return cmd.toString().replace('_', ' ');
     }
 
     public static byte[] getDelimiter(){

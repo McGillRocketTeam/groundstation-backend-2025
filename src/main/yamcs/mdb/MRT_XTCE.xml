@@ -474,6 +474,10 @@
 			</MetaCommand>
 			<MetaCommand name="second_timer_stop" shortDescription="hn ACK6_255">
 			</MetaCommand>
+			<MetaCommand name="radio_set_transmit_true" shortDescription="Radio_setTx_t ACKR_0">
+			</MetaCommand>
+			<MetaCommand name="radio_set_transmit_false" shortDescription="Radio_setTx_f ACKR_0">
+			</MetaCommand>
 		</MetaCommandSet>
 	</CommandMetaData>
 </SpaceSystem>
