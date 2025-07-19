@@ -35,6 +35,10 @@ public class FCUtils {
     public static String getCmdStrFromCmd(PreparedCommand command) {
         StringBuilder cmd = new StringBuilder(command.getMetaCommand().getShortDescription().split(" ")[0]);
 
+        if(command.getArgAssignment().values().size() == 1){
+            for(var arg : command.getArgAssignment().values()){
+                cmd.append(arg.getEngValue());
+            }        }
         for(var arg : command.getArgAssignment().values()){
             cmd.append(",").append(arg.getEngValue());
         }

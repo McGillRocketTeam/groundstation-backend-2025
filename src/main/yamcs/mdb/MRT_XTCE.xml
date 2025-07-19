@@ -338,9 +338,9 @@
 					<ParameterRefEntry parameterRef="pl_sample_temp" shortDescription="Payload: Actual Sample temperautre"/>
 					<ParameterRefEntry parameterRef="pl_battery_voltage" shortDescription="Battery Voltage"/>
 					<ParameterRefEntry parameterRef="pading" />
-					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: OK status bit" />
-					<ParameterRefEntry parameterRef="pl_sampling_state" shortDescription="Payload: Sampling state"/>
 					<ParameterRefEntry parameterRef="pl_active_temp_ctrl_state" shortDescription="Payload: Active temperature control state"/>
+					<ParameterRefEntry parameterRef="pl_sampling_state" shortDescription="Payload: Sampling state"/>
+					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: OK status bit" />
 					<!-- The 3 booleans are bit packed we need to add an offset so everything remains byte aligned			-->
 
 
@@ -361,13 +361,13 @@
 		<AlgorithmSet>
 			<MathAlgorithm name="battery_voltage_algorithm">
 				<MathOperation outputParameterRef="adjusted_voltage">
-					<ParameterInstanceRefOperand parameterRef="battery_voltage"/>
+					<ParameterInstanceRefOperand parameterRef="pl_battery_voltage"/>
 					<ValueOperand>10</ValueOperand>
 					<Operator>-</Operator>
 					<ValueOperand>2186</ValueOperand>
 					<Operator>/</Operator>
 					<TriggerSet>
-						<OnParameterUpdateTrigger parameterRef="battery_voltage"/>
+						<OnParameterUpdateTrigger parameterRef="pl_battery_voltage"/>
 					</TriggerSet>
 				</MathOperation>
 			</MathAlgorithm>
