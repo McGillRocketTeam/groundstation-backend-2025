@@ -45,19 +45,19 @@ dataLinks:
     port: 10025
     commandPostprocessorClassName: ca.mrt.gs_backend.MyCommandPostprocessor
 
-#  - name: fc-903
-#    class: ca.mrt.gs_backend.serialcomm.FCLink
-#    tmStream: tm_flight_computer_903
-#    tcStream: tc_flight_computer_903
-#    frequency: "903"
-#    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
-
   - name: fc-903
-    class: ca.mrt.gs_backend.networkcomm.FCTcpServer
+    class: ca.mrt.gs_backend.serialcomm.FCLink
     tmStream: tm_flight_computer_903
     tcStream: tc_flight_computer_903
-    port: 9000
+    frequency: "903"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+
+#  - name: fc-903
+#    class: ca.mrt.gs_backend.networkcomm.FCTcpServer
+#    tmStream: tm_flight_computer_903
+#    tcStream: tc_flight_computer_903
+#    port: 9000
+#    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: fc-433
     class: ca.mrt.gs_backend.serialcomm.FCLink

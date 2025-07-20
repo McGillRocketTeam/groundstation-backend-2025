@@ -263,6 +263,11 @@
 				</ParameterProperties>
 			</Parameter>
 
+			<Parameter name="filtered_tank_pressure" parameterTypeRef="float">
+				<ParameterProperties dataSource="derived" readOnly="true">
+				</ParameterProperties>
+			</Parameter>
+
 		</ParameterSet>
 		<ContainerSet>
 			<SequenceContainer name="FCPacket">
@@ -371,6 +376,25 @@
 					</TriggerSet>
 				</MathOperation>
 			</MathAlgorithm>
+
+			<CustomAlgorithm name="filtered_tank_pressure_algorithm" language="JavaScript">
+				<InputSet>
+					<InputParameter parameterRef="tank_pressure"/>
+				</InputSet>
+				<OutputSet>
+					<OutputParameter parameterRef="filtered_tank_pressure"/>
+				</OutputSet>
+				<TriggerSet>
+					<OnParameterUpdateTrigger parameterRef="tank_pressure"/>
+				</TriggerSet>
+				<AlgorithmText language="JavaScript">
+					if (tank_pressure != 0) {
+					return tank_pressure;
+					} else {
+					return __no_update__;
+					}
+				</AlgorithmText>
+			</CustomAlgorithm>
 		</AlgorithmSet>
 	</TelemetryMetaData>
 	<CommandMetaData>
@@ -424,7 +448,7 @@
 			</MetaCommand>
 			<MetaCommand name="payload_stop_sampling" shortDescription="bt ACK5_2">
 			</MetaCommand>
-			<MetaCommand name="payload_scrub" shortDescription="bo ACK5_0">
+			<MetaCommand name="payload_reset" shortDescription="bo ACK5_0">
 			</MetaCommand>
 			<MetaCommand name="payload_landed_(for_testing)" shortDescription="bl ACK5_3">
 			</MetaCommand>

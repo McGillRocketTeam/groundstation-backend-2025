@@ -208,6 +208,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
             return null;
         }
 
+
         return uniqueIdentifier[0].split("\\.")[0];
     }
 }

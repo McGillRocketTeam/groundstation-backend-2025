@@ -85,22 +85,27 @@ public class ControlBoxLink extends SerialDataLink {
                     LabJackDataLink.getInstance().writeDigitalPin(6, 1);
                     break;
                 case "IGN PLUS RELEASED":
+                    LabJackDataLink.getInstance().writeDigitalPin(6, 0);
                     break;
                 case "IGN MINUS PUSHED":
                     LabJackDataLink.getInstance().writeDigitalPin(7, 1);
                     break;
                 case "IGN MINUS RELEASED":
+                    LabJackDataLink.getInstance().writeDigitalPin(7, 0);
                     break;
                 case "ACTUATOR B POWER PUSHED":
                     LabJackDataLink.getInstance().writeDigitalPin(20, 1);
                     break;
                 case "ACTUATOR B POWER RELEASED":
+                    LabJackDataLink.getInstance().writeDigitalPin(20, 0);
                     break;
                 case "ACTUATOR B POLARITY PUSHED":
                     LabJackDataLink.getInstance().writeDigitalPin(22, 1);
                     break;
                 case "ACTUATOR B POLARITY RELEASED":
+                    LabJackDataLink.getInstance().writeDigitalPin(22, 0);
                     break;
+
             }
         });
     }
