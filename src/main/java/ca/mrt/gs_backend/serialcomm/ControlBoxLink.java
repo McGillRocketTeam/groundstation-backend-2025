@@ -53,6 +53,8 @@ public class ControlBoxLink extends SerialDataLink {
                     break;
                 case "EMERGENCY STOP PUSHED":
                     sendFCCmd("pe");
+                    LabJackDataLink.getInstance().writeDigitalPin(2, 0);
+                    LabJackDataLink.getInstance().writeDigitalPin(3, 0);
                     break;
                 case "EMERGENCY STOP RELEASED":
                     sendFCCmd("pc");

@@ -358,7 +358,7 @@
                     <ParameterInstanceRefOperand parameterRef="AIN2"/>
                     <ValueOperand>280.35</ValueOperand>
                     <Operator>*</Operator>
-                    <ValueOperand>494.05</ValueOperand>
+                    <ValueOperand>497.6</ValueOperand>
                     <Operator>-</Operator>
                     <TriggerSet>
                         <OnParameterUpdateTrigger parameterRef="AIN2"/>
@@ -370,7 +370,7 @@
                     <ParameterInstanceRefOperand parameterRef="AIN4"/>
                     <ValueOperand>280.35</ValueOperand>
                     <Operator>*</Operator>
-                    <ValueOperand>491.85</ValueOperand>
+                    <ValueOperand>495.15</ValueOperand>
                     <Operator>-</Operator>
                     <TriggerSet>
                         <OnParameterUpdateTrigger parameterRef="AIN4"/>

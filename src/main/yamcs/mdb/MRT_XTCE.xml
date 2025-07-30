@@ -365,7 +365,7 @@
 		</ContainerSet>
 		<AlgorithmSet>
 			<MathAlgorithm name="battery_voltage_algorithm">
-				<MathOperation outputParameterRef="adjusted_voltage">
+				<MathOperation outputParameterRef="pl_battery_voltage">
 					<ParameterInstanceRefOperand parameterRef="pl_battery_voltage"/>
 					<ValueOperand>10</ValueOperand>
 					<Operator>-</Operator>
@@ -373,6 +373,17 @@
 					<Operator>/</Operator>
 					<TriggerSet>
 						<OnParameterUpdateTrigger parameterRef="pl_battery_voltage"/>
+					</TriggerSet>
+				</MathOperation>
+			</MathAlgorithm>
+
+			<MathAlgorithm name="av_battery_voltage_algorithm">
+				<MathOperation outputParameterRef="battery_voltage">
+					<ParameterInstanceRefOperand parameterRef="battery_voltage"/>
+					<ValueOperand>10</ValueOperand>
+					<Operator>/</Operator>
+					<TriggerSet>
+						<OnParameterUpdateTrigger parameterRef="battery_voltage"/>
 					</TriggerSet>
 				</MathOperation>
 			</MathAlgorithm>
@@ -452,11 +463,11 @@
 			</MetaCommand>
 			<MetaCommand name="payload_landed_(for_testing)" shortDescription="bl ACK5_3">
 			</MetaCommand>
-			<MetaCommand name="payload_start_cooling" shortDescription="bc ACK5_255">
+			<MetaCommand name="payload_start_cooling" shortDescription="bc ACK5_4">
 			</MetaCommand>
-			<MetaCommand name="payload_stop_cooling" shortDescription="bd ACK5_255">
+			<MetaCommand name="payload_stop_cooling" shortDescription="bd ACK5_5">
 			</MetaCommand>
-			<MetaCommand name="payload_set_temp" shortDescription="b ACK5_255">
+			<MetaCommand name="payload_set_temp" shortDescription="b ACK5_4">
 				<ArgumentList>
 					<Argument name="temp_enum" argumentTypeRef="temp_enum">
 					</Argument>
