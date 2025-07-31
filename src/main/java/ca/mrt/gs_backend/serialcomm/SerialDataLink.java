@@ -11,6 +11,7 @@ import org.yamcs.cmdhistory.CommandHistoryPublisher;
 import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.protobuf.Commanding;
 import org.yamcs.tctm.AbstractTcTmParamLink;
+import org.yamcs.tctm.TmSink;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -101,6 +102,9 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
             @Override
             public void serialEvent(SerialPortEvent serialPortEvent) {
+
+                SerialDataLink test = uniqueIdentifierToLink.get(uniqueIdentifier);
+
                 if (serialPortEvent.getEventType() == SerialPort.LISTENING_EVENT_PORT_DISCONNECTED) {
                     log.warn("Serial port " + currConnectedPort.getSystemPortName() + " disconnected");
                     disconnectFromCurrPort();
@@ -120,6 +124,10 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                     return;
                 }
 
+                if (uniqueIdentifier.equals("gs_radio")) {
+                    return;
+                }
+
                 if (processAck(dataStr)) { //incoming message is an ack
                     log.info("Received ack: " + dataStr);
                     return;
@@ -127,8 +135,15 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                 byte[] trimmed_array = new byte[94];
                 System.arraycopy(serialPortEvent.getReceivedData(), 0, trimmed_array, 0, trimmed_array.length);
 
-                TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
+                // TODO:
+                //  - If the current port is an FC, get the radio equivalent
+                //  - Use that to process GSRadio packets (from the FCPacket link)
+                //  - OR Create GSRadioPackets directly from the FCPacket link like:
+                //  - TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
+                //  - tmPacket.setRootContainer("...");
 
+                TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
+                log.info("DEBUG: DEFAULT PACKET CONTAINER: "+tmPacket.getRootContainer());
                 packetQueue.add(packetPreprocessor.process(tmPacket));
             }
         });
@@ -208,6 +223,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     public void init(String instance, String name, YConfiguration config) throws ConfigurationException {
         super.init(instance, name, config);
         if (config.containsKey("frequency")) {
+            log.info("SETTING UP: "+config.getString("frequency"));
             uniqueIdentifier = config.getString("frequency");
         } else {
             uniqueIdentifier = "control_box";
@@ -217,7 +233,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             throw new ConfigurationException("Cannot have duplicate unique identifiers (can't have 2 control boxes, 2 FCs with same frequency, etc.)");
         }
 
-        if (!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.matches("^\\d+.\\d+$")) {
+        if (!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.contains("gs_radio") && !uniqueIdentifier.matches("^\\d+.\\d+$")) {
             throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number representing a frequency");
         }
     }

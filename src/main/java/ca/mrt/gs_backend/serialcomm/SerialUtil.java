@@ -8,6 +8,7 @@ import org.yamcs.AbstractYamcsService;
 import org.yamcs.InitException;
 import org.yamcs.YConfiguration;
 import org.yamcs.logging.Log;
+import org.yamcs.protobuf.QueuesApiClient;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
@@ -169,6 +170,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
             Callable<String> task = () -> {
                 serialPort.writeBytes(pingMessage, pingMessage.length);
                 log.info("ping written");
+
                 return "Task Completed";
             };
 

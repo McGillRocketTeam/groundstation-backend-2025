@@ -38,12 +38,25 @@ dataLinks:
     port: 10015
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
+  - name: udp-in-gs-radio
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tm_gs_radio_903
+    port: 10017
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+
   - name: udp-out
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_udp
     host: localhost
     port: 10025
     commandPostprocessorClassName: ca.mrt.gs_backend.MyCommandPostprocessor
+
+  - name: gs-radio-903
+    class: ca.mrt.gs_backend.serialcomm.FCLink
+    tmStream: tm_gs_radio_903
+    tcStream: tc_flight_computer_903
+    frequency: "gs_radio_903"
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: fc-903
     class: ca.mrt.gs_backend.serialcomm.FCLink
@@ -88,12 +101,18 @@ mdb:
       - type: xtce
         args:
           file: mdb/MRT_XTCE.xml
+      - type: xtce
+        args:
+          file: mdb/GSRADIO_XTCE.xml
   - type: emptyNode
     spec: "FC433"
     subLoaders:
       - type: xtce
         args:
           file: mdb/MRT_XTCE.xml
+      - type: xtce
+        args:
+          file: mdb/GSRADIO_XTCE.xml
   - type: xtce
     spec: "LabJack"
     args:
@@ -106,6 +125,10 @@ streamConfig:
     - name: "tm_flight_computer_903"
       processor: "realtime"
       rootContainer: "/FC903/FlightComputer/FCPacket"
+    - name: "tm_gs_radio_903"
+      processor: "realtime"
+      rootContainer: "/FC433/GSRadio/GSRadioPacket"
+
     - name: "tm_flight_computer_433"
       processor: "realtime"
       rootContainer: "/FC433/FlightComputer/FCPacket"

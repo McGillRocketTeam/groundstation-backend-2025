@@ -51,6 +51,8 @@ public class FCUtils {
 
 
     public static String getAckStrFromCmd(PreparedCommand command) {
+        // HERE
+
         return command.getCmdName().equals("ping") ? "ping_ack" : command.getMetaCommand().getShortDescription().split(" ")[1];
     }
 }
