@@ -513,9 +513,9 @@
 			</MetaCommand>
 			<MetaCommand name="radio_set_transmit_false" shortDescription="Radio_setTx_f ACKR_0">
 			</MetaCommand>
-			<MetaCommand name="umbilical_high_(connected)" shortDescription="uh">
+			<MetaCommand name="umbilical_high_(connected)" shortDescription="uh ACK9_0">
 			</MetaCommand>
-			<MetaCommand name="umbilical_low_(disconnected)" shortDescription="ul">
+			<MetaCommand name="umbilical_low_(disconnected)" shortDescription="ul ACK9_1">
 			</MetaCommand>
 		</MetaCommandSet>
 	</CommandMetaData>
