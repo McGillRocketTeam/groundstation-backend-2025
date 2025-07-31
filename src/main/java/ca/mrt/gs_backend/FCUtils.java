@@ -5,10 +5,7 @@ import org.yamcs.mdb.Mdb;
 import org.yamcs.mdb.MdbFactory;
 import org.yamcs.xtce.MetaCommand;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FCUtils {
     private static final Map<String, List<MetaCommand>> fcStrToMetaCmd = new HashMap<>();
@@ -33,14 +30,30 @@ public class FCUtils {
     }
 
     public static String getCmdStrFromCmd(PreparedCommand command) {
-        StringBuilder cmd = new StringBuilder(command.getMetaCommand().getShortDescription().split(" ")[0]);
+        String[] commandComponents = command.getMetaCommand().getShortDescription().split(" ");
+
+        boolean isGSRadioCommand = command
+                .getMetaCommand()
+                .getCommandContainer()
+                .getBaseContainer()
+                .getName().startsWith("GSRadio");
+
+        StringBuilder cmd = new StringBuilder(String.join(" ", Arrays.copyOf(commandComponents, commandComponents.length - 1)));        // join the array back together with " " but don't include the last element in the array above ^
 
         if(command.getArgAssignment().values().size() == 1){
             for(var arg : command.getArgAssignment().values()){
                 cmd.append(arg.getEngValue());
-            }        }
-        for(var arg : command.getArgAssignment().values()){
-            cmd.append(",").append(arg.getEngValue());
+            }
+        }
+        // GS Radio commands encode their arguments different from FC commands
+        if (isGSRadioCommand) {
+            for(var arg : command.getArgAssignment().values()){
+                cmd.append(" ").append(arg.getEngValue());
+            }
+        } else {
+            for(var arg : command.getArgAssignment().values()){
+                cmd.append(",").append(arg.getEngValue());
+            }
         }
         return cmd.toString().replace('_', ' ');
     }
@@ -52,7 +65,10 @@ public class FCUtils {
 
     public static String getAckStrFromCmd(PreparedCommand command) {
         // HERE
+        if (command.getCmdName().equals("ping")) return "ping_ack";
 
-        return command.getCmdName().equals("ping") ? "ping_ack" : command.getMetaCommand().getShortDescription().split(" ")[1];
+        String[] commandComponents = command.getMetaCommand().getShortDescription().split(" ");
+        // The last component of every command short description is the ack string
+        return commandComponents[commandComponents.length - 1];
     }
 }

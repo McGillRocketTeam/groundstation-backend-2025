@@ -57,6 +57,14 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private final Map<String, Commanding.CommandId> ackStrToMostRecentCmdId = new HashMap<>();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
+    private Integer isGSRadio() {
+        if (uniqueIdentifier.startsWith("gs_radio_")) {
+            String digitsString = uniqueIdentifier.substring("gs_radio_".length());
+            return Integer.parseInt(digitsString);
+        } else {
+            return null;
+        }
+    }
 
     public void addListener(ca.mrt.gs_backend.serialcomm.Listener listener) {
         listeners.add(listener);
@@ -309,8 +317,9 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             log.warn("Attempting to send serial device commands while not connected to this device");
             return false;
         }
-        String cmdStr = getCmdStrFromCmd(preparedCommand);
-        String ackStr = getAckStrFromCmd(preparedCommand);
+
+        String cmdStr = getCmdStrFromCmd(preparedCommand);;
+        String ackStr = getAckStrFromCmd(preparedCommand);;
 
         if (!writePort(cmdStr, preparedCommand.getCommandId())) {
             log.error("Failed to write to port: " + cmdStr);

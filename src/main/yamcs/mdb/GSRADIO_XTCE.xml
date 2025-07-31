@@ -37,4 +37,44 @@
             </SequenceContainer>
         </ContainerSet>
     </TelemetryMetaData>
+    <CommandMetaData>
+        <ArgumentTypeSet>
+            <FloatArgumentType name="float32A">
+                <UnitSet />
+                <FloatDataEncoding sizeInBits="32" />
+            </FloatArgumentType>
+            <IntegerArgumentType name="int32A" signed="true">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="32"/>
+            </IntegerArgumentType>
+        </ArgumentTypeSet>
+        <MetaCommandSet>
+            <MetaCommand name="ping" shortDescription="ping ping_ack" />
+            <MetaCommand name="radio_ping" shortDescription="radio ping ack_r_0" />
+
+            <MetaCommand name="set_coding_rate" shortDescription="radio cr ack_r_0" >
+                <ArgumentList>
+                    <Argument shortDescription="Coding Rate" name="coding_rate" argumentTypeRef="int32A" />
+                </ArgumentList>
+            </MetaCommand>
+
+            <MetaCommand name="set_bandwidth" shortDescription="radio bw ack_r_0">
+                <ArgumentList>
+                    <Argument shortDescription="Bandwidth" name="bandwidth" argumentTypeRef="float32A" />
+                </ArgumentList>
+            </MetaCommand>
+
+            <MetaCommand name="set_spreading_factor" shortDescription="radio sf ack_r_0">
+                <ArgumentList>
+                    <Argument shortDescription="Spreading Factor" name="spreading_factor" argumentTypeRef="int32A" />
+                </ArgumentList>
+            </MetaCommand>
+
+            <MetaCommand name="set_frequency" shortDescription="radio pow ack_r_0">
+                <ArgumentList>
+                    <Argument shortDescription="Frequency" name="frequency" argumentTypeRef="float32A" />
+                </ArgumentList>
+            </MetaCommand>
+        </MetaCommandSet>
+    </CommandMetaData>
 </SpaceSystem>
