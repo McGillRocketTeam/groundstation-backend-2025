@@ -18,6 +18,7 @@
             <Parameter name="spreading_factor" parameterTypeRef="int32" shortDescription="Spreading Factor" />
             <Parameter name="bandwidth" parameterTypeRef="float" shortDescription="Bandwidth" />
             <Parameter name="coding_rate" parameterTypeRef="int32" shortDescription="Coding Rate" />
+            <Parameter name="power" parameterTypeRef="int32" shortDescription="Power" />
         </ParameterSet>
         <ContainerSet>
             <SequenceContainer name="GSRadioPacket">
@@ -27,6 +28,7 @@
                     <ParameterRefEntry parameterRef="bandwidth"/>
                     <ParameterRefEntry parameterRef="frequency"/>
                     <ParameterRefEntry parameterRef="coding_rate"/>
+                    <ParameterRefEntry parameterRef="power"/>
 
                     <!--Parameter Encoding Definitions-->
                     <!--spreading_factor: int32 -->

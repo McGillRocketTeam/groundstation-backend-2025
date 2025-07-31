@@ -12,6 +12,7 @@ import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.protobuf.Commanding;
 import org.yamcs.tctm.AbstractTcTmParamLink;
 import org.yamcs.tctm.TmSink;
+import org.yamcs.yarch.DataType;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -140,18 +141,35 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                     log.info("Received ack: " + dataStr);
                     return;
                 }
+
+                if (dataStr.startsWith("GSRADIO")) {
+                    log.info("Received GSRadio information");
+                    log.info(dataStr);
+
+                    // Total length should be 20 bytes
+                    // there are 5 parameters each 4 bytes (32 bits)
+                    // The prefix is "GSRADIO" which is 7 bytes
+                    byte[] trimmed_array = new byte[20];
+                    System.arraycopy(serialPortEvent.getReceivedData(), 8, trimmed_array, 0, trimmed_array.length);
+
+                    // TODO:
+                    //  - If the current port is an FC, get the radio equivalent
+                    //  - Use that to process GSRadio packets (from the FCPacket link)
+                    //  - OR Create GSRadioPackets directly from the FCPacket link like:
+                    //  - TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
+                    //  - tmPacket.setRootContainer("...");
+
+                    TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
+                    log.info("DEBUG: DEFAULT PACKET CONTAINER: "+tmPacket.getRootContainer());
+                    packetQueue.add(packetPreprocessor.process(tmPacket));
+                    return;
+                }
+
                 byte[] trimmed_array = new byte[94];
                 System.arraycopy(serialPortEvent.getReceivedData(), 0, trimmed_array, 0, trimmed_array.length);
 
-                // TODO:
-                //  - If the current port is an FC, get the radio equivalent
-                //  - Use that to process GSRadio packets (from the FCPacket link)
-                //  - OR Create GSRadioPackets directly from the FCPacket link like:
-                //  - TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
-                //  - tmPacket.setRootContainer("...");
 
                 TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
-                log.info("DEBUG: DEFAULT PACKET CONTAINER: "+tmPacket.getRootContainer());
                 packetQueue.add(packetPreprocessor.process(tmPacket));
             }
         });

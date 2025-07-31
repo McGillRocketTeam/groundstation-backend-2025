@@ -50,11 +50,14 @@ public class FCUtils {
             for(var arg : command.getArgAssignment().values()){
                 cmd.append(" ").append(arg.getEngValue());
             }
+
+            cmd.append("\n");
         } else {
             for(var arg : command.getArgAssignment().values()){
                 cmd.append(",").append(arg.getEngValue());
             }
         }
+
         return cmd.toString().replace('_', ' ');
     }
 
