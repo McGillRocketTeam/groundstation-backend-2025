@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SpaceSystem name="GSRadio"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/XTCE/20180204"
-             xsi:schemaLocation="https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd ">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.omg.org/spec/XTCE/20180204"
+    xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
     <TelemetryMetaData>
         <ParameterTypeSet>
             <IntegerParameterType name="int32">
-                <IntegerDataEncoding encoding="twosComplement" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+                <IntegerDataEncoding encoding="twosComplement" sizeInBits="32"
+                    byteOrder="leastSignificantByteFirst" />
             </IntegerParameterType>
             <FloatParameterType name="float">
-                <UnitSet/>
-                <FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+                <UnitSet />
+                <FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" />
             </FloatParameterType>
         </ParameterTypeSet>
         <ParameterSet>
-            <!--For Ground Station Radio-->
-            <Parameter name="frequency" parameterTypeRef="float" shortDescription="Frequency"/>
-            <Parameter name="spreading_factor" parameterTypeRef="int32" shortDescription="Spreading Factor" />
+            <!--For
+            Ground Station Radio-->
+            <Parameter name="frequency" parameterTypeRef="float" shortDescription="Frequency" />
+            <Parameter name="spreading_factor" parameterTypeRef="int32"
+                shortDescription="Spreading Factor" />
             <Parameter name="bandwidth" parameterTypeRef="float" shortDescription="Bandwidth" />
             <Parameter name="coding_rate" parameterTypeRef="int32" shortDescription="Coding Rate" />
             <Parameter name="power" parameterTypeRef="int32" shortDescription="Power" />
         </ParameterSet>
         <ContainerSet>
-            <SequenceContainer name="GSRadioPacket">
+            <SequenceContainer name="GSRPacket">
                 <EntryList>
-                    <!--Order of Parameters-->
-                    <ParameterRefEntry parameterRef="frequency"/>
-                    <ParameterRefEntry parameterRef="bandwidth"/>
-                    <ParameterRefEntry parameterRef="coding_rate"/>
-                    <ParameterRefEntry parameterRef="spreading_factor"/>
-                    <ParameterRefEntry parameterRef="power"/>
+                    <!--Order
+                    of Parameters-->
+                    <ParameterRefEntry parameterRef="frequency" />
+                    <ParameterRefEntry parameterRef="bandwidth" />
+                    <ParameterRefEntry parameterRef="coding_rate" />
+                    <ParameterRefEntry parameterRef="spreading_factor" />
+                    <ParameterRefEntry parameterRef="power" />
 
-                    <!--Parameter Encoding Definitions-->
-                    <!--spreading_factor: int32 -->
-                    <!--bandwidth: float (32) -->
-                    <!--frequency: float (32) -->
-                    <!--coding_rate: int32-->
+                    <!--Parameter
+                    Encoding Definitions-->
+                    <!--spreading_factor:
+                    int32 -->
+                    <!--bandwidth:
+                    float (32) -->
+                    <!--frequency:
+                    float (32) -->
+                    <!--coding_rate:
+                    int32-->
                 </EntryList>
             </SequenceContainer>
         </ContainerSet>
@@ -46,34 +56,38 @@
                 <FloatDataEncoding sizeInBits="32" />
             </FloatArgumentType>
             <IntegerArgumentType name="int32A" signed="true">
-                <UnitSet/>
-                <IntegerDataEncoding sizeInBits="32"/>
+                <UnitSet />
+                <IntegerDataEncoding sizeInBits="32" />
             </IntegerArgumentType>
         </ArgumentTypeSet>
         <MetaCommandSet>
             <MetaCommand name="radio_ping" shortDescription="radio init ack_r" />
 
-            <MetaCommand name="set_coding_rate" shortDescription="radio cr ack_r" >
+            <MetaCommand name="set_coding_rate" shortDescription="radio cr ack_r">
                 <ArgumentList>
-                    <Argument shortDescription="Coding Rate" name="coding_rate" argumentTypeRef="int32A" />
+                    <Argument shortDescription="Coding Rate" name="coding_rate"
+                        argumentTypeRef="int32A" />
                 </ArgumentList>
             </MetaCommand>
 
             <MetaCommand name="set_bandwidth" shortDescription="radio bw ack_r">
                 <ArgumentList>
-                    <Argument shortDescription="Bandwidth" name="bandwidth" argumentTypeRef="float32A" />
+                    <Argument shortDescription="Bandwidth" name="bandwidth"
+                        argumentTypeRef="float32A" />
                 </ArgumentList>
             </MetaCommand>
 
             <MetaCommand name="set_spreading_factor" shortDescription="radio sf ack_r">
                 <ArgumentList>
-                    <Argument shortDescription="Spreading Factor" name="spreading_factor" argumentTypeRef="int32A" />
+                    <Argument shortDescription="Spreading Factor" name="spreading_factor"
+                        argumentTypeRef="int32A" />
                 </ArgumentList>
             </MetaCommand>
 
             <MetaCommand name="set_frequency" shortDescription="radio freq ack_r">
                 <ArgumentList>
-                    <Argument shortDescription="Frequency" name="frequency" argumentTypeRef="float32A" />
+                    <Argument shortDescription="Frequency" name="frequency"
+                        argumentTypeRef="float32A" />
                 </ArgumentList>
             </MetaCommand>
 

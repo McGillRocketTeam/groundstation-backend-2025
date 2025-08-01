@@ -1,161 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SpaceSystem name="FlightComputer"
-			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/XTCE/20180204"
-			 xsi:schemaLocation="https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd ">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.omg.org/spec/XTCE/20180204"
+	xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
 	<TelemetryMetaData>
 		<ParameterTypeSet>
-			<IntegerParameterType name="pad" >
-				<IntegerDataEncoding sizeInBits="5"/>
+			<IntegerParameterType name="pad">
+				<IntegerDataEncoding sizeInBits="5" />
 			</IntegerParameterType>
 
 			<IntegerParameterType name="uint8" signed="false">
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" bitOrder="mostSignificantBitFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" bitOrder="mostSignificantBitFirst" />
 			</IntegerParameterType>
 			<IntegerParameterType name="uint8_V" signed="false">
 				<UnitSet>
 					<Unit>V</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 			<IntegerParameterType name="uint16_V" signed="false">
 				<UnitSet>
 					<Unit>V</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
 			<IntegerParameterType name="uint8_C" signed="false">
 				<UnitSet>
 					<Unit>°C</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 			<IntegerParameterType name="int16_C">
 				<UnitSet>
 					<Unit>°C</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
 			<IntegerParameterType name="pad5bits" signed="false">
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="5" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="5"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
 
 			<IntegerParameterType name="uint16" signed="false">
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 			<IntegerParameterType name="uint16_psi" signed="false">
 				<UnitSet>
 					<Unit>psi</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 			<IntegerParameterType name="uint16_ms" signed="false">
 				<UnitSet>
 					<Unit>ms</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
 
 			<IntegerParameterType name="uint32" signed="false">
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="32"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 			<IntegerParameterType name="uint32_s" signed="false">
 				<UnitSet>
 					<Unit>s</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="32"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
 
 			<IntegerParameterType name="int8">
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="8" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="8"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
 
 			<IntegerParameterType name="int16">
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
-			<IntegerParameterType name="int16_mpsps" >
+			<IntegerParameterType name="int16_mpsps">
 				<UnitSet>
 					<Unit>m</Unit>
 					<Unit power="-2">s</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 			<IntegerParameterType name="int16_mg">
 				<UnitSet>
 					<Unit>mG</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
 
 			<IntegerParameterType name="int32">
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="32"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 			<IntegerParameterType name="int32_mps">
 				<UnitSet>
 					<Unit>m</Unit>
 					<Unit power="-1">s</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="twosComplement" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="32"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
 
 			<FloatParameterType name="float">
-				<UnitSet/>
-				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+				<UnitSet />
+				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" />
 			</FloatParameterType>
 			<FloatParameterType name="float_ft">
 				<UnitSet>
 					<Unit>ft</Unit>
 				</UnitSet>
-				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" />
 			</FloatParameterType>
 			<IntegerParameterType name="uint16_Hz" signed="false">
 				<UnitSet>
 					<Unit>Hz</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 			<IntegerParameterType name="uint32_ms" signed="false">
 				<UnitSet>
 					<Unit>ms</Unit>
 				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="32" byteOrder="leastSignificantByteFirst"/>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="32"
+					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
 			<AggregateParameterType name="xyzFloat">
 				<MemberList>
-					<Member name="x" typeRef="float"/>
-					<Member name="y" typeRef="float"/>
-					<Member name="z" typeRef="float"/>
+					<Member name="x" typeRef="float" />
+					<Member name="y" typeRef="float" />
+					<Member name="z" typeRef="float" />
 				</MemberList>
 			</AggregateParameterType>
 			<AggregateParameterType name="xyzYPRFloat">
 				<MemberList>
-					<Member name="x" typeRef="float"/>
-					<Member name="y" typeRef="float"/>
-					<Member name="z" typeRef="float"/>
-					<Member name="yaw" typeRef="float"/>
-					<Member name="pitch" typeRef="float"/>
-					<Member name="roll" typeRef="float"/>
+					<Member name="x" typeRef="float" />
+					<Member name="y" typeRef="float" />
+					<Member name="z" typeRef="float" />
+					<Member name="yaw" typeRef="float" />
+					<Member name="pitch" typeRef="float" />
+					<Member name="roll" typeRef="float" />
 				</MemberList>
 			</AggregateParameterType>
 			<EnumeratedParameterType name="flightStageType">
-				<UnitSet/>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" byteOrder="leastSignificantByteFirst"/>
+				<UnitSet />
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"
+					byteOrder="leastSignificantByteFirst" />
 				<EnumerationList>
-					<Enumeration value="99" label="Pre-Pad, error in initialization"/>
-					<Enumeration value="0" label="Pad, filling and readying for launch"/>
-					<Enumeration value="1" label="Ascent, climbing at high velocity"/>
-					<Enumeration value="2" label="Pre-Apogee, checking for ejection"/>
-					<Enumeration value="3" label="Drogue descent"/>
-					<Enumeration value="4" label="Main descent"/>
-					<Enumeration value="5" label="Landed"/>
+					<Enumeration value="99" label="Pre-Pad, error in initialization" />
+					<Enumeration value="0" label="Pad, filling and readying for launch" />
+					<Enumeration value="1" label="Ascent, climbing at high velocity" />
+					<Enumeration value="2" label="Pre-Apogee, checking for ejection" />
+					<Enumeration value="3" label="Drogue descent" />
+					<Enumeration value="4" label="Main descent" />
+					<Enumeration value="5" label="Landed" />
 				</EnumerationList>
 			</EnumeratedParameterType>
 			<BinaryParameterType name="payloadPacketType">
@@ -166,11 +186,11 @@
 				</BinaryDataEncoding>
 			</BinaryParameterType>
 			<BooleanParameterType name="bool">
-				<UnitSet/>
-				<IntegerDataEncoding sizeInBits="1"/>
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="1" />
 			</BooleanParameterType>
 			<StringParameterType name="callsign">
-				<UnitSet/>
+				<UnitSet />
 				<StringDataEncoding>
 					<SizeInBits>
 						<Fixed>
@@ -181,82 +201,136 @@
 			</StringParameterType>
 		</ParameterTypeSet>
 		<ParameterSet>
-			<Parameter name="packet_id" parameterTypeRef="uint8" shortDescription="Packet ID number"/>
-			<Parameter name="HAM_call_sign" parameterTypeRef="callsign" shortDescription="HAM call sign"/>
-			<Parameter name="rx_tx_ratio" parameterTypeRef="uint8" shortDescription="Radio rx/tx ratio"/>
-			<Parameter name="polling_rate" parameterTypeRef="uint16_ms" shortDescription="Polling rate"/>
-			<Parameter name="time_from_sw_reset" parameterTypeRef="uint32_s" shortDescription="Time from last sofware reset"/>
-			<Parameter name="battery_voltage" parameterTypeRef="uint8_V" shortDescription="Battery Voltage"/>
-			<Parameter name="FC_RPO" parameterTypeRef="bool" shortDescription="FC RPO sense signal"/>
-			<Parameter name="pl_ok" parameterTypeRef="bool" shortDescription="FC RPO sense signal"/>
-			<Parameter name="CTSFlag" parameterTypeRef="uint8" shortDescription="FC RPO sense signal"/>
+			<Parameter name="packet_id" parameterTypeRef="uint8" shortDescription="Packet ID number" />
+			<Parameter name="HAM_call_sign" parameterTypeRef="callsign" shortDescription="HAM call sign" />
+			<Parameter name="rx_tx_ratio" parameterTypeRef="uint8" shortDescription="Radio rx/tx ratio" />
+			<Parameter name="polling_rate" parameterTypeRef="uint16_ms" shortDescription="Polling rate" />
+			<Parameter name="time_from_sw_reset" parameterTypeRef="uint32_s"
+				shortDescription="Time from last sofware reset" />
+			<Parameter name="battery_voltage" parameterTypeRef="uint8_V"
+				shortDescription="Battery Voltage" />
+			<Parameter name="FC_RPO" parameterTypeRef="bool" shortDescription="FC RPO sense signal" />
+			<Parameter name="pl_ok" parameterTypeRef="bool" shortDescription="FC RPO sense signal" />
+			<Parameter name="CTSFlag" parameterTypeRef="uint8" shortDescription="FC RPO sense signal" />
 
-			<Parameter name="pading" parameterTypeRef="pad"/>
+			<Parameter name="pading" parameterTypeRef="pad" />
 
-			<Parameter name="drogue_armed_SW" parameterTypeRef="bool" shortDescription="drogueEmatch: logical armed"/>
-			<Parameter name="drogue_armed_HW" parameterTypeRef="bool" shortDescription="drogueEmatch: logical armed"/>
+			<Parameter name="drogue_armed_SW" parameterTypeRef="bool"
+				shortDescription="drogueEmatch: logical armed" />
+			<Parameter name="drogue_armed_HW" parameterTypeRef="bool"
+				shortDescription="drogueEmatch: logical armed" />
 
-			<Parameter name="drogue_energized_SW" parameterTypeRef="bool" shortDescription="drogue: logical energized"/>
-			<Parameter name="drogue_energizedGate_HW" parameterTypeRef="bool" shortDescription="drogue: electrical energized gate"/>
-			<Parameter name="drogue_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="drogue: electrical energized current"/>
-			<Parameter name="drogue_continuity_HW" parameterTypeRef="bool" shortDescription="drogue: electrical continuity"/>
-			<Parameter name="main_armed_SW" parameterTypeRef="bool" shortDescription="Main: logical armed"/>
-			<Parameter name="main_armed_HW" parameterTypeRef="bool" shortDescription="Main: electrical armed"/>
-			<Parameter name="main_energized_SW" parameterTypeRef="bool" shortDescription="Main: logical energized"/>
-			<Parameter name="main_energizedGate_HW" parameterTypeRef="bool" shortDescription="Main: electrical energized gate"/>
-			<Parameter name="main_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="Main: electrical energized current"/>
-			<Parameter name="main_continuity_HW" parameterTypeRef="bool" shortDescription="Nitrogen fill valve: logical armed"/>
-			<Parameter name="prop_energized_elec" parameterTypeRef="bool" shortDescription="Electrical energized propulsion boards"/>
-			<Parameter name="ufd_armed_SW" parameterTypeRef="bool" shortDescription="F/DOV normally closed: logical armed"/>
-			<Parameter name="ufd_armed_HW" parameterTypeRef="bool" shortDescription="F/DOV normally closed: electrical armed"/>
-			<Parameter name="ufd_energized_SW" parameterTypeRef="bool" shortDescription="F/DOV normally closed: logical energized"/>
-			<Parameter name="ufd_energizedGate_HW" parameterTypeRef="bool" shortDescription="F/DOV normally closed: electrical energized gate"/>
-			<Parameter name="ufd_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="F/DOV normally closed: electrical energized current"/>
-			<Parameter name="ufd_continuity_HW" parameterTypeRef="bool" shortDescription="F/DOV normally closed: electrical continuity"/>
-			<Parameter name="run_armed_SW" parameterTypeRef="bool" shortDescription="F/DOV normally open: logical armed"/>
-			<Parameter name="run_armed_HW" parameterTypeRef="bool" shortDescription="F/DOV normally open: electrical armed"/>
-			<Parameter name="run_energized_SW" parameterTypeRef="bool" shortDescription="F/DOV normally open: logical energized"/>
-			<Parameter name="run_energizedGate_HW" parameterTypeRef="bool" shortDescription="F/DOV normally open: electrical energized gate"/>
-			<Parameter name="run_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="F/DOV normally open: electrical energized current"/>
-			<Parameter name="run_continuity_HW" parameterTypeRef="bool" shortDescription="F/DOV normally open: electrical continuity"/>
-			<Parameter name="vent_armed_SW" parameterTypeRef="bool" shortDescription="Vent: logical armed"/>
-			<Parameter name="vent_armed_HW" parameterTypeRef="bool" shortDescription="Vent: electrical armed"/>
-			<Parameter name="vent_energized_SW" parameterTypeRef="bool" shortDescription="Vent: logical energized"/>
-			<Parameter name="vent_energizedGate_HW" parameterTypeRef="bool" shortDescription="Vent: electrical energized gate"/>
-			<Parameter name="vent_energizedCurrent_HW" parameterTypeRef="bool" shortDescription="Vent: electrical energized current"/>
-			<Parameter name="vent_continuity_HW" parameterTypeRef="bool" shortDescription="Vent: electrical continuity"/>
-			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi" shortDescription="Combustion chamber pressure (prop bottom)"/>
-			<Parameter name="tank_pressure" parameterTypeRef="uint16_psi" shortDescription="Tank bottom pressure"/>
-			<Parameter name="tank_temp" parameterTypeRef="uint8_C" shortDescription="Tank temperature (prop bottom)"/>
-			<Parameter name="vent_temp" parameterTypeRef="uint8_C" shortDescription="Vent valve temperature (prop top)"/>
-			<Parameter name="pl_sampling_state" parameterTypeRef="bool" shortDescription="Payload: Sampling state"/>
-			<Parameter name="pl_vibration_freq_x" parameterTypeRef="uint16_Hz" shortDescription="Payload: Vibration frequency x"/>
-			<Parameter name="pl_vibration_freq_y" parameterTypeRef="uint16_Hz" shortDescription="Payload: Vibration frequency y"/>
-			<Parameter name="pl_vibration_freq_z" parameterTypeRef="uint16_Hz" shortDescription="Payload: Vibration frequency z"/>
-			<Parameter name="pl_vibration_amplitude_x" parameterTypeRef="uint16_V" shortDescription="Payload: Vibration amplitude x"/>
-			<Parameter name="pl_vibration_amplitude_y" parameterTypeRef="uint16_V" shortDescription="Payload: Vibration amplitude y"/>
-			<Parameter name="pl_vibration_amplitude_z" parameterTypeRef="uint16_V" shortDescription="Payload: Vibration amplitude z"/>
-			<Parameter name="pl_time_since_start" parameterTypeRef="uint32_ms" shortDescription="Payload: Time since start of sampling"/>
-			<Parameter name="pl_active_temp_ctrl_state" parameterTypeRef="bool" shortDescription="Payload: Active temperature control state"/>
-			<Parameter name="pl_target_temp" parameterTypeRef="uint8_C" shortDescription="Payload: Target temerature"/>
-			<Parameter name="pl_sample_temp" parameterTypeRef="int16_C" shortDescription="Payload: Actual Sample temperautre"/>
-			<Parameter name="flight_stage" parameterTypeRef="flightStageType" shortDescription="Flight stage"/>
-			<Parameter name="alt_altitude" parameterTypeRef="float_ft" shortDescription="Altitude from ground (calculated from pressure)"/>
-			<Parameter name="vertical_speed" parameterTypeRef="int32_mps" shortDescription="Vertical speed"/>
-			<Parameter name="gps_latitude" parameterTypeRef="float" shortDescription="GPS latitude"/>
-			<Parameter name="gps_longitude" parameterTypeRef="float" shortDescription="GPS longitude"/>
-			<Parameter name="gps_altitude" parameterTypeRef="float" shortDescription="GPS altitude"/>
-			<Parameter name="gps_time_last_update" parameterTypeRef="float" shortDescription="GPS time from last update"/>
-			<Parameter name="acceleration_x" parameterTypeRef="int16_mpsps" shortDescription="Acceleration x"/>
-			<Parameter name="acceleration_y" parameterTypeRef="int16_mpsps" shortDescription="Acceleration Y"/>
-			<Parameter name="acceleration_z" parameterTypeRef="int16_mpsps" shortDescription="Acceleration Z"/>
-			<Parameter name="angle_yaw" parameterTypeRef="int16" shortDescription="Angular yaw"/>
-			<Parameter name="angle_pitch" parameterTypeRef="int16" shortDescription="Angular pitch"/>
-			<Parameter name="angle_roll" parameterTypeRef="int16" shortDescription="Angular roll"/>
-			<Parameter name="pl_battery_voltage" parameterTypeRef="uint16_V" shortDescription="Battery Voltage"/>
+			<Parameter name="drogue_energized_SW" parameterTypeRef="bool"
+				shortDescription="drogue: logical energized" />
+			<Parameter name="drogue_energizedGate_HW" parameterTypeRef="bool"
+				shortDescription="drogue: electrical energized gate" />
+			<Parameter name="drogue_energizedCurrent_HW" parameterTypeRef="bool"
+				shortDescription="drogue: electrical energized current" />
+			<Parameter name="drogue_continuity_HW" parameterTypeRef="bool"
+				shortDescription="drogue: electrical continuity" />
+			<Parameter name="main_armed_SW" parameterTypeRef="bool" shortDescription="Main: logical armed" />
+			<Parameter name="main_armed_HW" parameterTypeRef="bool"
+				shortDescription="Main: electrical armed" />
+			<Parameter name="main_energized_SW" parameterTypeRef="bool"
+				shortDescription="Main: logical energized" />
+			<Parameter name="main_energizedGate_HW" parameterTypeRef="bool"
+				shortDescription="Main: electrical energized gate" />
+			<Parameter name="main_energizedCurrent_HW" parameterTypeRef="bool"
+				shortDescription="Main: electrical energized current" />
+			<Parameter name="main_continuity_HW" parameterTypeRef="bool"
+				shortDescription="Nitrogen fill valve: logical armed" />
+			<Parameter name="prop_energized_elec" parameterTypeRef="bool"
+				shortDescription="Electrical energized propulsion boards" />
+			<Parameter name="ufd_armed_SW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally closed: logical armed" />
+			<Parameter name="ufd_armed_HW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally closed: electrical armed" />
+			<Parameter name="ufd_energized_SW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally closed: logical energized" />
+			<Parameter name="ufd_energizedGate_HW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally closed: electrical energized gate" />
+			<Parameter name="ufd_energizedCurrent_HW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally closed: electrical energized current" />
+			<Parameter name="ufd_continuity_HW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally closed: electrical continuity" />
+			<Parameter name="run_armed_SW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally open: logical armed" />
+			<Parameter name="run_armed_HW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally open: electrical armed" />
+			<Parameter name="run_energized_SW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally open: logical energized" />
+			<Parameter name="run_energizedGate_HW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally open: electrical energized gate" />
+			<Parameter name="run_energizedCurrent_HW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally open: electrical energized current" />
+			<Parameter name="run_continuity_HW" parameterTypeRef="bool"
+				shortDescription="F/DOV normally open: electrical continuity" />
+			<Parameter name="vent_armed_SW" parameterTypeRef="bool" shortDescription="Vent: logical armed" />
+			<Parameter name="vent_armed_HW" parameterTypeRef="bool"
+				shortDescription="Vent: electrical armed" />
+			<Parameter name="vent_energized_SW" parameterTypeRef="bool"
+				shortDescription="Vent: logical energized" />
+			<Parameter name="vent_energizedGate_HW" parameterTypeRef="bool"
+				shortDescription="Vent: electrical energized gate" />
+			<Parameter name="vent_energizedCurrent_HW" parameterTypeRef="bool"
+				shortDescription="Vent: electrical energized current" />
+			<Parameter name="vent_continuity_HW" parameterTypeRef="bool"
+				shortDescription="Vent: electrical continuity" />
+			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi"
+				shortDescription="Combustion chamber pressure (prop bottom)" />
+			<Parameter name="tank_pressure" parameterTypeRef="uint16_psi"
+				shortDescription="Tank bottom pressure" />
+			<Parameter name="tank_temp" parameterTypeRef="uint8_C"
+				shortDescription="Tank temperature (prop bottom)" />
+			<Parameter name="vent_temp" parameterTypeRef="uint8_C"
+				shortDescription="Vent valve temperature (prop top)" />
+			<Parameter name="pl_sampling_state" parameterTypeRef="bool"
+				shortDescription="Payload: Sampling state" />
+			<Parameter name="pl_vibration_freq_x" parameterTypeRef="uint16_Hz"
+				shortDescription="Payload: Vibration frequency x" />
+			<Parameter name="pl_vibration_freq_y" parameterTypeRef="uint16_Hz"
+				shortDescription="Payload: Vibration frequency y" />
+			<Parameter name="pl_vibration_freq_z" parameterTypeRef="uint16_Hz"
+				shortDescription="Payload: Vibration frequency z" />
+			<Parameter name="pl_vibration_amplitude_x" parameterTypeRef="uint16_V"
+				shortDescription="Payload: Vibration amplitude x" />
+			<Parameter name="pl_vibration_amplitude_y" parameterTypeRef="uint16_V"
+				shortDescription="Payload: Vibration amplitude y" />
+			<Parameter name="pl_vibration_amplitude_z" parameterTypeRef="uint16_V"
+				shortDescription="Payload: Vibration amplitude z" />
+			<Parameter name="pl_time_since_start" parameterTypeRef="uint32_ms"
+				shortDescription="Payload: Time since start of sampling" />
+			<Parameter name="pl_active_temp_ctrl_state" parameterTypeRef="bool"
+				shortDescription="Payload: Active temperature control state" />
+			<Parameter name="pl_target_temp" parameterTypeRef="uint8_C"
+				shortDescription="Payload: Target temerature" />
+			<Parameter name="pl_sample_temp" parameterTypeRef="int16_C"
+				shortDescription="Payload: Actual Sample temperautre" />
+			<Parameter name="flight_stage" parameterTypeRef="flightStageType"
+				shortDescription="Flight stage" />
+			<Parameter name="alt_altitude" parameterTypeRef="float_ft"
+				shortDescription="Altitude from ground (calculated from pressure)" />
+			<Parameter name="vertical_speed" parameterTypeRef="int32_mps"
+				shortDescription="Vertical speed" />
+			<Parameter name="gps_latitude" parameterTypeRef="float" shortDescription="GPS latitude" />
+			<Parameter name="gps_longitude" parameterTypeRef="float" shortDescription="GPS longitude" />
+			<Parameter name="gps_altitude" parameterTypeRef="float" shortDescription="GPS altitude" />
+			<Parameter name="gps_time_last_update" parameterTypeRef="float"
+				shortDescription="GPS time from last update" />
+			<Parameter name="acceleration_x" parameterTypeRef="int16_mpsps"
+				shortDescription="Acceleration x" />
+			<Parameter name="acceleration_y" parameterTypeRef="int16_mpsps"
+				shortDescription="Acceleration Y" />
+			<Parameter name="acceleration_z" parameterTypeRef="int16_mpsps"
+				shortDescription="Acceleration Z" />
+			<Parameter name="angle_yaw" parameterTypeRef="int16" shortDescription="Angular yaw" />
+			<Parameter name="angle_pitch" parameterTypeRef="int16" shortDescription="Angular pitch" />
+			<Parameter name="angle_roll" parameterTypeRef="int16" shortDescription="Angular roll" />
+			<Parameter name="pl_battery_voltage" parameterTypeRef="uint16_V"
+				shortDescription="Battery Voltage" />
 
-			<Parameter name="RSSI" parameterTypeRef="int32"/>
-			<Parameter name="SNR" parameterTypeRef="int32"/>
+			<Parameter name="RSSI" parameterTypeRef="int32" />
+			<Parameter name="SNR" parameterTypeRef="int32" />
 
 			<Parameter name="adjusted_voltage" parameterTypeRef="float">
 				<ParameterProperties dataSource="derived" readOnly="true">
@@ -273,92 +347,133 @@
 			<SequenceContainer name="FCPacket">
 				<EntryList>
 					<!-- Radio Packet (8 bytes) -->
-					<ParameterRefEntry parameterRef="CTSFlag" shortDescription="CTS flag"/>
-					<ParameterRefEntry parameterRef="packet_id" shortDescription="Packet ID number"/>
-					<ParameterRefEntry parameterRef="HAM_call_sign" shortDescription="HAM call sign"/>
+					<ParameterRefEntry parameterRef="CTSFlag" shortDescription="CTS flag" />
+					<ParameterRefEntry parameterRef="packet_id" shortDescription="Packet ID number" />
+					<ParameterRefEntry parameterRef="HAM_call_sign" shortDescription="HAM call sign" />
 
 					<!-- Boolean Packet (32 booleans) -->
-					<ParameterRefEntry parameterRef="main_armed_SW" shortDescription="Main: logical armed"/>
-					<ParameterRefEntry parameterRef="drogue_continuity_HW" shortDescription="drogueEmatch: electrical continuity"/>
-					<ParameterRefEntry parameterRef="drogue_energizedCurrent_HW" shortDescription="drogueEmatch: electrical energized current"/>
-					<ParameterRefEntry parameterRef="drogue_energizedGate_HW" shortDescription="drogueEmatch: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="drogue_energized_SW" shortDescription="drogueEmatch: logical energized"/>
-					<ParameterRefEntry parameterRef="drogue_armed_HW" shortDescription="drogueEmatch: electrical armed"/>
-					<ParameterRefEntry parameterRef="drogue_armed_SW" shortDescription="drogueEmatch: logical armed"/>
-					<ParameterRefEntry parameterRef="FC_RPO" shortDescription="FC RPO sense signal"/>
+					<ParameterRefEntry parameterRef="main_armed_SW" shortDescription="Main: logical armed" />
+					<ParameterRefEntry parameterRef="drogue_continuity_HW"
+						shortDescription="drogueEmatch: electrical continuity" />
+					<ParameterRefEntry parameterRef="drogue_energizedCurrent_HW"
+						shortDescription="drogueEmatch: electrical energized current" />
+					<ParameterRefEntry parameterRef="drogue_energizedGate_HW"
+						shortDescription="drogueEmatch: electrical energized gate" />
+					<ParameterRefEntry parameterRef="drogue_energized_SW"
+						shortDescription="drogueEmatch: logical energized" />
+					<ParameterRefEntry parameterRef="drogue_armed_HW"
+						shortDescription="drogueEmatch: electrical armed" />
+					<ParameterRefEntry parameterRef="drogue_armed_SW"
+						shortDescription="drogueEmatch: logical armed" />
+					<ParameterRefEntry parameterRef="FC_RPO" shortDescription="FC RPO sense signal" />
 
-					<ParameterRefEntry parameterRef="ufd_armed_HW" shortDescription="ufd: electrical armed"/>
-					<ParameterRefEntry parameterRef="ufd_armed_SW" shortDescription="ufd: logical armed"/>
-					<ParameterRefEntry parameterRef="prop_energized_elec" shortDescription="Electrical energized propulsion boards"/>
-					<ParameterRefEntry parameterRef="main_continuity_HW" shortDescription="Nitrogen fill valve: logical armed"/>
-					<ParameterRefEntry parameterRef="main_energizedCurrent_HW" shortDescription="Main: electrical energized current"/>
-					<ParameterRefEntry parameterRef="main_energizedGate_HW" shortDescription="Main: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="main_energized_SW" shortDescription="Main: logical energized"/>
-					<ParameterRefEntry parameterRef="main_armed_HW" shortDescription="Main: electrical armed"/>
+					<ParameterRefEntry parameterRef="ufd_armed_HW" shortDescription="ufd: electrical armed" />
+					<ParameterRefEntry parameterRef="ufd_armed_SW" shortDescription="ufd: logical armed" />
+					<ParameterRefEntry parameterRef="prop_energized_elec"
+						shortDescription="Electrical energized propulsion boards" />
+					<ParameterRefEntry parameterRef="main_continuity_HW"
+						shortDescription="Nitrogen fill valve: logical armed" />
+					<ParameterRefEntry parameterRef="main_energizedCurrent_HW"
+						shortDescription="Main: electrical energized current" />
+					<ParameterRefEntry parameterRef="main_energizedGate_HW"
+						shortDescription="Main: electrical energized gate" />
+					<ParameterRefEntry parameterRef="main_energized_SW"
+						shortDescription="Main: logical energized" />
+					<ParameterRefEntry parameterRef="main_armed_HW" shortDescription="Main: electrical armed" />
 
-					<ParameterRefEntry parameterRef="run_energizedGate_HW" shortDescription="run: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="run_energized_SW" shortDescription="run: logical energized"/>
-					<ParameterRefEntry parameterRef="run_armed_HW" shortDescription="run: electrical armed"/>
-					<ParameterRefEntry parameterRef="run_armed_SW" shortDescription="run: logical armed"/>
-					<ParameterRefEntry parameterRef="ufd_continuity_HW" shortDescription="ufd: electrical continuity"/>
-					<ParameterRefEntry parameterRef="ufd_energizedCurrent_HW" shortDescription="ufd: electrical energized current"/>
-					<ParameterRefEntry parameterRef="ufd_energizedGate_HW" shortDescription="ufd: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="ufd_energized_SW" shortDescription="ufd: logical energized"/>
+					<ParameterRefEntry parameterRef="run_energizedGate_HW"
+						shortDescription="run: electrical energized gate" />
+					<ParameterRefEntry parameterRef="run_energized_SW"
+						shortDescription="run: logical energized" />
+					<ParameterRefEntry parameterRef="run_armed_HW" shortDescription="run: electrical armed" />
+					<ParameterRefEntry parameterRef="run_armed_SW" shortDescription="run: logical armed" />
+					<ParameterRefEntry parameterRef="ufd_continuity_HW"
+						shortDescription="ufd: electrical continuity" />
+					<ParameterRefEntry parameterRef="ufd_energizedCurrent_HW"
+						shortDescription="ufd: electrical energized current" />
+					<ParameterRefEntry parameterRef="ufd_energizedGate_HW"
+						shortDescription="ufd: electrical energized gate" />
+					<ParameterRefEntry parameterRef="ufd_energized_SW"
+						shortDescription="ufd: logical energized" />
 
-					<ParameterRefEntry parameterRef="vent_continuity_HW" shortDescription="Vent: electrical continuity"/>
-					<ParameterRefEntry parameterRef="vent_energizedCurrent_HW" shortDescription="Vent: electrical energized current"/>
-					<ParameterRefEntry parameterRef="vent_energizedGate_HW" shortDescription="Vent: electrical energized gate"/>
-					<ParameterRefEntry parameterRef="vent_energized_SW" shortDescription="Vent: logical energized"/>
-					<ParameterRefEntry parameterRef="vent_armed_HW" shortDescription="Vent: electrical armed"/>
-					<ParameterRefEntry parameterRef="vent_armed_SW" shortDescription="Vent: logical armed"/>
-					<ParameterRefEntry parameterRef="run_continuity_HW" shortDescription="run: electrical continuity"/>
-					<ParameterRefEntry parameterRef="run_energizedCurrent_HW" shortDescription="run: electrical energized current"/>
+					<ParameterRefEntry parameterRef="vent_continuity_HW"
+						shortDescription="Vent: electrical continuity" />
+					<ParameterRefEntry parameterRef="vent_energizedCurrent_HW"
+						shortDescription="Vent: electrical energized current" />
+					<ParameterRefEntry parameterRef="vent_energizedGate_HW"
+						shortDescription="Vent: electrical energized gate" />
+					<ParameterRefEntry parameterRef="vent_energized_SW"
+						shortDescription="Vent: logical energized" />
+					<ParameterRefEntry parameterRef="vent_armed_HW" shortDescription="Vent: electrical armed" />
+					<ParameterRefEntry parameterRef="vent_armed_SW" shortDescription="Vent: logical armed" />
+					<ParameterRefEntry parameterRef="run_continuity_HW"
+						shortDescription="run: electrical continuity" />
+					<ParameterRefEntry parameterRef="run_energizedCurrent_HW"
+						shortDescription="run: electrical energized current" />
 
 					<!-- Flight Computer Packet (37 bytes) -->
-					<ParameterRefEntry parameterRef="tank_pressure" shortDescription="Tank bottom pressure"/>
-					<ParameterRefEntry parameterRef="vent_temp" shortDescription="Vent valve temperature (prop top)"/>
-					<ParameterRefEntry parameterRef="flight_stage" shortDescription="Flight stage"/>
-					<ParameterRefEntry parameterRef="alt_altitude" shortDescription="Altitude from ground (calculated from pressure)"/>
-					<ParameterRefEntry parameterRef="vertical_speed" shortDescription="Vertical speed"/>
-					<ParameterRefEntry parameterRef="gps_latitude" shortDescription="GPS latitude"/>
-					<ParameterRefEntry parameterRef="gps_longitude" shortDescription="GPS longitude"/>
-					<ParameterRefEntry parameterRef="gps_altitude" shortDescription="GPS altitude"/>
-					<ParameterRefEntry parameterRef="acceleration_x" shortDescription="Acceleration x"/>
-					<ParameterRefEntry parameterRef="acceleration_y" shortDescription="Acceleration Y"/>
-					<ParameterRefEntry parameterRef="acceleration_z" shortDescription="Acceleration Z"/>
-					<ParameterRefEntry parameterRef="angle_yaw" shortDescription="Angular yaw"/>
-					<ParameterRefEntry parameterRef="angle_pitch" shortDescription="Angular pitch"/>
-					<ParameterRefEntry parameterRef="angle_roll" shortDescription="Angular roll"/>
-					<ParameterRefEntry parameterRef="battery_voltage" shortDescription="Battery Voltage"/>
+					<ParameterRefEntry parameterRef="tank_pressure" shortDescription="Tank bottom pressure" />
+					<ParameterRefEntry parameterRef="vent_temp"
+						shortDescription="Vent valve temperature (prop top)" />
+					<ParameterRefEntry parameterRef="flight_stage" shortDescription="Flight stage" />
+					<ParameterRefEntry parameterRef="alt_altitude"
+						shortDescription="Altitude from ground (calculated from pressure)" />
+					<ParameterRefEntry parameterRef="vertical_speed" shortDescription="Vertical speed" />
+					<ParameterRefEntry parameterRef="gps_latitude" shortDescription="GPS latitude" />
+					<ParameterRefEntry parameterRef="gps_longitude" shortDescription="GPS longitude" />
+					<ParameterRefEntry parameterRef="gps_altitude" shortDescription="GPS altitude" />
+					<ParameterRefEntry parameterRef="acceleration_x" shortDescription="Acceleration x" />
+					<ParameterRefEntry parameterRef="acceleration_y" shortDescription="Acceleration Y" />
+					<ParameterRefEntry parameterRef="acceleration_z" shortDescription="Acceleration Z" />
+					<ParameterRefEntry parameterRef="angle_yaw" shortDescription="Angular yaw" />
+					<ParameterRefEntry parameterRef="angle_pitch" shortDescription="Angular pitch" />
+					<ParameterRefEntry parameterRef="angle_roll" shortDescription="Angular roll" />
+					<ParameterRefEntry parameterRef="battery_voltage" shortDescription="Battery Voltage" />
 
 					<!-- Payload Packet (22 bytes) -->
-					<ParameterRefEntry parameterRef="pl_vibration_freq_x" shortDescription="Payload: Vibration frequency x"/>
-					<ParameterRefEntry parameterRef="pl_vibration_freq_y" shortDescription="Payload: Vibration frequency y"/>
-					<ParameterRefEntry parameterRef="pl_vibration_freq_z" shortDescription="Payload: Vibration frequency z"/>
-					<ParameterRefEntry parameterRef="pl_vibration_amplitude_x" shortDescription="Payload: Vibration amplitude x"/>
-					<ParameterRefEntry parameterRef="pl_vibration_amplitude_y" shortDescription="Payload: Vibration amplitude y"/>
-					<ParameterRefEntry parameterRef="pl_vibration_amplitude_z" shortDescription="Payload: Vibration amplitude z"/>
-					<ParameterRefEntry parameterRef="pl_time_since_start" shortDescription="Payload: Time since start of sampling"/>
-					<ParameterRefEntry parameterRef="pl_target_temp" shortDescription="Payload: Target temerature"/>
-					<ParameterRefEntry parameterRef="pl_sample_temp" shortDescription="Payload: Actual Sample temperautre"/>
-					<ParameterRefEntry parameterRef="pl_battery_voltage" shortDescription="Battery Voltage"/>
+					<ParameterRefEntry parameterRef="pl_vibration_freq_x"
+						shortDescription="Payload: Vibration frequency x" />
+					<ParameterRefEntry parameterRef="pl_vibration_freq_y"
+						shortDescription="Payload: Vibration frequency y" />
+					<ParameterRefEntry parameterRef="pl_vibration_freq_z"
+						shortDescription="Payload: Vibration frequency z" />
+					<ParameterRefEntry parameterRef="pl_vibration_amplitude_x"
+						shortDescription="Payload: Vibration amplitude x" />
+					<ParameterRefEntry parameterRef="pl_vibration_amplitude_y"
+						shortDescription="Payload: Vibration amplitude y" />
+					<ParameterRefEntry parameterRef="pl_vibration_amplitude_z"
+						shortDescription="Payload: Vibration amplitude z" />
+					<ParameterRefEntry parameterRef="pl_time_since_start"
+						shortDescription="Payload: Time since start of sampling" />
+					<ParameterRefEntry parameterRef="pl_target_temp"
+						shortDescription="Payload: Target temerature" />
+					<ParameterRefEntry parameterRef="pl_sample_temp"
+						shortDescription="Payload: Actual Sample temperautre" />
+					<ParameterRefEntry parameterRef="pl_battery_voltage" shortDescription="Battery Voltage" />
 					<ParameterRefEntry parameterRef="pading" />
-					<ParameterRefEntry parameterRef="pl_active_temp_ctrl_state" shortDescription="Payload: Active temperature control state"/>
-					<ParameterRefEntry parameterRef="pl_sampling_state" shortDescription="Payload: Sampling state"/>
+					<ParameterRefEntry parameterRef="pl_active_temp_ctrl_state"
+						shortDescription="Payload: Active temperature control state" />
+					<ParameterRefEntry parameterRef="pl_sampling_state"
+						shortDescription="Payload: Sampling state" />
 					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: OK status bit" />
-					<!-- The 3 booleans are bit packed we need to add an offset so everything remains byte aligned			-->
+					<!-- The 3 booleans are bit packed we need to add an offset so everything remains byte
+					aligned			-->
 
 
 					<!-- Variable Packet (14 bytes) -->
-					<ParameterRefEntry parameterRef="gps_time_last_update" shortDescription="GPS time from last update"/>
-					<ParameterRefEntry parameterRef="tank_temp" shortDescription="Tank temperature (prop bottom)"/>
-					<ParameterRefEntry parameterRef="polling_rate" shortDescription="Polling rate"/>
-					<ParameterRefEntry parameterRef="prop_cc_pressure" shortDescription="Combustion chamber pressure (prop bottom)"/>
-					<ParameterRefEntry parameterRef="time_from_sw_reset" shortDescription="Time from last software reset"/>
-					<ParameterRefEntry parameterRef="rx_tx_ratio" shortDescription="Radio rx/tx ratio"/>
+					<ParameterRefEntry parameterRef="gps_time_last_update"
+						shortDescription="GPS time from last update" />
+					<ParameterRefEntry parameterRef="tank_temp"
+						shortDescription="Tank temperature (prop bottom)" />
+					<ParameterRefEntry parameterRef="polling_rate" shortDescription="Polling rate" />
+					<ParameterRefEntry parameterRef="prop_cc_pressure"
+						shortDescription="Combustion chamber pressure (prop bottom)" />
+					<ParameterRefEntry parameterRef="time_from_sw_reset"
+						shortDescription="Time from last software reset" />
+					<ParameterRefEntry parameterRef="rx_tx_ratio" shortDescription="Radio rx/tx ratio" />
 
-					<ParameterRefEntry parameterRef="RSSI"/>
-					<ParameterRefEntry parameterRef="SNR"/>
+					<ParameterRefEntry parameterRef="RSSI" />
+					<ParameterRefEntry parameterRef="SNR" />
 				</EntryList>
 
 			</SequenceContainer>
@@ -366,37 +481,37 @@
 		<AlgorithmSet>
 			<MathAlgorithm name="battery_voltage_algorithm">
 				<MathOperation outputParameterRef="pl_battery_voltage">
-					<ParameterInstanceRefOperand parameterRef="pl_battery_voltage"/>
+					<ParameterInstanceRefOperand parameterRef="pl_battery_voltage" />
 					<ValueOperand>10</ValueOperand>
 					<Operator>-</Operator>
 					<ValueOperand>2186</ValueOperand>
 					<Operator>/</Operator>
 					<TriggerSet>
-						<OnParameterUpdateTrigger parameterRef="pl_battery_voltage"/>
+						<OnParameterUpdateTrigger parameterRef="pl_battery_voltage" />
 					</TriggerSet>
 				</MathOperation>
 			</MathAlgorithm>
 
 			<MathAlgorithm name="av_battery_voltage_algorithm">
 				<MathOperation outputParameterRef="battery_voltage">
-					<ParameterInstanceRefOperand parameterRef="battery_voltage"/>
+					<ParameterInstanceRefOperand parameterRef="battery_voltage" />
 					<ValueOperand>10</ValueOperand>
 					<Operator>/</Operator>
 					<TriggerSet>
-						<OnParameterUpdateTrigger parameterRef="battery_voltage"/>
+						<OnParameterUpdateTrigger parameterRef="battery_voltage" />
 					</TriggerSet>
 				</MathOperation>
 			</MathAlgorithm>
 
 			<CustomAlgorithm name="filtered_tank_pressure_algorithm" language="JavaScript">
 				<InputSet>
-					<InputParameter parameterRef="tank_pressure"/>
+					<InputParameter parameterRef="tank_pressure" />
 				</InputSet>
 				<OutputSet>
-					<OutputParameter parameterRef="filtered_tank_pressure"/>
+					<OutputParameter parameterRef="filtered_tank_pressure" />
 				</OutputSet>
 				<TriggerSet>
-					<OnParameterUpdateTrigger parameterRef="tank_pressure"/>
+					<OnParameterUpdateTrigger parameterRef="tank_pressure" />
 				</TriggerSet>
 				<AlgorithmText language="JavaScript">
 					if (tank_pressure != 0) {
@@ -411,112 +526,78 @@
 	<CommandMetaData>
 		<ArgumentTypeSet>
 			<IntegerArgumentType name="temp_enum" signed="false">
-				<UnitSet/>
-				<IntegerDataEncoding sizeInBits="8"/>
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="8" />
 				<ValidRangeSet>
-					<ValidRange maxInclusive="7" minInclusive="0"/>
+					<ValidRange maxInclusive="7" minInclusive="0" />
 				</ValidRangeSet>
 			</IntegerArgumentType>
 		</ArgumentTypeSet>
 		<MetaCommandSet>
-			<MetaCommand name="arm_recovery" shortDescription="ea ACK1_0">
-			</MetaCommand>
-			<MetaCommand name="disarm_recovery" shortDescription="ed ACK1_1">
-			</MetaCommand>
-			<MetaCommand name="reset_from_start_(PAD_mode)" shortDescription="er ACK">
-			</MetaCommand>
-			<MetaCommand name="main_ejection" shortDescription="eM ACK1_4">
-			</MetaCommand>
-			<MetaCommand name="drogue_ejection" shortDescription="eD ACK1_3">
-			</MetaCommand>
-			<MetaCommand name="landed" shortDescription="el ACK1_2">
-			</MetaCommand>
-			<MetaCommand name="emergency_stop" shortDescription="pe ACK2_8">
-			</MetaCommand>
-			<MetaCommand name="emergency_cancel" shortDescription="pc ACK2_9">
-			</MetaCommand>
-			<MetaCommand name="vent_valve_energize" shortDescription="p0 ACK2_0">
-			</MetaCommand>
-			<MetaCommand name="vent_valve_de-energize" shortDescription="p1 ACK2_1">
-			</MetaCommand>
-			<MetaCommand name="MOV_arming" shortDescription="p2 ACK2_2">
-			</MetaCommand>
-			<MetaCommand name="MOV_disarming" shortDescription="p3 ACK2_3">
-			</MetaCommand>
-			<MetaCommand name="FDOV_energize" shortDescription="p4 ACK2_4">
-			</MetaCommand>
-			<MetaCommand name="FDOV_de-energize" shortDescription="p5 ACK2_5">
-			</MetaCommand>
-			<MetaCommand name="propulsion_on" shortDescription="pi ACK2_6">
-			</MetaCommand>
-			<MetaCommand name="propulsion_off" shortDescription="po ACK2_7">
-			</MetaCommand>
-			<MetaCommand name="launch_(pilot_valve_open)" shortDescription="pl ACK2_10">
-			</MetaCommand>
-			<MetaCommand name="reset_prop_boards_valves_state" shortDescription="pr ACK2_11">
-			</MetaCommand>
-			<MetaCommand name="payload_start_sampling" shortDescription="bs ACK5_1">
-			</MetaCommand>
-			<MetaCommand name="payload_stop_sampling" shortDescription="bt ACK5_2">
-			</MetaCommand>
-			<MetaCommand name="payload_reset" shortDescription="bo ACK5_0">
-			</MetaCommand>
-			<MetaCommand name="payload_landed_(for_testing)" shortDescription="bl ACK5_3">
-			</MetaCommand>
-			<MetaCommand name="payload_start_cooling" shortDescription="bc ACK5_4">
-			</MetaCommand>
-			<MetaCommand name="payload_stop_cooling" shortDescription="bd ACK5_5">
-			</MetaCommand>
+			<!-- Recovery -->
+			<MetaCommand name="arm_recovery" shortDescription="ea ACK1_0" />
+			<MetaCommand name="disarm_recovery" shortDescription="ed ACK1_1" />
+			<MetaCommand name="reset_from_start_(PAD_mode)" shortDescription="er ACK" />
+			<MetaCommand name="main_ejection" shortDescription="eM ACK1_4" />
+			<MetaCommand name="drogue_ejection" shortDescription="eD ACK1_3" />
+			<MetaCommand name="landed" shortDescription="el ACK1_2" />
+
+			<!-- Propulsion -->
+			<MetaCommand name="emergency_stop" shortDescription="pe ACK2_8" />
+			<MetaCommand name="emergency_cancel" shortDescription="pc ACK2_9" />
+			<MetaCommand name="vent_valve_energize" shortDescription="p0 ACK2_0" />
+			<MetaCommand name="vent_valve_de-energize" shortDescription="p1 ACK2_1" />
+			<MetaCommand name="MOV_arming" shortDescription="p2 ACK2_2" />
+			<MetaCommand name="MOV_disarming" shortDescription="p3 ACK2_3" />
+			<MetaCommand name="FDOV_energize" shortDescription="p4 ACK2_4" />
+			<MetaCommand name="FDOV_de-energize" shortDescription="p5 ACK2_5" />
+			<MetaCommand name="propulsion_on" shortDescription="pi ACK2_6" />
+			<MetaCommand name="propulsion_off" shortDescription="po ACK2_7" />
+			<MetaCommand name="launch_(pilot_valve_open)" shortDescription="pl ACK2_10" />
+			<MetaCommand name="reset_prop_boards_valves_state" shortDescription="pr ACK2_11" />
+
+			<!-- Payload -->
+			<MetaCommand name="payload_start_sampling" shortDescription="bs ACK5_1" />
+			<MetaCommand name="payload_stop_sampling" shortDescription="bt ACK5_2" />
+			<MetaCommand name="payload_reset" shortDescription="bo ACK5_0" />
+			<MetaCommand name="payload_landed_(for_testing)" shortDescription="bl ACK5_3" />
+			<MetaCommand name="payload_start_cooling" shortDescription="bc ACK5_4" />
+			<MetaCommand name="payload_stop_cooling" shortDescription="bd ACK5_5" />
 			<MetaCommand name="payload_set_temp" shortDescription="b ACK5_4">
 				<ArgumentList>
-					<Argument name="temp_enum" argumentTypeRef="temp_enum">
-					</Argument>
+					<Argument name="temp_enum" argumentTypeRef="temp_enum" />
 				</ArgumentList>
 			</MetaCommand>
-			<MetaCommand name="payload_launch_mode" shortDescription="bb ACK5_255">
-			</MetaCommand>
-			<MetaCommand name="payload_pad_mode" shortDescription="bp ACK5_255">
-			</MetaCommand>
-			<MetaCommand name="video_recorder_power_on" shortDescription="v1 ACK3_0">
-			</MetaCommand>
-			<MetaCommand name="video_recorder_start" shortDescription="v2 ACK3_1">
-			</MetaCommand>
-			<MetaCommand name="video_recorder_stop" shortDescription="v3 ACK3_2">
-			</MetaCommand>
-			<MetaCommand name="video_recorder_power_off" shortDescription="v4 ACK3_3">
-			</MetaCommand>
-			<MetaCommand name="start_timer" shortDescription="hs ACK6_3">
-			</MetaCommand>
-			<MetaCommand name="stop_timer" shortDescription="ho ACK6_4">
-			</MetaCommand>
-			<MetaCommand name="manual_flight_termination" shortDescription="ha NA">
-			</MetaCommand>
-			<MetaCommand name="parachute_ejection" shortDescription="hp ACK6_255">
-			</MetaCommand>
-			<MetaCommand name="balloon_actuator_release" shortDescription="hr ACK6_1">
-			</MetaCommand>
-			<MetaCommand name="balloon_actuator_lock" shortDescription="hl ACK6_2">
-			</MetaCommand>
-			<MetaCommand name="parachute_actuator_lock" shortDescription="hc ACK6_255">
-			</MetaCommand>
-			<MetaCommand name="parachute_actuator_unlock" shortDescription="ho NA">
-			</MetaCommand>
-			<MetaCommand name="first_timer_start_(termination_timer)" shortDescription="hs NA">
-			</MetaCommand>
-			<MetaCommand name="first_timer_stop" shortDescription="ht ACK6_255">
-			</MetaCommand>
-			<MetaCommand name="second_timer_start_(parachute)" shortDescription="hm ACK6_255">
-			</MetaCommand>
-			<MetaCommand name="second_timer_stop" shortDescription="hn ACK6_255">
-			</MetaCommand>
-			<MetaCommand name="radio_set_transmit_true" shortDescription="Radio_setTx_t ACKR_0">
-			</MetaCommand>
-			<MetaCommand name="radio_set_transmit_false" shortDescription="Radio_setTx_f ACKR_0">
-			</MetaCommand>
-			<MetaCommand name="umbilical_high_(connected)" shortDescription="uh ACK9_0">
-			</MetaCommand>
-			<MetaCommand name="umbilical_low_(disconnected)" shortDescription="ul ACK9_1">
-			</MetaCommand>
+			<MetaCommand name="payload_launch_mode" shortDescription="bb ACK5_255" />
+			<MetaCommand name="payload_pad_mode" shortDescription="bp ACK5_255" />
+
+			<!-- Video Recorder -->
+			<MetaCommand name="video_recorder_power_on" shortDescription="v1 ACK3_0" />
+			<MetaCommand name="video_recorder_start" shortDescription="v2 ACK3_1" />
+			<MetaCommand name="video_recorder_stop" shortDescription="v3 ACK3_2" />
+			<MetaCommand name="video_recorder_power_off" shortDescription="v4 ACK3_3" />
+
+			<!-- HAB -->
+			<MetaCommand name="start_timer" shortDescription="hs ACK6_3" />
+			<MetaCommand name="stop_timer" shortDescription="ho ACK6_4" />
+			<MetaCommand name="manual_flight_termination" shortDescription="ha NA" />
+			<MetaCommand name="parachute_ejection" shortDescription="hp ACK6_255" />
+			<MetaCommand name="balloon_actuator_release" shortDescription="hr ACK6_1" />
+			<MetaCommand name="balloon_actuator_lock" shortDescription="hl ACK6_2" />
+			<MetaCommand name="parachute_actuator_lock" shortDescription="hc ACK6_255" />
+			<MetaCommand name="parachute_actuator_unlock" shortDescription="ho NA" />
+			<MetaCommand name="first_timer_start_(termination_timer)" shortDescription="hs NA" />
+			<MetaCommand name="first_timer_stop" shortDescription="ht ACK6_255" />
+			<MetaCommand name="second_timer_start_(parachute)" shortDescription="hm ACK6_255" />
+			<MetaCommand name="second_timer_stop" shortDescription="hn ACK6_255" />
+
+			<!-- Radio -->
+			<MetaCommand name="radio_set_transmit_true" shortDescription="Radio_setTx_t ACKR_0" />
+			<MetaCommand name="radio_set_transmit_false" shortDescription="Radio_setTx_f ACKR_0" />
+
+			<!-- Umbilical -->
+			<MetaCommand name="umbilical_high_(connected)" shortDescription="uh ACK9_0" />
+			<MetaCommand name="umbilical_low_(disconnected)" shortDescription="ul ACK9_1" />
 		</MetaCommandSet>
 	</CommandMetaData>
 </SpaceSystem>

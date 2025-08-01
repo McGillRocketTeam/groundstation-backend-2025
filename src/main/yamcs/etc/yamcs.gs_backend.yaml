@@ -45,6 +45,8 @@ dataLinks:
     port: 10025
     commandPostprocessorClassName: ca.mrt.gs_backend.MyCommandPostprocessor
 
+
+    ###### 903 Devices ######
   - name: gs-radio-903
     class: ca.mrt.gs_backend.serialcomm.FCLink
     tmStream: tm_gs_radio_903
@@ -59,12 +61,13 @@ dataLinks:
     frequency: "903"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
-#  - name: fc-903
-#    class: ca.mrt.gs_backend.networkcomm.FCTcpServer
-#    tmStream: tm_flight_computer_903
-#    tcStream: tc_flight_computer_903
-#    port: 9000
-#    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+    ###### 433 Devices ######
+  - name: gs-radio-433
+    class: ca.mrt.gs_backend.serialcomm.FCLink
+    tmStream: tm_gs_radio_433
+    tcStream: tc_flight_computer_433
+    frequency: "gs_radio_433"
+    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: fc-433
     class: ca.mrt.gs_backend.serialcomm.FCLink
@@ -86,6 +89,13 @@ dataLinks:
     tcStream: tc_labJack
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
+#  - name: fc-903
+#    class: ca.mrt.gs_backend.networkcomm.FCTcpServer
+#    tmStream: tm_flight_computer_903
+#    tcStream: tc_flight_computer_903
+#    port: 9000
+#    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
+    #
 mdb:
   # Configuration of the active loaders
   # Valid loaders are: sheet, xtce or fully qualified name of the class
@@ -116,19 +126,27 @@ mdb:
 # Configuration for streams created at server startup
 streamConfig:
   tm:
+    # Coming from the GSRadio 903 board
     - name: "tm_flight_computer_903"
       processor: "realtime"
       rootContainer: "/FC903/FlightComputer/FCPacket"
     - name: "tm_gs_radio_903"
       processor: "realtime"
-      rootContainer: "/FC903/GSRadio/GSRadioPacket"
+      rootContainer: "/FC903/GSRadio/GSRPacket"
 
+    # Coming from the GSRadio 433 board
     - name: "tm_flight_computer_433"
       processor: "realtime"
       rootContainer: "/FC433/FlightComputer/FCPacket"
+    - name: "tm_gs_radio_433"
+      processor: "realtime"
+      rootContainer: "/FC903/GSRadio/GSRPacket"
+
+    # Labjack
     - name: "tm_labJack"
       processor: "realtime"
       rootContainer: "/LabJackT7/LabJackPacket"
+
   cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
   event: ["events_realtime", "events_dump"]
   param: ["pp_realtime", "pp_dump", "sys_param", "proc_param"]
