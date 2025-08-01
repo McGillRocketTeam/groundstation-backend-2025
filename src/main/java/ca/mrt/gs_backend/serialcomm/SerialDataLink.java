@@ -7,7 +7,9 @@ import org.yamcs.ConfigurationException;
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
 import org.yamcs.YamcsServer;
+import org.yamcs.client.processor.ProcessorClient;
 import org.yamcs.cmdhistory.CommandHistoryPublisher;
+import org.yamcs.commanding.CommandingManager;
 import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.protobuf.Commanding;
 import org.yamcs.tctm.AbstractTcTmParamLink;
@@ -142,29 +144,6 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                     return;
                 }
 
-                if (dataStr.startsWith("GSRADIO")) {
-                    log.info("Received GSRadio information");
-                    log.info(dataStr);
-
-                    // Total length should be 20 bytes
-                    // there are 5 parameters each 4 bytes (32 bits)
-                    // The prefix is "GSRADIO" which is 7 bytes
-                    byte[] trimmed_array = new byte[20];
-                    System.arraycopy(serialPortEvent.getReceivedData(), 8, trimmed_array, 0, trimmed_array.length);
-
-                    // TODO:
-                    //  - If the current port is an FC, get the radio equivalent
-                    //  - Use that to process GSRadio packets (from the FCPacket link)
-                    //  - OR Create GSRadioPackets directly from the FCPacket link like:
-                    //  - TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
-                    //  - tmPacket.setRootContainer("...");
-
-                    TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
-                    log.info("DEBUG: DEFAULT PACKET CONTAINER: "+tmPacket.getRootContainer());
-                    packetQueue.add(packetPreprocessor.process(tmPacket));
-                    return;
-                }
-
                 byte[] trimmed_array = new byte[94];
                 System.arraycopy(serialPortEvent.getReceivedData(), 0, trimmed_array, 0, trimmed_array.length);
 
@@ -176,9 +155,52 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
         activePorts.add(serialPort.getSystemPortName());
         currConnectedPort = serialPort;
+
+        byte[] dataToWrite = ("radio init" + "\r\n").getBytes(StandardCharsets.UTF_8);
+        try {
+            currConnectedPort.getOutputStream().write(dataToWrite);
+        } catch (IOException e) {
+            log.error("Failed to write radio init command");
+        }
+    }
+
+    private boolean processGSRadioAck(String ackText) {
+        String prefix = "ack_rGSRadio";
+        // This is not a GSRadio Ack
+        if (!ackText.startsWith(prefix)) {
+            return false;
+        } else {
+            ackText = ackText.substring(prefix.length());
+        }
+
+        byte[] bytes = ackText.getBytes();
+
+
+        SerialDataLink link = uniqueIdentifierToLink.get("gs_radio_903");
+        if (link != null) {
+            TmPacket tmPacket = new TmPacket(getCurrentTime(), bytes);
+            link.packetQueue.add(link.packetPreprocessor.process(tmPacket));
+        } else {
+            log.error("GSRadio Link was null");
+            var set = uniqueIdentifierToLink.keySet();
+            log.error(String.join(" ", set));
+        }
+
+
+        String ackName = "ack_r";
+        var cmdId = ackStrToMostRecentCmdId.get(ackName);
+        getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+        ackStrToMostRecentCmdId.remove(ackName);
+
+        return true;
     }
 
     private boolean processAck(String ackText) {
+        // GSRadio ACKs come with extra data that needs to be parsed
+        if (ackText.contains("GSRadio")) {
+            return processGSRadioAck(ackText);
+        }
+
         String ackName = ackText.trim();
         if (!ackStrToMostRecentCmdId.containsKey(ackName)) {
             return ackText.toUpperCase().contains("ACK");
@@ -262,7 +284,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         if (!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.contains("gs_radio") && !uniqueIdentifier.matches("^\\d+.\\d+$")) {
             throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number representing a frequency");
         }
-    }
+	}
 
     @Override
     public void doEnable() {
@@ -335,15 +357,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             log.warn("Attempting to send serial device commands while not connected to this device");
             return false;
         }
-
-        String cmdStr = getCmdStrFromCmd(preparedCommand);;
-        String ackStr = getAckStrFromCmd(preparedCommand);;
-
-        if (!writePort(cmdStr, preparedCommand.getCommandId())) {
-            log.error("Failed to write to port: " + cmdStr);
-            return false;
-        }
-
+        String cmdStr = getCmdStrFromCmd(preparedCommand);
+        String ackStr = getAckStrFromCmd(preparedCommand);
 
         ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
         scheduler.schedule(() -> {

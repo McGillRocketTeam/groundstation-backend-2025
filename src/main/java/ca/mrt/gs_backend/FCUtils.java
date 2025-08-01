@@ -33,18 +33,10 @@ public class FCUtils {
         String[] commandComponents = command.getMetaCommand().getShortDescription().split(" ");
 
         boolean isGSRadioCommand = command
-                .getMetaCommand()
-                .getCommandContainer()
-                .getBaseContainer()
-                .getName().startsWith("GSRadio");
+                .getMetaCommand().getQualifiedName().contains("GSRadio");
 
         StringBuilder cmd = new StringBuilder(String.join(" ", Arrays.copyOf(commandComponents, commandComponents.length - 1)));        // join the array back together with " " but don't include the last element in the array above ^
 
-        if(command.getArgAssignment().values().size() == 1){
-            for(var arg : command.getArgAssignment().values()){
-                cmd.append(arg.getEngValue());
-            }
-        }
         // GS Radio commands encode their arguments different from FC commands
         if (isGSRadioCommand) {
             for(var arg : command.getArgAssignment().values()){
@@ -53,6 +45,12 @@ public class FCUtils {
 
             cmd.append("\n");
         } else {
+            if(command.getArgAssignment().values().size() == 1){
+                for(var arg : command.getArgAssignment().values()){
+                    cmd.append(arg.getEngValue());
+                }
+            }
+
             for(var arg : command.getArgAssignment().values()){
                 cmd.append(",").append(arg.getEngValue());
             }

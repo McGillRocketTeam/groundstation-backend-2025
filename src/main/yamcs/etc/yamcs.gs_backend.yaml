@@ -38,12 +38,6 @@ dataLinks:
     port: 10015
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
-  - name: udp-in-gs-radio
-    class: org.yamcs.tctm.UdpTmDataLink
-    stream: tm_gs_radio_903
-    port: 10017
-    packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
-
   - name: udp-out
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_udp
@@ -127,7 +121,7 @@ streamConfig:
       rootContainer: "/FC903/FlightComputer/FCPacket"
     - name: "tm_gs_radio_903"
       processor: "realtime"
-      rootContainer: "/FC433/GSRadio/GSRadioPacket"
+      rootContainer: "/FC903/GSRadio/GSRadioPacket"
 
     - name: "tm_flight_computer_433"
       processor: "realtime"

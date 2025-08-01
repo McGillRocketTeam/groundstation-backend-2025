@@ -24,10 +24,10 @@
             <SequenceContainer name="GSRadioPacket">
                 <EntryList>
                     <!--Order of Parameters-->
-                    <ParameterRefEntry parameterRef="spreading_factor"/>
-                    <ParameterRefEntry parameterRef="bandwidth"/>
                     <ParameterRefEntry parameterRef="frequency"/>
+                    <ParameterRefEntry parameterRef="bandwidth"/>
                     <ParameterRefEntry parameterRef="coding_rate"/>
+                    <ParameterRefEntry parameterRef="spreading_factor"/>
                     <ParameterRefEntry parameterRef="power"/>
 
                     <!--Parameter Encoding Definitions-->
@@ -51,30 +51,35 @@
             </IntegerArgumentType>
         </ArgumentTypeSet>
         <MetaCommandSet>
-            <MetaCommand name="ping" shortDescription="ping ping_ack" />
-            <MetaCommand name="radio_ping" shortDescription="radio ping ack_r_0" />
+            <MetaCommand name="radio_ping" shortDescription="radio init ack_r" />
 
-            <MetaCommand name="set_coding_rate" shortDescription="radio cr ack_r_0" >
+            <MetaCommand name="set_coding_rate" shortDescription="radio cr ack_r" >
                 <ArgumentList>
                     <Argument shortDescription="Coding Rate" name="coding_rate" argumentTypeRef="int32A" />
                 </ArgumentList>
             </MetaCommand>
 
-            <MetaCommand name="set_bandwidth" shortDescription="radio bw ack_r_0">
+            <MetaCommand name="set_bandwidth" shortDescription="radio bw ack_r">
                 <ArgumentList>
                     <Argument shortDescription="Bandwidth" name="bandwidth" argumentTypeRef="float32A" />
                 </ArgumentList>
             </MetaCommand>
 
-            <MetaCommand name="set_spreading_factor" shortDescription="radio sf ack_r_0">
+            <MetaCommand name="set_spreading_factor" shortDescription="radio sf ack_r">
                 <ArgumentList>
                     <Argument shortDescription="Spreading Factor" name="spreading_factor" argumentTypeRef="int32A" />
                 </ArgumentList>
             </MetaCommand>
 
-            <MetaCommand name="set_frequency" shortDescription="radio pow ack_r_0">
+            <MetaCommand name="set_frequency" shortDescription="radio freq ack_r">
                 <ArgumentList>
                     <Argument shortDescription="Frequency" name="frequency" argumentTypeRef="float32A" />
+                </ArgumentList>
+            </MetaCommand>
+
+            <MetaCommand name="set_power" shortDescription="radio pow ack_r">
+                <ArgumentList>
+                    <Argument shortDescription="Power" name="power" argumentTypeRef="float32A" />
                 </ArgumentList>
             </MetaCommand>
         </MetaCommandSet>

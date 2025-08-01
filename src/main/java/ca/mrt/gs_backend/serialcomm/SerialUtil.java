@@ -153,6 +153,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
                 if(receivedMessage.contains("ping_ack")){
                     String[] pingParams = receivedMessage.trim().split(":")[1].split(",");
 
+
                     if(pingParams[0].equals("control_box")){
                         uniqueIdentifier[0] = pingParams[0];
                     } else if(pingParams[2].matches("^\\d+.\\d+$")){
