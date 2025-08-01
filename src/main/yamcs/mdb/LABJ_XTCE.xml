@@ -12,10 +12,10 @@
                     <Enumeration value="1" label="high"/>
                 </EnumerationList>
             </EnumeratedParameterType>
+
             <FloatParameterType name="float_32">
                 <FloatDataEncoding encoding="IEEE754_1985"/>
             </FloatParameterType>
-
         </ParameterTypeSet>
         <ParameterSet>
             <Parameter name="AIN0" parameterTypeRef="float_32"/>

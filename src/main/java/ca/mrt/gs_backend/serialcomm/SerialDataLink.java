@@ -7,10 +7,14 @@ import org.yamcs.ConfigurationException;
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
 import org.yamcs.YamcsServer;
+import org.yamcs.client.processor.ProcessorClient;
 import org.yamcs.cmdhistory.CommandHistoryPublisher;
+import org.yamcs.commanding.CommandingManager;
 import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.protobuf.Commanding;
 import org.yamcs.tctm.AbstractTcTmParamLink;
+import org.yamcs.tctm.TmSink;
+import org.yamcs.yarch.DataType;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -56,6 +60,14 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private final Map<String, Commanding.CommandId> ackStrToMostRecentCmdId = new HashMap<>();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
+    private Integer isGSRadio() {
+        if (uniqueIdentifier.startsWith("gs_radio_")) {
+            String digitsString = uniqueIdentifier.substring("gs_radio_".length());
+            return Integer.parseInt(digitsString);
+        } else {
+            return null;
+        }
+    }
 
     public void addListener(ca.mrt.gs_backend.serialcomm.Listener listener) {
         listeners.add(listener);
@@ -101,6 +113,9 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
             @Override
             public void serialEvent(SerialPortEvent serialPortEvent) {
+
+                SerialDataLink test = uniqueIdentifierToLink.get(uniqueIdentifier);
+
                 if (serialPortEvent.getEventType() == SerialPort.LISTENING_EVENT_PORT_DISCONNECTED) {
                     log.warn("Serial port " + currConnectedPort.getSystemPortName() + " disconnected");
                     disconnectFromCurrPort();
@@ -120,24 +135,72 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                     return;
                 }
 
+                if (uniqueIdentifier.equals("gs_radio")) {
+                    return;
+                }
+
                 if (processAck(dataStr)) { //incoming message is an ack
                     log.info("Received ack: " + dataStr);
                     return;
                 }
+
                 byte[] trimmed_array = new byte[94];
                 System.arraycopy(serialPortEvent.getReceivedData(), 0, trimmed_array, 0, trimmed_array.length);
 
-                TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
 
+                TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
                 packetQueue.add(packetPreprocessor.process(tmPacket));
             }
         });
 
         activePorts.add(serialPort.getSystemPortName());
         currConnectedPort = serialPort;
+
+        byte[] dataToWrite = ("radio init" + "\r\n").getBytes(StandardCharsets.UTF_8);
+        try {
+            currConnectedPort.getOutputStream().write(dataToWrite);
+        } catch (IOException e) {
+            log.error("Failed to write radio init command");
+        }
+    }
+
+    private boolean processGSRadioAck(String ackText) {
+        String prefix = "ack_rGSRadio";
+        // This is not a GSRadio Ack
+        if (!ackText.startsWith(prefix)) {
+            return false;
+        } else {
+            ackText = ackText.substring(prefix.length());
+        }
+
+        byte[] bytes = ackText.getBytes();
+
+
+        SerialDataLink link = uniqueIdentifierToLink.get("gs_radio_903");
+        if (link != null) {
+            TmPacket tmPacket = new TmPacket(getCurrentTime(), bytes);
+            link.packetQueue.add(link.packetPreprocessor.process(tmPacket));
+        } else {
+            log.error("GSRadio Link was null");
+            var set = uniqueIdentifierToLink.keySet();
+            log.error(String.join(" ", set));
+        }
+
+
+        String ackName = "ack_r";
+        var cmdId = ackStrToMostRecentCmdId.get(ackName);
+        getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+        ackStrToMostRecentCmdId.remove(ackName);
+
+        return true;
     }
 
     private boolean processAck(String ackText) {
+        // GSRadio ACKs come with extra data that needs to be parsed
+        if (ackText.contains("GSRadio")) {
+            return processGSRadioAck(ackText);
+        }
+
         String ackName = ackText.trim();
         if (!ackStrToMostRecentCmdId.containsKey(ackName)) {
             return ackText.toUpperCase().contains("ACK");
@@ -208,6 +271,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     public void init(String instance, String name, YConfiguration config) throws ConfigurationException {
         super.init(instance, name, config);
         if (config.containsKey("frequency")) {
+            log.info("SETTING UP: "+config.getString("frequency"));
             uniqueIdentifier = config.getString("frequency");
         } else {
             uniqueIdentifier = "control_box";
@@ -217,10 +281,10 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             throw new ConfigurationException("Cannot have duplicate unique identifiers (can't have 2 control boxes, 2 FCs with same frequency, etc.)");
         }
 
-        if (!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.matches("^\\d+.\\d+$")) {
+        if (!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.contains("gs_radio") && !uniqueIdentifier.matches("^\\d+.\\d+$")) {
             throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number representing a frequency");
         }
-    }
+	}
 
     @Override
     public void doEnable() {
@@ -295,12 +359,6 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         }
         String cmdStr = getCmdStrFromCmd(preparedCommand);
         String ackStr = getAckStrFromCmd(preparedCommand);
-
-        if (!writePort(cmdStr, preparedCommand.getCommandId())) {
-            log.error("Failed to write to port: " + cmdStr);
-            return false;
-        }
-
 
         ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
         scheduler.schedule(() -> {
