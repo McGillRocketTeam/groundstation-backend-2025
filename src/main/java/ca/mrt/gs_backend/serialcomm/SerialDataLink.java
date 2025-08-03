@@ -142,11 +142,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                     return;
                 }
 
-                byte[] trimmed_array = new byte[94];
-                System.arraycopy(serialPortEvent.getReceivedData(), 0, trimmed_array, 0, trimmed_array.length);
-
-
-                TmPacket tmPacket = new TmPacket(getCurrentTime(), trimmed_array);
+                TmPacket tmPacket = new TmPacket(getCurrentTime(), serialPortEvent.getReceivedData());
                 packetQueue.add(packetPreprocessor.process(tmPacket));
             }
         });

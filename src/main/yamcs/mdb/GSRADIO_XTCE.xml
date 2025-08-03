@@ -40,12 +40,18 @@
     </TelemetryMetaData>
     <CommandMetaData>
         <ArgumentTypeSet>
-            <IntegerArgumentType name="spreading_factor_int">
+            <IntegerArgumentType name="spreading_factor_arg">
                 <IntegerDataEncoding sizeInBits="32" />
                 <ValidRangeSet>
                     <ValidRange minInclusive="5" maxInclusive="12" />
                 </ValidRangeSet>
             </IntegerArgumentType>
+<!--            <IntegerArgumentType name="power_arg">-->
+<!--                <IntegerDataEncoding sizeInBits="32" />-->
+<!--                <ValidRangeSet>-->
+<!--                    <ValidRange minInclusive="5" maxInclusive="12" />-->
+<!--                </ValidRangeSet>-->
+<!--            </IntegerArgumentType>-->
             <FloatArgumentType name="float32A">
                 <UnitSet />
                 <FloatDataEncoding sizeInBits="32" />
@@ -75,7 +81,7 @@
             <MetaCommand name="set_spreading_factor" shortDescription="radio sf ack_r">
                 <ArgumentList>
                     <Argument shortDescription="Spreading Factor" name="spreading_factor"
-                        argumentTypeRef="spreading_factor_int" />
+                        argumentTypeRef="spreading_factor_arg" />
                 </ArgumentList>
             </MetaCommand>
 
