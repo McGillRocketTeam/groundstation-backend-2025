@@ -46,20 +46,47 @@
                     <ValidRange minInclusive="5" maxInclusive="12" />
                 </ValidRangeSet>
             </IntegerArgumentType>
-<!--            <IntegerArgumentType name="power_arg">-->
-<!--                <IntegerDataEncoding sizeInBits="32" />-->
-<!--                <ValidRangeSet>-->
-<!--                    <ValidRange minInclusive="5" maxInclusive="12" />-->
-<!--                </ValidRangeSet>-->
-<!--            </IntegerArgumentType>-->
-            <FloatArgumentType name="float32A">
-                <UnitSet />
-                <FloatDataEncoding sizeInBits="32" />
-            </FloatArgumentType>
-            <IntegerArgumentType name="int32A" signed="true">
-                <UnitSet />
+
+            <IntegerArgumentType name="power_arg">
+                <UnitSet>
+                    <Unit>dBm</Unit>
+                </UnitSet>
                 <IntegerDataEncoding sizeInBits="32" />
+                <ValidRangeSet>
+                    <ValidRange minInclusive="-9" maxInclusive="22" />
+                </ValidRangeSet>
             </IntegerArgumentType>
+
+            <EnumeratedArgumentType name="coding_rate_arg">
+                <IntegerDataEncoding sizeInBits="32" />
+                <EnumerationList>
+                    <Enumeration value="5" label="5" />
+                    <Enumeration value="6" label="6" />
+                    <Enumeration value="7" label="7" />
+                    <Enumeration value="8" label="8" />
+                </EnumerationList>
+            </EnumeratedArgumentType>
+
+            <FloatArgumentType name="bandwidth_arg">
+                <UnitSet>
+                    <Unit>MHz</Unit>
+                </UnitSet>
+                <FloatDataEncoding sizeInBits="32" />
+                <ValidRangeSet>
+                    <ValidRange minInclusive="7.8" maxInclusive="500" />
+                </ValidRangeSet>
+            </FloatArgumentType>
+
+            <FloatArgumentType name="frequency_arg">
+                <UnitSet>
+                    <Unit>MHz</Unit>
+                </UnitSet>
+                <FloatDataEncoding sizeInBits="32" />
+                <ValidRangeSet>
+                    <ValidRange minInclusive="150" maxInclusive="900" />
+                </ValidRangeSet>
+            </FloatArgumentType>
+
         </ArgumentTypeSet>
         <MetaCommandSet>
             <MetaCommand name="radio_ping" shortDescription="radio init ack_r" />
@@ -67,14 +94,14 @@
             <MetaCommand name="set_coding_rate" shortDescription="radio cr ack_r">
                 <ArgumentList>
                     <Argument shortDescription="Coding Rate" name="coding_rate"
-                        argumentTypeRef="int32A" />
+                        argumentTypeRef="coding_rate_arg" />
                 </ArgumentList>
             </MetaCommand>
 
             <MetaCommand name="set_bandwidth" shortDescription="radio bw ack_r">
                 <ArgumentList>
                     <Argument shortDescription="Bandwidth" name="bandwidth"
-                        argumentTypeRef="float32A" />
+                        argumentTypeRef="bandwidth_arg" />
                 </ArgumentList>
             </MetaCommand>
 
@@ -88,13 +115,13 @@
             <MetaCommand name="set_frequency" shortDescription="radio freq ack_r">
                 <ArgumentList>
                     <Argument shortDescription="Frequency" name="frequency"
-                        argumentTypeRef="float32A" />
+                        argumentTypeRef="frequency_arg" />
                 </ArgumentList>
             </MetaCommand>
 
             <MetaCommand name="set_power" shortDescription="radio pow ack_r">
                 <ArgumentList>
-                    <Argument shortDescription="Power" name="power" argumentTypeRef="float32A" />
+                    <Argument shortDescription="Power" name="power" argumentTypeRef="power_arg" />
                 </ArgumentList>
             </MetaCommand>
         </MetaCommandSet>
