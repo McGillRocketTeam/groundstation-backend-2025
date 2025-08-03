@@ -34,23 +34,18 @@
                     <ParameterRefEntry parameterRef="coding_rate" />
                     <ParameterRefEntry parameterRef="spreading_factor" />
                     <ParameterRefEntry parameterRef="power" />
-
-                    <!--Parameter
-                    Encoding Definitions-->
-                    <!--spreading_factor:
-                    int32 -->
-                    <!--bandwidth:
-                    float (32) -->
-                    <!--frequency:
-                    float (32) -->
-                    <!--coding_rate:
-                    int32-->
                 </EntryList>
             </SequenceContainer>
         </ContainerSet>
     </TelemetryMetaData>
     <CommandMetaData>
         <ArgumentTypeSet>
+            <IntegerArgumentType name="spreading_factor_int">
+                <IntegerDataEncoding sizeInBits="32" />
+                <ValidRangeSet>
+                    <ValidRange minInclusive="5" maxInclusive="12" />
+                </ValidRangeSet>
+            </IntegerArgumentType>
             <FloatArgumentType name="float32A">
                 <UnitSet />
                 <FloatDataEncoding sizeInBits="32" />
@@ -80,7 +75,7 @@
             <MetaCommand name="set_spreading_factor" shortDescription="radio sf ack_r">
                 <ArgumentList>
                     <Argument shortDescription="Spreading Factor" name="spreading_factor"
-                        argumentTypeRef="int32A" />
+                        argumentTypeRef="spreading_factor_int" />
                 </ArgumentList>
             </MetaCommand>
 

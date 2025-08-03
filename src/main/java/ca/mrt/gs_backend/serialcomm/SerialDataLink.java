@@ -114,8 +114,6 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             @Override
             public void serialEvent(SerialPortEvent serialPortEvent) {
 
-                SerialDataLink test = uniqueIdentifierToLink.get(uniqueIdentifier);
-
                 if (serialPortEvent.getEventType() == SerialPort.LISTENING_EVENT_PORT_DISCONNECTED) {
                     log.warn("Serial port " + currConnectedPort.getSystemPortName() + " disconnected");
                     disconnectFromCurrPort();
@@ -156,6 +154,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         activePorts.add(serialPort.getSystemPortName());
         currConnectedPort = serialPort;
 
+        log.info("Writing \"radio init\"");
         byte[] dataToWrite = ("radio init" + "\r\n").getBytes(StandardCharsets.UTF_8);
         try {
             currConnectedPort.getOutputStream().write(dataToWrite);
@@ -168,13 +167,13 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         String prefix = "ack_rGSRadio";
         // This is not a GSRadio Ack
         if (!ackText.startsWith(prefix)) {
+            log.info("returning");
             return false;
         } else {
             ackText = ackText.substring(prefix.length());
         }
 
         byte[] bytes = ackText.getBytes();
-
 
         SerialDataLink link = uniqueIdentifierToLink.get("gs_radio_903");
         if (link != null) {
@@ -189,8 +188,10 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
         String ackName = "ack_r";
         var cmdId = ackStrToMostRecentCmdId.get(ackName);
-        getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
-        ackStrToMostRecentCmdId.remove(ackName);
+        if (cmdId != null) {
+            getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+            ackStrToMostRecentCmdId.remove(ackName);
+        }
 
         return true;
     }
@@ -334,7 +335,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         byte[] dataToWrite = (text.strip() + "\r\n").getBytes(StandardCharsets.UTF_8);
         try {
             currConnectedPort.getOutputStream().write(dataToWrite);
-            log.info("Wrote " + text + " to " + currConnectedPort.getSystemPortName());
+            log.info("Wrote \"" + text + "\" to " + currConnectedPort.getSystemPortName());
         } catch (IOException e) {
             log.error("Failed to write " + text + " to " + currConnectedPort.getSystemPortName());
             log.error(e.getMessage());
@@ -353,12 +354,23 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
     @Override
     public boolean sendCommand(PreparedCommand preparedCommand) {
-        if (!isCurrentlyConnected()) {
+        // GS Radio commmands are sent through the FC link
+        // Don't send them here to avoid duplication
+        if (uniqueIdentifier.startsWith("gs_radio_")){
+            return false;
+        } else if (!isCurrentlyConnected()) {
             log.warn("Attempting to send serial device commands while not connected to this device");
             return false;
         }
         String cmdStr = getCmdStrFromCmd(preparedCommand);
         String ackStr = getAckStrFromCmd(preparedCommand);
+
+        log.info(currConnectedPort.getSystemPortName());
+
+        if (!writePort(cmdStr, preparedCommand.getCommandId())) {
+            log.error("Failed to write to port: " + cmdStr);
+            return false;
+        }
 
         ackStrToMostRecentCmdId.put(ackStr, preparedCommand.getCommandId());
         scheduler.schedule(() -> {

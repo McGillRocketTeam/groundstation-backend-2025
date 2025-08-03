@@ -344,7 +344,23 @@
 
 		</ParameterSet>
 		<ContainerSet>
+			<!--Super Container-->
+<!--			<SequenceContainer name="FCPacket">-->
+<!--				<EntryList />-->
+<!--				<BaseContainer containerRef="FCPacketBase">-->
+<!--					<RestrictionCriteria>-->
+<!--						<ComparisonList>-->
+<!--							<Comparison parameterRef="packet_size" value="###"/>-->
+<!--							<NextContainer containerRef="Latch"/>-->
+<!--							<Comparison parameterRef="packet_size" value="###"/>-->
+<!--							<NextContainer containerRef="Latch"/>-->
+<!--						</ComparisonList>-->
+<!--					</RestrictionCriteria>-->
+<!--				</BaseContainer>-->
+<!--			</SequenceContainer>-->
+
 			<SequenceContainer name="FCPacket">
+
 				<EntryList>
 					<!-- Radio Packet (8 bytes) -->
 					<ParameterRefEntry parameterRef="CTSFlag" shortDescription="CTS flag" />
