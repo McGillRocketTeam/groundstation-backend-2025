@@ -190,7 +190,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
 
             log.info("Port " + serialPort.getSystemPortName() + " pinged");
 
-            Thread.sleep(500); //unsure if this is necessary, test without
+            Thread.sleep(100); //unsure if this is necessary, test without
         } catch (InterruptedException e) {
             log.error("Failed to ping port " + serialPort.getSystemPortName());
             return null;

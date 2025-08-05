@@ -73,6 +73,52 @@
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
 					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
+			<FloatParameterType name="int16_Centi_C">
+				<UnitSet>
+					<Unit>°C</Unit>
+				</UnitSet>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+									 byteOrder="leastSignificantByteFirst">
+					<DefaultCalibrator>
+						<MathOperationCalibrator>
+							<ThisParameterOperand />
+							<ValueOperand>100</ValueOperand>
+							<Operator>/</Operator>
+						</MathOperationCalibrator>
+					</DefaultCalibrator>
+				</IntegerDataEncoding>
+			</FloatParameterType>
+			<FloatParameterType name="uint8_Deci_C">
+				<UnitSet>
+					<Unit>°C</Unit>
+				</UnitSet>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+									 byteOrder="leastSignificantByteFirst">
+					<DefaultCalibrator>
+						<MathOperationCalibrator>
+							<ThisParameterOperand />
+							<ValueOperand>10</ValueOperand>
+							<Operator>/</Operator>
+						</MathOperationCalibrator>
+					</DefaultCalibrator>
+				</IntegerDataEncoding>
+			</FloatParameterType>
+
+			<FloatParameterType name="uint16_deci_psi">
+				<UnitSet>
+					<Unit>psi</Unit>
+				</UnitSet>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+									 byteOrder="leastSignificantByteFirst">
+					<DefaultCalibrator>
+						<MathOperationCalibrator>
+							<ThisParameterOperand />
+							<ValueOperand>10</ValueOperand>
+							<Operator>/</Operator>
+						</MathOperationCalibrator>
+					</DefaultCalibrator>
+				</IntegerDataEncoding>
+			</FloatParameterType>
 
 			<IntegerParameterType name="pad5bits" signed="false">
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="5"
@@ -310,11 +356,11 @@
 				shortDescription="Vent: electrical continuity" />
 			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi"
 				shortDescription="Combustion chamber pressure (prop bottom)" />
-			<Parameter name="tank_pressure" parameterTypeRef="uint16_psi"
+			<Parameter name="tank_pressure" parameterTypeRef="uint16_deci_psi"
 				shortDescription="Tank bottom pressure" />
-			<Parameter name="tank_temp" parameterTypeRef="uint8_C"
+			<Parameter name="tank_temp" parameterTypeRef="uint8_Deci_C"
 				shortDescription="Tank temperature (prop bottom)" />
-			<Parameter name="vent_temp" parameterTypeRef="uint8_C"
+			<Parameter name="vent_temp" parameterTypeRef="uint8_Deci_C"
 				shortDescription="Vent valve temperature (prop top)" />
 			<Parameter name="pl_sampling_state" parameterTypeRef="bool"
 				shortDescription="Payload: Sampling state" />
@@ -336,7 +382,7 @@
 				shortDescription="Payload: Active temperature control state" />
 			<Parameter name="pl_target_temp" parameterTypeRef="uint8_C"
 				shortDescription="Payload: Target temerature" />
-			<Parameter name="pl_sample_temp" parameterTypeRef="int16_C"
+			<Parameter name="pl_sample_temp" parameterTypeRef="int16_Centi_C"
 				shortDescription="Payload: Actual Sample temperautre" />
 			<Parameter name="flight_stage" parameterTypeRef="flightStageType"
 				shortDescription="Flight stage" />
