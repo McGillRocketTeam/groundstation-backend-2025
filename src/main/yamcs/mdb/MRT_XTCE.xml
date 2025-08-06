@@ -17,11 +17,20 @@
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" bitOrder="mostSignificantBitFirst" />
 			</IntegerParameterType>
 
-			<FloatParameterType name="uint8_V">
+			<IntegerParameterType name="uint8_V" signed="false">
 				<UnitSet>
 					<Unit>V</Unit>
 				</UnitSet>
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"
+					byteOrder="leastSignificantByteFirst">
+				</IntegerDataEncoding>
+			</IntegerParameterType>
+
+			<FloatParameterType name="uint16_V">
+				<UnitSet>
+					<Unit>V</Unit>
+				</UnitSet>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
 					byteOrder="leastSignificantByteFirst">
 					<DefaultCalibrator>
 						<MathOperationCalibrator>
@@ -32,14 +41,6 @@
 					</DefaultCalibrator>
 				</IntegerDataEncoding>
 			</FloatParameterType>
-
-			<IntegerParameterType name="uint16_V" signed="false">
-				<UnitSet>
-					<Unit>V</Unit>
-				</UnitSet>
-				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
-					byteOrder="leastSignificantByteFirst" />
-			</IntegerParameterType>
 
 			<FloatParameterType name="uint16_V_pl_battery">
 				<UnitSet>
