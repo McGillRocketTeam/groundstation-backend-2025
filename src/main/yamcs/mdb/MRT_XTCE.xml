@@ -26,7 +26,7 @@
 				</IntegerDataEncoding>
 			</IntegerParameterType>
 
-			<IntegerParameterType name="uint8_V_battery" signed="false">
+			<FloatParameterType name="uint8_V_battery">
 				<UnitSet>
 					<Unit>V</Unit>
 				</UnitSet>
@@ -40,7 +40,7 @@
 						</MathOperationCalibrator>
 					</DefaultCalibrator>
 				</IntegerDataEncoding>
-			</IntegerParameterType>
+			</FloatParameterType>
 
 			<FloatParameterType name="uint16_V">
 				<UnitSet>
@@ -606,26 +606,26 @@
 				</EntryList>
 			</SequenceContainer>
 		</ContainerSet>
-		<AlgorithmSet>
-			<CustomAlgorithm name="filtered_tank_pressure_algorithm" language="JavaScript">
-				<InputSet>
-					<InputParameter parameterRef="tank_pressure" />
-				</InputSet>
-				<OutputSet>
-					<OutputParameter parameterRef="filtered_tank_pressure" />
-				</OutputSet>
-				<TriggerSet>
-					<OnParameterUpdateTrigger parameterRef="tank_pressure" />
-				</TriggerSet>
-				<AlgorithmText language="JavaScript">
-					if (tank_pressure != 0) {
-					return tank_pressure;
-					} else {
-					return __no_update__;
-					}
-				</AlgorithmText>
-			</CustomAlgorithm>
-		</AlgorithmSet>
+		<!-- <AlgorithmSet> -->
+		<!-- <CustomAlgorithm name="filtered_tank_pressure_algorithm" language="JavaScript"> -->
+		<!-- 	<InputSet> -->
+		<!-- 		<InputParameter parameterRef="tank_pressure" /> -->
+		<!-- 	</InputSet> -->
+		<!-- 	<OutputSet> -->
+		<!-- 		<OutputParameter parameterRef="filtered_tank_pressure" /> -->
+		<!-- 	</OutputSet> -->
+		<!-- 	<TriggerSet> -->
+		<!-- 		<OnParameterUpdateTrigger parameterRef="tank_pressure" /> -->
+		<!-- 	</TriggerSet> -->
+		<!-- 	<AlgorithmText language="JavaScript"> -->
+		<!-- 		if (tank_pressure != 0) { -->
+		<!-- 		return tank_pressure; -->
+		<!-- 		} else { -->
+		<!-- 		return __no_update__; -->
+		<!-- 		} -->
+		<!-- 	</AlgorithmText> -->
+		<!-- </CustomAlgorithm> -->
+		<!-- </AlgorithmSet> -->
 	</TelemetryMetaData>
 	<CommandMetaData>
 		<ArgumentTypeSet>
