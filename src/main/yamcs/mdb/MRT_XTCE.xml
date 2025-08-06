@@ -44,7 +44,7 @@
 
 			<FloatParameterType name="uint16_V">
 				<UnitSet>
-					<Unit>V</Unit>
+					<Unit>mV</Unit>
 				</UnitSet>
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
 					byteOrder="leastSignificantByteFirst">
