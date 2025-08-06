@@ -26,6 +26,22 @@
 				</IntegerDataEncoding>
 			</IntegerParameterType>
 
+			<IntegerParameterType name="uint8_V_battery" signed="false">
+				<UnitSet>
+					<Unit>V</Unit>
+				</UnitSet>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"
+					byteOrder="leastSignificantByteFirst">
+					<DefaultCalibrator>
+						<MathOperationCalibrator>
+							<ThisParameterOperand />
+							<ValueOperand>10</ValueOperand>
+							<Operator>/</Operator>
+						</MathOperationCalibrator>
+					</DefaultCalibrator>
+				</IntegerDataEncoding>
+			</IntegerParameterType>
+
 			<FloatParameterType name="uint16_V">
 				<UnitSet>
 					<Unit>V</Unit>
@@ -97,6 +113,23 @@
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
 					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
+
+			<FloatParameterType name="uint16_psi_cc_pressure">
+				<UnitSet>
+					<Unit>psi</Unit>
+				</UnitSet>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="16"
+					byteOrder="leastSignificantByteFirst">
+					<DefaultCalibrator>
+						<MathOperationCalibrator>
+							<ThisParameterOperand />
+							<ValueOperand>100</ValueOperand>
+							<Operator>/</Operator>
+						</MathOperationCalibrator>
+					</DefaultCalibrator>
+				</IntegerDataEncoding>
+			</FloatParameterType>
+
 			<IntegerParameterType name="uint16_ms" signed="false">
 				<UnitSet>
 					<Unit>ms</Unit>
@@ -253,7 +286,7 @@
 			<Parameter name="polling_rate" parameterTypeRef="uint16_ms" shortDescription="Polling rate" />
 			<Parameter name="time_from_sw_reset" parameterTypeRef="uint32_s"
 				shortDescription="Time from last sofware reset" />
-			<Parameter name="battery_voltage" parameterTypeRef="uint8_V"
+			<Parameter name="battery_voltage" parameterTypeRef="uint8_V_battery"
 				shortDescription="Battery Voltage" />
 			<Parameter name="FC_RPO" parameterTypeRef="bool" shortDescription="FC RPO sense signal" />
 			<Parameter name="pl_ok" parameterTypeRef="bool" shortDescription="FC RPO sense signal" />
@@ -323,7 +356,7 @@
 				shortDescription="Vent: electrical energized current" />
 			<Parameter name="vent_continuity_HW" parameterTypeRef="bool"
 				shortDescription="Vent: electrical continuity" />
-			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi"
+			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi_cc_pressure"
 				shortDescription="Combustion chamber pressure (prop bottom)" />
 			<Parameter name="tank_pressure" parameterTypeRef="uint16_psi"
 				shortDescription="Tank bottom pressure" />
