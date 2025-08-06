@@ -52,8 +52,6 @@
 						<MathOperationCalibrator>
 							<ThisParameterOperand />
 							<ValueOperand>10</ValueOperand>
-							<Operator>-</Operator>
-							<ValueOperand>2186</ValueOperand>
 							<Operator>/</Operator>
 						</MathOperationCalibrator>
 					</DefaultCalibrator>
