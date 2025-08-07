@@ -113,7 +113,6 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
             @Override
             public void serialEvent(SerialPortEvent serialPortEvent) {
-
                 if (serialPortEvent.getEventType() == SerialPort.LISTENING_EVENT_PORT_DISCONNECTED) {
                     log.warn("Serial port " + currConnectedPort.getSystemPortName() + " disconnected");
                     disconnectFromCurrPort();
@@ -150,6 +149,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         activePorts.add(serialPort.getSystemPortName());
         currConnectedPort = serialPort;
 
+        enable();
         log.info("Writing \"radio init\"");
         byte[] dataToWrite = ("radio init" + "\r\n").getBytes(StandardCharsets.UTF_8);
         try {
@@ -170,8 +170,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         }
 
         byte[] bytes = ackText.getBytes();
-
-        SerialDataLink link = uniqueIdentifierToLink.get("gs_radio_903");
+        log.info("Writing ACK to gs_radio_"+uniqueIdentifier);
+        SerialDataLink link = uniqueIdentifierToLink.get("gs_radio_"+uniqueIdentifier);
         if (link != null) {
             TmPacket tmPacket = new TmPacket(getCurrentTime(), bytes);
             link.packetQueue.add(link.packetPreprocessor.process(tmPacket));
