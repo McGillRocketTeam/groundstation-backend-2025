@@ -288,6 +288,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         Thread thread = new Thread(this);
         thread.setName(getClass().getSimpleName() + "-" + linkName + "-" + uniqueIdentifier);
         thread.start();
+        enable();
     }
 
     @Override
@@ -295,6 +296,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         if (isCurrentlyConnected()) {
             disconnectFromCurrPort();
         }
+        disable();
     }
 
     @Override

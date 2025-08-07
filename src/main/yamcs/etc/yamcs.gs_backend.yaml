@@ -140,7 +140,7 @@ streamConfig:
       rootContainer: "/FC433/FlightComputer/FCPacket"
     - name: "tm_gs_radio_433"
       processor: "realtime"
-      rootContainer: "/FC903/GSRadio/GSRPacket"
+      rootContainer: "/FC433/GSRadio/GSRPacket"
 
     # Labjack
     - name: "tm_labJack"
