@@ -164,8 +164,7 @@
 			</IntegerParameterType>
 			<IntegerParameterType name="int16_mpsps">
 				<UnitSet>
-					<Unit>m</Unit>
-					<Unit power="-2">s</Unit>
+					<Unit>m/s²</Unit>
 				</UnitSet>
 				<IntegerDataEncoding encoding="twosComplement" sizeInBits="16"
 					byteOrder="leastSignificantByteFirst" />
