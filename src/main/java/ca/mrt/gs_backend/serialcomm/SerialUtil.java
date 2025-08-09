@@ -4,13 +4,14 @@ import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortEvent;
 import com.fazecast.jSerialComm.SerialPortMessageListener;
 import com.google.common.base.Stopwatch;
-import org.yamcs.AbstractYamcsService;
-import org.yamcs.InitException;
-import org.yamcs.YConfiguration;
+import org.yamcs.*;
 import org.yamcs.logging.Log;
+import org.yamcs.management.LinkManager;
 import org.yamcs.protobuf.QueuesApiClient;
+import org.yamcs.tctm.Link;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -156,8 +157,25 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
 
                     if(pingParams[0].equals("control_box")){
                         uniqueIdentifier[0] = pingParams[0];
+
+                        try{
+                            LinkManager manager = YamcsServer.getServer().getInstance(SerialUtil.super.getYamcsInstance()).getLinkManager();
+                            Link controlBox = manager.getLink("control-box");
+                            ((ControlBoxLink) controlBox).setErrorMessage(null);
+                        } catch (Exception e) {
+                            log.warn("Unable to report control box success to control-box link.");
+                        }
                     } else if(pingParams[2].matches("^\\d+.\\d+$")){
                         uniqueIdentifier[0] = pingParams[2];
+                    }
+                } else if (receivedMessage.contains("Control box failure:")) {
+                    log.error(receivedMessage);
+                    try{
+                        LinkManager manager = YamcsServer.getServer().getInstance(SerialUtil.super.getYamcsInstance()).getLinkManager();
+                        Link controlBox = manager.getLink("control-box");
+                        ((ControlBoxLink) controlBox).setErrorMessage(receivedMessage);
+                    } catch (Exception e) {
+                        log.warn("Unable to report control box failure to control-box link.");
                     }
                 }
             }
@@ -165,6 +183,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
 
         try {
             Thread.sleep(2000); //this is needed for control box
+            log.info(serialPort.getSystemPortName()+" open state: "+serialPort.isOpen());
             byte[] pingMessage = "ping\r\n".getBytes(StandardCharsets.UTF_8);
             ExecutorService executor = Executors.newSingleThreadExecutor();
 
@@ -178,7 +197,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
             Future<String> future = executor.submit(task);
 
             try {
-                future.get(2000, TimeUnit.MILLISECONDS); // Timeout of 2 seconds
+                future.get(1000, TimeUnit.MILLISECONDS); // Timeout of 2 seconds
             } catch (TimeoutException e) {
                 log.warn("Timeout: writing ping took too long");
                 future.cancel(true); // Cancel the task if it exceeds the timeout
@@ -200,6 +219,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         while(stopwatch.elapsed(TimeUnit.SECONDS) < 2 && uniqueIdentifier[0] == null);
+        log.warn("Got Identifier ("+ Arrays.stream(uniqueIdentifier).findFirst()+") in :"+stopwatch.elapsed(TimeUnit.MILLISECONDS)+"ms");
 
         serialPort.removeDataListener();
         serialPort.closePort();

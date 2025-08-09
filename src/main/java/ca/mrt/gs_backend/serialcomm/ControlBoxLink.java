@@ -140,4 +140,19 @@ public class ControlBoxLink extends SerialDataLink {
     protected byte[] getDelimiter() {
         return new byte[]{'\r', '\n'};
     }
+
+    @Override
+    public String getDetailedStatus() {
+        if (errorMessage != null) {
+            return errorMessage;
+        } else {
+            return super.getDetailedStatus();
+        }
+
+    }
+
+    private String errorMessage;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 }
