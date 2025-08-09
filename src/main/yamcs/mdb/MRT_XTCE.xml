@@ -304,7 +304,7 @@
 				shortDescription="Time from last sofware reset" />
 			<Parameter name="battery_voltage" parameterTypeRef="uint8_V_battery"
 				shortDescription="Battery Voltage" />
-			<Parameter name="FC_RPO" parameterTypeRef="bool" shortDescription="FC RPO sense signal" />
+			<Parameter name="v_ext_sns" parameterTypeRef="bool" shortDescription="FC RPO sense signal" />
 			<Parameter name="pl_ok" parameterTypeRef="bool" shortDescription="FC RPO sense signal" />
 			<Parameter name="CTSFlag" parameterTypeRef="uint8" shortDescription="FC RPO sense signal" />
 
@@ -378,7 +378,7 @@
 				shortDescription="Tank bottom pressure" />
 			<Parameter name="tank_temp" parameterTypeRef="uint8_C_tank_temp"
 				shortDescription="Tank temperature (prop bottom)" />
-			<Parameter name="vent_temp" parameterTypeRef="uint8_C"
+			<Parameter name="vent_temp" parameterTypeRef="uint8_C_tank_temp"
 				shortDescription="Vent valve temperature (prop top)" />
 			<Parameter name="pl_sampling_state" parameterTypeRef="bool"
 				shortDescription="Payload: Sampling state" />
@@ -470,7 +470,7 @@
 						shortDescription="drogueEmatch: electrical armed" />
 					<ParameterRefEntry parameterRef="drogue_armed_SW"
 						shortDescription="drogueEmatch: logical armed" />
-					<ParameterRefEntry parameterRef="FC_RPO" shortDescription="FC RPO sense signal" />
+					<ParameterRefEntry parameterRef="v_ext_sns" shortDescription="External voltage sense" />
 
 					<ParameterRefEntry parameterRef="ufd_armed_HW" shortDescription="ufd: electrical armed" />
 					<ParameterRefEntry parameterRef="ufd_armed_SW" shortDescription="ufd: logical armed" />
@@ -718,6 +718,7 @@
 			<!-- Umbilical -->
 			<MetaCommand name="umbilical_high_(connected)" shortDescription="uh ACK9_0" />
 			<MetaCommand name="umbilical_low_(disconnected)" shortDescription="ul ACK9_1" />
+			<MetaCommand name="cmd_error" shortDescription="Unable to process prior command" />
 		</MetaCommandSet>
 	</CommandMetaData>
 </SpaceSystem>

@@ -33,7 +33,7 @@ import java.util.concurrent.*;
  * which has a matching unique identifier. Once the comport is given to the {@link SerialDataLink} instance, it is added to a set
  * {@link SerialDataLink#activePorts} of comports to no longer ping and should not be written to or read from by this class.
  */
-public class SerialUtil extends AbstractYamcsService implements Runnable{
+public class SerialUtil extends AbstractYamcsService implements Runnable {
     private Log log;
     private ScheduledExecutorService executorService;
     private final Set<String> existingSerialPorts = new HashSet<>();
@@ -69,6 +69,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
         }
 
         checkInactivePortsAgainCounter++;
+        SerialPort[] ports = SerialPort.getCommPorts();
         for(SerialPort serialPort : SerialPort.getCommPorts()){
             if(!existingSerialPorts.contains(serialPort.getSystemPortName()) || checkInactivePortsAgainCounter > 3){
                 existingSerialPorts.add(serialPort.getSystemPortName());
@@ -219,7 +220,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         while(stopwatch.elapsed(TimeUnit.SECONDS) < 2 && uniqueIdentifier[0] == null);
-        log.warn("Got Identifier ("+ Arrays.stream(uniqueIdentifier).findFirst()+") in :"+stopwatch.elapsed(TimeUnit.MILLISECONDS)+"ms");
+//        log.warn("Got Identifier ("+ Arrays.stream(uniqueIdentifier).findFirst()+") in :"+stopwatch.elapsed(TimeUnit.MILLISECONDS)+"ms");
 
         serialPort.removeDataListener();
         serialPort.closePort();

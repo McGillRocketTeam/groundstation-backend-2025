@@ -126,6 +126,20 @@ public class ControlBoxLink extends SerialDataLink {
 
     }
 
+    private void sendFCErrorCMD(String fcCmd, String errorMessage) {
+        FCUtils.getMetaCmds("cmd_error").forEach((metaCommand -> {
+            var prepCmd = cmdManager.buildRawCommand(metaCommand, new byte[]{}, "yamcs-internal", 0, YamcsServer.getServer().getSecurityStore().getSystemUser());
+            prepCmd.setComment(errorMessage);
+            cmdReleaser.releaseCommand(prepCmd);
+//            prepCmd.setMetaCommand();
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+    }
+
     @Override
     protected String getAckStrFromCmd(PreparedCommand command) {
         return command.getCmdName().equals("ping") ? "ping_ack" : command.getCmdName();
