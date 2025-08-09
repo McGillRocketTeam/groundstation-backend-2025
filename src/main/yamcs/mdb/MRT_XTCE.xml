@@ -81,6 +81,23 @@
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"
 					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
+
+			<FloatParameterType name="uint8_C_tank_temp">
+				<UnitSet>
+					<Unit>°C</Unit>
+				</UnitSet>
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"
+									 byteOrder="leastSignificantByteFirst">
+					<DefaultCalibrator>
+						<MathOperationCalibrator>
+							<ThisParameterOperand />
+							<ValueOperand>10</ValueOperand>
+							<Operator>/</Operator>
+						</MathOperationCalibrator>
+					</DefaultCalibrator>
+				</IntegerDataEncoding>
+			</FloatParameterType>
+
 			<FloatParameterType name="int16_C">
 				<UnitSet>
 					<Unit>°C</Unit>
@@ -114,7 +131,7 @@
 					byteOrder="leastSignificantByteFirst" />
 			</IntegerParameterType>
 
-			<FloatParameterType name="uint16_psi_cc_pressure">
+			<FloatParameterType name="uint16_psi_calibrated">
 				<UnitSet>
 					<Unit>psi</Unit>
 				</UnitSet>
@@ -123,7 +140,7 @@
 					<DefaultCalibrator>
 						<MathOperationCalibrator>
 							<ThisParameterOperand />
-							<ValueOperand>100</ValueOperand>
+							<ValueOperand>10</ValueOperand>
 							<Operator>/</Operator>
 						</MathOperationCalibrator>
 					</DefaultCalibrator>
@@ -355,11 +372,11 @@
 				shortDescription="Vent: electrical energized current" />
 			<Parameter name="vent_continuity_HW" parameterTypeRef="bool"
 				shortDescription="Vent: electrical continuity" />
-			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi_cc_pressure"
+			<Parameter name="prop_cc_pressure" parameterTypeRef="uint16_psi_calibrated"
 				shortDescription="Combustion chamber pressure (prop bottom)" />
-			<Parameter name="tank_pressure" parameterTypeRef="uint16_psi"
+			<Parameter name="tank_pressure" parameterTypeRef="uint16_psi_calibrated"
 				shortDescription="Tank bottom pressure" />
-			<Parameter name="tank_temp" parameterTypeRef="uint8_C"
+			<Parameter name="tank_temp" parameterTypeRef="uint8_C_tank_temp"
 				shortDescription="Tank temperature (prop bottom)" />
 			<Parameter name="vent_temp" parameterTypeRef="uint8_C"
 				shortDescription="Vent valve temperature (prop top)" />

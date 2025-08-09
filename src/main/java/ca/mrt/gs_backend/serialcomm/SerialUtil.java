@@ -199,7 +199,7 @@ public class SerialUtil extends AbstractYamcsService implements Runnable{
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        while(stopwatch.elapsed(TimeUnit.SECONDS) < 10 && uniqueIdentifier[0] == null);
+        while(stopwatch.elapsed(TimeUnit.SECONDS) < 2 && uniqueIdentifier[0] == null);
 
         serialPort.removeDataListener();
         serialPort.closePort();

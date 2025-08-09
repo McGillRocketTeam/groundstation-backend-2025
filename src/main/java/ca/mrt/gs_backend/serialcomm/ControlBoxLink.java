@@ -117,6 +117,11 @@ public class ControlBoxLink extends SerialDataLink {
         FCUtils.getMetaCmds(fcCmd).forEach((metaCommand -> {
             var prepCmd = cmdManager.buildRawCommand(metaCommand, new byte[]{}, "yamcs-internal", 0, YamcsServer.getServer().getSecurityStore().getSystemUser());
             cmdReleaser.releaseCommand(prepCmd);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }));
 
     }
