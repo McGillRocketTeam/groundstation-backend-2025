@@ -219,6 +219,14 @@
 				</UnitSet>
 				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" />
 			</FloatParameterType>
+
+			<FloatParameterType name="java_float_ft">
+				<UnitSet>
+					<Unit>ft</Unit>
+				</UnitSet>
+				<FloatDataEncoding sizeInBits="32" />
+			</FloatParameterType>
+
 			<FloatParameterType name="uint16_Hz">
 				<UnitSet>
 					<Unit>Hz</Unit>
@@ -428,17 +436,14 @@
 			<Parameter name="RSSI" parameterTypeRef="int32" />
 			<Parameter name="SNR" parameterTypeRef="int32" />
 
-			<!--			<Parameter name="adjusted_voltage" parameterTypeRef="float">-->
-			<!--				<ParameterProperties dataSource="derived" readOnly="true">-->
-			<!--				</ParameterProperties>-->
-			<!--			</Parameter>-->
-
-			<!--			<Parameter name="filtered_tank_pressure" parameterTypeRef="float">-->
-			<!--				<ParameterProperties dataSource="derived" readOnly="true">-->
-			<!--				</ParameterProperties>-->
-			<!--			</Parameter>-->
-			<!--			-->
 			<Parameter name="meta_packet_size" parameterTypeRef="uint32" />
+
+			<!-- Items that are calculated on the GUI -->
+			<Parameter name="alt_apogee" parameterTypeRef="java_float_ft"
+				shortDescription="Calculated Apogee">
+				<LongDescription>Calculates the maximum value reached by the altimiter (apogee).</LongDescription>
+				<ParameterProperties persistence="false" dataSource="derived" />
+			</Parameter>
 
 		</ParameterSet>
 		<ContainerSet>
@@ -450,6 +455,7 @@
 					<!-- Meta From Jeff -->
 					<ParameterRefEntry parameterRef="RSSI" />
 					<ParameterRefEntry parameterRef="SNR" />
+
 
 					<!-- Radio Packet (8 bytes) -->
 					<ParameterRefEntry parameterRef="CTSFlag" shortDescription="CTS flag" />
@@ -523,6 +529,8 @@
 					<ParameterRefEntry parameterRef="flight_stage" shortDescription="Flight stage" />
 					<ParameterRefEntry parameterRef="alt_altitude"
 						shortDescription="Altitude from ground (calculated from pressure)" />
+					<ParameterRefEntry parameterRef="alt_apogee"
+						shortDescription="The highest recorded altitude."></ParameterRefEntry>
 					<ParameterRefEntry parameterRef="vertical_speed" shortDescription="Vertical speed" />
 					<ParameterRefEntry parameterRef="gps_latitude" shortDescription="GPS latitude" />
 					<ParameterRefEntry parameterRef="gps_longitude" shortDescription="GPS longitude" />
@@ -622,26 +630,26 @@
 				</EntryList>
 			</SequenceContainer>
 		</ContainerSet>
-		<!-- <AlgorithmSet> -->
-		<!-- <CustomAlgorithm name="filtered_tank_pressure_algorithm" language="JavaScript"> -->
-		<!-- 	<InputSet> -->
-		<!-- 		<InputParameter parameterRef="tank_pressure" /> -->
-		<!-- 	</InputSet> -->
-		<!-- 	<OutputSet> -->
-		<!-- 		<OutputParameter parameterRef="filtered_tank_pressure" /> -->
-		<!-- 	</OutputSet> -->
-		<!-- 	<TriggerSet> -->
-		<!-- 		<OnParameterUpdateTrigger parameterRef="tank_pressure" /> -->
-		<!-- 	</TriggerSet> -->
-		<!-- 	<AlgorithmText language="JavaScript"> -->
-		<!-- 		if (tank_pressure != 0) { -->
-		<!-- 		return tank_pressure; -->
-		<!-- 		} else { -->
-		<!-- 		return __no_update__; -->
-		<!-- 		} -->
-		<!-- 	</AlgorithmText> -->
-		<!-- </CustomAlgorithm> -->
-		<!-- </AlgorithmSet> -->
+
+		<!-- For deriving data points -->
+		<AlgorithmSet>
+			<CustomAlgorithm name="calculate_apogee">
+				<AlgorithmText language="java-expression">
+					out0.setFloatValue(Math.max(newValue.getEngValue().getFloatValue(), oldValue.getEngValue().getFloatValue()));
+					return out0;
+				</AlgorithmText>
+				<InputSet>
+					<InputParameterInstanceRef parameterRef="alt_altitude" inputName="newValue" />
+					<InputParameterInstanceRef parameterRef="alt_apogee" inputName="oldValue" />
+				</InputSet>
+				<OutputSet>
+					<OutputParameterRef parameterRef="alt_apogee" outputName="out0" />
+				</OutputSet>
+				<TriggerSet>
+					<OnParameterUpdateTrigger parameterRef="alt_altitude" />
+				</TriggerSet>
+			</CustomAlgorithm>
+		</AlgorithmSet>
 	</TelemetryMetaData>
 	<CommandMetaData>
 		<ArgumentTypeSet>

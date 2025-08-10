@@ -294,7 +294,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     @Override
     public void doDisable() {
         if (isCurrentlyConnected()) {
-            disconnectFromCurrPort();
+           disconnectFromCurrPort();
         }
         disable();
     }
