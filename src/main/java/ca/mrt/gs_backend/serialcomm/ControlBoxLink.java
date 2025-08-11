@@ -3,6 +3,7 @@ package ca.mrt.gs_backend.serialcomm;
 import ca.mrt.gs_backend.FCUtils;
 import ca.mrt.gs_backend.labjack.LabJackDataLink;
 import org.yamcs.YamcsServer;
+import org.yamcs.cmdhistory.CommandHistoryPublisher;
 import org.yamcs.commanding.CommandReleaser;
 import org.yamcs.commanding.CommandingManager;
 import org.yamcs.commanding.PreparedCommand;
@@ -20,6 +21,7 @@ public class ControlBoxLink extends SerialDataLink {
     private CommandReleaser cmdReleaser;
 
     public ControlBoxLink() {
+//        sendFCErrorCMD("p0", "TESTING");
         addListener(newData -> {
             if (cmdManager == null) {
                 var processor = YamcsServer.getServer().getProcessor("gs_backend", "realtime");
@@ -127,11 +129,12 @@ public class ControlBoxLink extends SerialDataLink {
     }
 
     private void sendFCErrorCMD(String fcCmd, String errorMessage) {
-        FCUtils.getMetaCmds("cmd_error").forEach((metaCommand -> {
+        // TODO: Code for failed command
+        CommandHistoryPublisher cmdHistory = YamcsServer.getServer().getInstance(ControlBoxLink.super.getYamcsInstance()).getFirstProcessor().getCommandHistoryPublisher();
+        FCUtils.getMetaCmds(fcCmd).forEach((metaCommand -> {
             var prepCmd = cmdManager.buildRawCommand(metaCommand, new byte[]{}, "yamcs-internal", 0, YamcsServer.getServer().getSecurityStore().getSystemUser());
-            prepCmd.setComment(errorMessage);
-            cmdReleaser.releaseCommand(prepCmd);
-//            prepCmd.setMetaCommand();
+            cmdHistory.addCommand(prepCmd);
+            cmdHistory.commandFailed(prepCmd.getCommandId(), 0L, errorMessage);
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
