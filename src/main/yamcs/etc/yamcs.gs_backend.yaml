@@ -61,7 +61,7 @@ dataLinks:
     frequency: "903"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
-    ###### 433 Devices ######
+    ###### 435 Devices ######
   - name: gs-radio-435
     class: ca.mrt.gs_backend.serialcomm.FCLink
     tmStream: tm_gs_radio_435
@@ -109,7 +109,7 @@ mdb:
         args:
           file: mdb/GSRADIO_XTCE.xml
   - type: emptyNode
-    spec: "FC433"
+    spec: "FC435"
     subLoaders:
       - type: xtce
         args:
@@ -134,13 +134,13 @@ streamConfig:
       processor: "realtime"
       rootContainer: "/FC903/GSRadio/GSRPacket"
 
-    # Coming from the GSRadio 433 board
+    # Coming from the GSRadio 435 board
     - name: "tm_flight_computer_435"
       processor: "realtime"
-      rootContainer: "/FC433/FlightComputer/FCPacket"
+      rootContainer: "/FC435/FlightComputer/FCPacket"
     - name: "tm_gs_radio_435"
       processor: "realtime"
-      rootContainer: "/FC433/GSRadio/GSRPacket"
+      rootContainer: "/FC435/GSRadio/GSRPacket"
 
     # Labjack
     - name: "tm_labJack"
@@ -157,7 +157,7 @@ streamConfig:
       tcPatterns: ["/LabJackT7/.*"]
     - name: "tc_flight_computer_435"
       processor: "realtime"
-      tcPatterns: ["/FC433.*"]
+      tcPatterns: ["/FC435.*"]
     - name: "tc_flight_computer_903"
       processor: "realtime"
       tcPatterns: ["/FC903.*"]
