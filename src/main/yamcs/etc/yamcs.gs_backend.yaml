@@ -62,23 +62,23 @@ dataLinks:
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
     ###### 433 Devices ######
-  - name: gs-radio-433
+  - name: gs-radio-435
     class: ca.mrt.gs_backend.serialcomm.FCLink
-    tmStream: tm_gs_radio_433
-    tcStream: tc_flight_computer_433
-    frequency: "gs_radio_433"
+    tmStream: tm_gs_radio_435
+    tcStream: tc_flight_computer_435
+    frequency: "gs_radio_435"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
-  - name: fc-433
+  - name: fc-435
     class: ca.mrt.gs_backend.serialcomm.FCLink
-    tmStream: tm_flight_computer_433
-    tcStream: tc_flight_computer_433
-    frequency: "433"
+    tmStream: tm_flight_computer_435
+    tcStream: tc_flight_computer_435
+    frequency: "435"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
 
   - name: control-box
     class: ca.mrt.gs_backend.serialcomm.ControlBoxLink
-    tmStream: tm_flight_computer_433
+    tmStream: tm_flight_computer_435
     tcStream: tc_control_box
     frequency: "control_box"
     packetPreprocessorClassName: ca.mrt.gs_backend.MyPacketPreprocessor
@@ -135,10 +135,10 @@ streamConfig:
       rootContainer: "/FC903/GSRadio/GSRPacket"
 
     # Coming from the GSRadio 433 board
-    - name: "tm_flight_computer_433"
+    - name: "tm_flight_computer_435"
       processor: "realtime"
       rootContainer: "/FC433/FlightComputer/FCPacket"
-    - name: "tm_gs_radio_433"
+    - name: "tm_gs_radio_435"
       processor: "realtime"
       rootContainer: "/FC433/GSRadio/GSRPacket"
 
@@ -155,7 +155,7 @@ streamConfig:
     - name: "tc_labJack"
       processor: "realtime"
       tcPatterns: ["/LabJackT7/.*"]
-    - name: "tc_flight_computer_433"
+    - name: "tc_flight_computer_435"
       processor: "realtime"
       tcPatterns: ["/FC433.*"]
     - name: "tc_flight_computer_903"
