@@ -26,19 +26,27 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author Jake
- * This class manages a connection with a serial (USB) device.
- * In the context of MRT operations (as of now), this device could be a groundstation radio
- * connected to a flight computer on a unique frequency OR a control box.
- * <p>
- * Since we must have the ability to connect to multiple FCs at the same time, and we will
- * never have more than one FC on the same frequency, we use an option called the
- * 'unique identifier' to inform the data link which device it will be connecting to.
- * If the data link is supposed to connect to an FC, the unique identifier is the radio frequency
- * which that FC is on (e.g. 433).
- * If the data link is suppossed to connect to a control box, the unique identifier will be 'control_box'.
- * <p>
- * The way in which these SerialDataLink instances are connected to the correct device on the correct serial port
- * is controlled by the {@link SerialUtil} class.
+ *         This class manages a connection with a serial (USB) device.
+ *         In the context of MRT operations (as of now), this device could be a
+ *         groundstation radio
+ *         connected to a flight computer on a unique frequency OR a control
+ *         box.
+ *         <p>
+ *         Since we must have the ability to connect to multiple FCs at the same
+ *         time, and we will
+ *         never have more than one FC on the same frequency, we use an option
+ *         called the
+ *         'unique identifier' to inform the data link which device it will be
+ *         connecting to.
+ *         If the data link is supposed to connect to an FC, the unique
+ *         identifier is the radio frequency
+ *         which that FC is on (e.g. 435).
+ *         If the data link is suppossed to connect to a control box, the unique
+ *         identifier will be 'control_box'.
+ *         <p>
+ *         The way in which these SerialDataLink instances are connected to the
+ *         correct device on the correct serial port
+ *         is controlled by the {@link SerialUtil} class.
  */
 public abstract class SerialDataLink extends AbstractTcTmParamLink implements Runnable {
 
@@ -47,12 +55,13 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     private static CommandHistoryPublisher ackPublisher;
     private final Set<ca.mrt.gs_backend.serialcomm.Listener> listeners = new HashSet<>();
 
-    //todo maybe change this to an Optional
+    // todo maybe change this to an Optional
     private SerialPort currConnectedPort;
     private long timeOfLastPacket = System.currentTimeMillis();
 
     /**
-     * For ground stations connected to FCs, the unique identifier is their radio frequency
+     * For ground stations connected to FCs, the unique identifier is their radio
+     * frequency
      * For the control box, the unique identifier is the string "control_box"
      */
     private String uniqueIdentifier;
@@ -77,7 +86,6 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         return listeners.remove(listener);
     }
 
-
     protected void connectToPort(SerialPort serialPort) {
         if (isCurrentlyConnected()) {
             log.error("Cannot connect to new serial port before disconnecting from existing port: "
@@ -95,9 +103,9 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         serialPort.addDataListener(new SerialPortMessageListener() {
             @Override
             public byte[] getMessageDelimiter() {
-                //TODO verify if packets end with \n or \r or \n\r
+                // TODO verify if packets end with \n or \r or \n\r
                 return getDelimiter();
-                //<LEO?>
+                // <LEO?>
             }
 
             @Override
@@ -105,7 +113,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                 return true;
             }
 
-            //will call serialEvent method when port disconnected or data is received
+            // will call serialEvent method when port disconnected or data is received
             @Override
             public int getListeningEvents() {
                 return SerialPort.LISTENING_EVENT_PORT_DISCONNECTED | SerialPort.LISTENING_EVENT_DATA_RECEIVED;
@@ -136,7 +144,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                     return;
                 }
 
-                if (processAck(dataStr)) { //incoming message is an ack
+                if (processAck(dataStr)) { // incoming message is an ack
                     log.info("Received ack: " + dataStr);
                     return;
                 }
@@ -170,8 +178,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         }
 
         byte[] bytes = ackText.getBytes();
-        log.info("Writing ACK to gs_radio_"+uniqueIdentifier);
-        SerialDataLink link = uniqueIdentifierToLink.get("gs_radio_"+uniqueIdentifier);
+        log.info("Writing ACK to gs_radio_" + uniqueIdentifier);
+        SerialDataLink link = uniqueIdentifierToLink.get("gs_radio_" + uniqueIdentifier);
         if (link != null) {
             TmPacket tmPacket = new TmPacket(getCurrentTime(), bytes);
             link.packetQueue.add(link.packetPreprocessor.process(tmPacket));
@@ -181,11 +189,11 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             log.error(String.join(" ", set));
         }
 
-
         String ackName = "ack_r";
         var cmdId = ackStrToMostRecentCmdId.get(ackName);
         if (cmdId != null) {
-            getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+            getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(),
+                    CommandHistoryPublisher.AckStatus.OK);
             ackStrToMostRecentCmdId.remove(ackName);
         }
 
@@ -204,7 +212,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         }
 
         var cmdId = ackStrToMostRecentCmdId.get(ackName);
-        getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+        getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(),
+                CommandHistoryPublisher.AckStatus.OK);
         ackStrToMostRecentCmdId.remove(ackName);
         return true;
     }
@@ -247,7 +256,6 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         notifyStopped();
     }
 
-
     @Override
     public void run() {
         while (isRunningAndEnabled()) {
@@ -258,7 +266,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         }
     }
 
-    //TODO maybe change this to whether or not a serial connection is currently active
+    // TODO maybe change this to whether or not a serial connection is currently
+    // active
     @Override
     protected Status connectionStatus() {
         return System.currentTimeMillis() - timeOfLastPacket < 5000 ? Status.OK : Status.UNAVAIL;
@@ -268,20 +277,23 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     public void init(String instance, String name, YConfiguration config) throws ConfigurationException {
         super.init(instance, name, config);
         if (config.containsKey("frequency")) {
-            log.info("SETTING UP: "+config.getString("frequency"));
+            log.info("SETTING UP: " + config.getString("frequency"));
             uniqueIdentifier = config.getString("frequency");
         } else {
             uniqueIdentifier = "control_box";
         }
 
         if (uniqueIdentifierToLink.put(uniqueIdentifier, this) != null) {
-            throw new ConfigurationException("Cannot have duplicate unique identifiers (can't have 2 control boxes, 2 FCs with same frequency, etc.)");
+            throw new ConfigurationException(
+                    "Cannot have duplicate unique identifiers (can't have 2 control boxes, 2 FCs with same frequency, etc.)");
         }
 
-        if (!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.contains("gs_radio") && !uniqueIdentifier.matches("^\\d+.\\d+$")) {
-            throw new ConfigurationException("The 'unique_identifier' config must either be 'control_box' or a decimal number representing a frequency");
+        if (!uniqueIdentifier.equals("control_box") && !uniqueIdentifier.contains("gs_radio")
+                && !uniqueIdentifier.matches("^\\d+.\\d+$")) {
+            throw new ConfigurationException(
+                    "The 'unique_identifier' config must either be 'control_box' or a decimal number representing a frequency");
         }
-	}
+    }
 
     @Override
     public void doEnable() {
@@ -294,7 +306,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     @Override
     public void doDisable() {
         if (isCurrentlyConnected()) {
-           disconnectFromCurrPort();
+            disconnectFromCurrPort();
         }
         disable();
     }
@@ -338,13 +350,15 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
             log.error("Failed to write " + text + " to " + currConnectedPort.getSystemPortName());
             log.error(e.getMessage());
             if (cmdId != null) {
-                getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.NOK);
+                getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY,
+                        timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.NOK);
             }
             return false;
         }
 
         if (cmdId != null) {
-            getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY, timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
+            getAckPublisher().publishAck(cmdId, CommandHistoryPublisher.AcknowledgeSent_KEY,
+                    timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.OK);
         }
 
         return true;
@@ -354,7 +368,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
     public boolean sendCommand(PreparedCommand preparedCommand) {
         // GS Radio commmands are sent through the FC link
         // Don't send them here to avoid duplication
-        if (uniqueIdentifier.startsWith("gs_radio_")){
+        if (uniqueIdentifier.startsWith("gs_radio_")) {
             return false;
         } else if (!isCurrentlyConnected()) {
             log.warn("Attempting to send serial device commands while not connected to this device");
@@ -376,7 +390,8 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
                 log.warn("Didn't receive ack for cmd: " + cmdStr);
 
                 var cmdId = ackStrToMostRecentCmdId.get(ackStr);
-                getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(), CommandHistoryPublisher.AckStatus.TIMEOUT);
+                getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(),
+                        CommandHistoryPublisher.AckStatus.TIMEOUT);
                 ackStrToMostRecentCmdId.remove(ackStr);
             }
         }, 15, TimeUnit.SECONDS);
