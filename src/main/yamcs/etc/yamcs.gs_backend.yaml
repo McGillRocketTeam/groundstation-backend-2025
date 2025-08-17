@@ -4,6 +4,13 @@ services:
   - class: org.yamcs.archive.AlarmRecorder
   - class: org.yamcs.archive.EventRecorder
   - class: org.yamcs.archive.ReplayServer
+  - class: org.yamcs.ProcessRunner
+    args:
+     command:
+       - "C:\\Windows\\system32\\wsl.exe"
+       - "bash"
+       - "-c"
+       - "/root/go/bin/mbtileserver --port 8081 --dir /root/maptiles --missing-image-tile-404"
   - class: org.yamcs.parameter.SystemParametersService
     args:
       producers:

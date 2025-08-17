@@ -1,0 +1,1 @@
+wsl /root/go/bin/mbtileserver -p 8080

@@ -213,6 +213,7 @@
 				<UnitSet />
 				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" />
 			</FloatParameterType>
+
 			<FloatParameterType name="float_ft">
 				<UnitSet>
 					<Unit>ft</Unit>
@@ -529,8 +530,7 @@
 					<ParameterRefEntry parameterRef="flight_stage" shortDescription="Flight stage" />
 					<ParameterRefEntry parameterRef="alt_altitude"
 						shortDescription="Altitude from ground (calculated from pressure)" />
-					<ParameterRefEntry parameterRef="alt_apogee"
-						shortDescription="The highest recorded altitude."></ParameterRefEntry>
+
 					<ParameterRefEntry parameterRef="vertical_speed" shortDescription="Vertical speed" />
 					<ParameterRefEntry parameterRef="gps_latitude" shortDescription="GPS latitude" />
 					<ParameterRefEntry parameterRef="gps_longitude" shortDescription="GPS longitude" />
@@ -571,6 +571,8 @@
 					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: OK status bit" />
 					<!-- The 3 booleans are bit packed we need to add an offset so everything remains byte
 					aligned			-->
+<!--					<ParameterRefEntry parameterRef="alt_apogee"-->
+<!--									   shortDescription="The highest recorded altitude."></ParameterRefEntry>-->
 				</EntryList>
 			</SequenceContainer>
 
@@ -636,7 +638,6 @@
 			<CustomAlgorithm name="calculate_apogee">
 				<AlgorithmText language="java-expression">
 					out0.setFloatValue(Math.max(newValue.getEngValue().getFloatValue(), oldValue.getEngValue().getFloatValue()));
-					return out0;
 				</AlgorithmText>
 				<InputSet>
 					<InputParameterInstanceRef parameterRef="alt_altitude" inputName="newValue" />
@@ -727,6 +728,10 @@
 			<MetaCommand name="umbilical_high_(connected)" shortDescription="uh ACK9_0" />
 			<MetaCommand name="umbilical_low_(disconnected)" shortDescription="ul ACK9_1" />
 			<MetaCommand name="cmd_error" shortDescription="Unable to process prior command" />
+
+			<!-- SD Card-->
+			<MetaCommand name="sd_card_open" shortDescription="so ACK9_0" />
+			<MetaCommand name="sd_card_close" shortDescription="sc ACK9_1" />
 		</MetaCommandSet>
 	</CommandMetaData>
 </SpaceSystem>
