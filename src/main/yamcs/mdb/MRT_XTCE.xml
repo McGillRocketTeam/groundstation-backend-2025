@@ -89,7 +89,7 @@
 					<Unit>°C</Unit>
 				</UnitSet>
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="8"
-									 byteOrder="leastSignificantByteFirst">
+					byteOrder="leastSignificantByteFirst">
 					<DefaultCalibrator>
 						<MathOperationCalibrator>
 							<ThisParameterOperand />
@@ -217,16 +217,31 @@
 			</FloatParameterType>
 
 			<FloatParameterType name="float_ft">
-<!--				<UnitSet>-->
-<!--					<Unit>m</Unit>-->
-<!--				</UnitSet>-->
+				<UnitSet>
+					<Unit>ft</Unit>
+				</UnitSet>
 				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" />
 			</FloatParameterType>
 
+			<FloatParameterType name="float_gps_alt">
+				<UnitSet>
+					<Unit>ft</Unit>
+				</UnitSet>
+				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst">
+					<DefaultCalibrator>
+						<MathOperationCalibrator>
+							<ThisParameterOperand />
+							<ValueOperand>3.28084</ValueOperand>
+							<Operator>*</Operator>
+						</MathOperationCalibrator>
+					</DefaultCalibrator>
+				</FloatDataEncoding>
+			</FloatParameterType>
+
 			<FloatParameterType name="java_float_ft">
-<!--				<UnitSet>-->
-<!--					<Unit>ft</Unit>-->
-<!--				</UnitSet>-->
+				<UnitSet>
+					<Unit>ft</Unit>
+				</UnitSet>
 				<FloatDataEncoding sizeInBits="32" />
 			</FloatParameterType>
 
@@ -417,11 +432,14 @@
 				shortDescription="Flight stage" />
 			<Parameter name="alt_altitude" parameterTypeRef="float_ft"
 				shortDescription="Altitude from ground (calculated from pressure)" />
+			<Parameter name="alt_sea_level" parameterTypeRef="float_ft"
+				shortDescription="Altitude from sea level (calculated from pressure)" />
 			<Parameter name="vertical_speed" parameterTypeRef="int32_mps"
 				shortDescription="Vertical speed" />
 			<Parameter name="gps_latitude" parameterTypeRef="float" shortDescription="GPS latitude" />
 			<Parameter name="gps_longitude" parameterTypeRef="float" shortDescription="GPS longitude" />
-			<Parameter name="gps_altitude" parameterTypeRef="float" shortDescription="GPS altitude" />
+			<Parameter name="gps_altitude" parameterTypeRef="float_gps_alt"
+				shortDescription="GPS altitude" />
 			<Parameter name="gps_time_last_update" parameterTypeRef="float"
 				shortDescription="GPS time from last update" />
 			<Parameter name="acceleration_x" parameterTypeRef="int16_mpsps"
@@ -532,7 +550,8 @@
 					<ParameterRefEntry parameterRef="flight_stage" shortDescription="Flight stage" />
 					<ParameterRefEntry parameterRef="alt_altitude"
 						shortDescription="Altitude from ground (calculated from pressure)" />
-
+					<ParameterRefEntry parameterRef="alt_sea_level"
+						shortDescription="Altitude from ground (calculated from pressure)" />
 					<ParameterRefEntry parameterRef="vertical_speed" shortDescription="Vertical speed" />
 					<ParameterRefEntry parameterRef="gps_latitude" shortDescription="GPS latitude" />
 					<ParameterRefEntry parameterRef="gps_longitude" shortDescription="GPS longitude" />
@@ -573,8 +592,8 @@
 					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: OK status bit" />
 					<!-- The 3 booleans are bit packed we need to add an offset so everything remains byte
 					aligned			-->
-<!--					<ParameterRefEntry parameterRef="alt_apogee"-->
-<!--									   shortDescription="The highest recorded altitude."></ParameterRefEntry>-->
+					<!--					<ParameterRefEntry parameterRef="alt_apogee"-->
+					<!--									   shortDescription="The highest recorded altitude."></ParameterRefEntry>-->
 				</EntryList>
 			</SequenceContainer>
 
