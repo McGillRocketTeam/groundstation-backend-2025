@@ -37,6 +37,8 @@
 							<ThisParameterOperand />
 							<ValueOperand>10</ValueOperand>
 							<Operator>/</Operator>
+							<ValueOperand>0.7</ValueOperand>
+							<Operator>-</Operator>
 						</MathOperationCalibrator>
 					</DefaultCalibrator>
 				</IntegerDataEncoding>
@@ -215,16 +217,16 @@
 			</FloatParameterType>
 
 			<FloatParameterType name="float_ft">
-				<UnitSet>
-					<Unit>ft</Unit>
-				</UnitSet>
+<!--				<UnitSet>-->
+<!--					<Unit>m</Unit>-->
+<!--				</UnitSet>-->
 				<FloatDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" />
 			</FloatParameterType>
 
 			<FloatParameterType name="java_float_ft">
-				<UnitSet>
-					<Unit>ft</Unit>
-				</UnitSet>
+<!--				<UnitSet>-->
+<!--					<Unit>ft</Unit>-->
+<!--				</UnitSet>-->
 				<FloatDataEncoding sizeInBits="32" />
 			</FloatParameterType>
 

@@ -44,6 +44,7 @@ public class FCUtils {
             }
 
             cmd.append("\n");
+            System.out.println("=========== "+cmd);
         } else {
             if(command.getArgAssignment().values().size() == 1){
                 for(var arg : command.getArgAssignment().values()){
@@ -67,6 +68,7 @@ public class FCUtils {
     public static String getAckStrFromCmd(PreparedCommand command) {
         // HERE
         if (command.getCmdName().equals("ping")) return "ping_ack";
+        if (command.getCmdName().equals("set_radio_params")) return "ACK_LORA";
 
         String[] commandComponents = command.getMetaCommand().getShortDescription().split(" ");
         // The last component of every command short description is the ack string

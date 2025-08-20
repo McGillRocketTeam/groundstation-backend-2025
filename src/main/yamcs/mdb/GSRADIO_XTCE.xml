@@ -124,6 +124,15 @@
                     <Argument shortDescription="Power" name="power" argumentTypeRef="power_arg" />
                 </ArgumentList>
             </MetaCommand>
+
+            <MetaCommand name="set_radio_params" shortDescription="change param ACK_LORA">
+                <ArgumentList>
+                    <Argument name="frequency" shortDescription="Frequency" argumentTypeRef="frequency_arg" />
+                    <Argument name="spreading_factor" shortDescription="Spreading Factor" argumentTypeRef="spreading_factor_arg" />
+                    <Argument name="bandwidth" shortDescription="Bandwidth" argumentTypeRef="bandwidth_arg" />
+                    <Argument name="coding_rate" shortDescription="Coding Rate" argumentTypeRef="coding_rate_arg" />
+                </ArgumentList>
+            </MetaCommand>
         </MetaCommandSet>
     </CommandMetaData>
 </SpaceSystem>

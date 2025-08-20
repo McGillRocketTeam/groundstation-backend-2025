@@ -171,7 +171,7 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
         String prefix = "ack_rGSRadio";
         // This is not a GSRadio Ack
         if (!ackText.startsWith(prefix)) {
-            log.info("returning");
+            log.warn("Tried to process GSRadio ack but didn't find te prefix \"ack_rGSRadio\"");
             return false;
         } else {
             ackText = ackText.substring(prefix.length());
@@ -202,7 +202,22 @@ public abstract class SerialDataLink extends AbstractTcTmParamLink implements Ru
 
     private boolean processAck(String ackText) {
         // GSRadio ACKs come with extra data that needs to be parsed
-        if (ackText.contains("GSRadio")) {
+        if (ackText.contains("ACK_LORA")) {
+            String ackName = "ACK_LORA";
+            log.info("Received ACK_LORA, writing \"radio init\" for updated parameters");
+            var cmdId = ackStrToMostRecentCmdId.get(ackName);
+            if (cmdId != null) {
+                getAckPublisher().publishAck(cmdId, "custom ack", timeService.getMissionTime(),
+                        CommandHistoryPublisher.AckStatus.OK);
+                ackStrToMostRecentCmdId.remove(ackName);
+            }
+            byte[] dataToWrite = ("radio init" + "\r\n").getBytes(StandardCharsets.UTF_8);
+            try {
+                currConnectedPort.getOutputStream().write(dataToWrite);
+            } catch (IOException e) {
+                log.error("Failed to write radio init command");
+            }
+        } else if (ackText.contains("GSRadio")) {
             return processGSRadioAck(ackText);
         }
 

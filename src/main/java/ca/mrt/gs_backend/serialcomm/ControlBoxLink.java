@@ -29,6 +29,8 @@ public class ControlBoxLink extends SerialDataLink {
                 cmdReleaser = processor.getCommandReleaser();
             }
 
+//            log.info(newData);
+
             switch (newData) {
                 case "VENT PUSHED":
                     sendFCCmd("p0");
@@ -44,9 +46,11 @@ public class ControlBoxLink extends SerialDataLink {
                     break;
                 case "KEY PUSHED":
                     sendFCCmd("p2");
+                    sendFCCmd("ul");
                     break;
                 case "KEY RELEASED":
                     sendFCCmd("p3");
+                    sendFCCmd("uh");
                     break;
                 case "RUN PUSHED":
                     sendFCCmd("pl");

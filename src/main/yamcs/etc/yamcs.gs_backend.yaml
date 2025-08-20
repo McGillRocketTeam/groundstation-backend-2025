@@ -6,6 +6,7 @@ services:
   - class: org.yamcs.archive.ReplayServer
   - class: org.yamcs.ProcessRunner
     args:
+     logPrefix: "mbtileserver"
      command:
        - "C:\\Windows\\system32\\wsl.exe"
        - "bash"
