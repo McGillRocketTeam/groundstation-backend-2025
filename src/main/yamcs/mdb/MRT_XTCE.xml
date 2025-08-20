@@ -458,14 +458,6 @@
 			<Parameter name="SNR" parameterTypeRef="int32" />
 
 			<Parameter name="meta_packet_size" parameterTypeRef="uint32" />
-
-			<!-- Items that are calculated on the GUI -->
-			<Parameter name="alt_apogee" parameterTypeRef="java_float_ft"
-				shortDescription="Calculated Apogee">
-				<LongDescription>Calculates the maximum value reached by the altimiter (apogee).</LongDescription>
-				<ParameterProperties persistence="false" dataSource="derived" />
-			</Parameter>
-
 		</ParameterSet>
 		<ContainerSet>
 			<!--Super
@@ -590,10 +582,6 @@
 					<ParameterRefEntry parameterRef="pl_sampling_state"
 						shortDescription="Payload: Sampling state" />
 					<ParameterRefEntry parameterRef="pl_ok" shortDescription="Payload: OK status bit" />
-					<!-- The 3 booleans are bit packed we need to add an offset so everything remains byte
-					aligned			-->
-					<!--					<ParameterRefEntry parameterRef="alt_apogee"-->
-					<!--									   shortDescription="The highest recorded altitude."></ParameterRefEntry>-->
 				</EntryList>
 			</SequenceContainer>
 
@@ -655,23 +643,6 @@
 		</ContainerSet>
 
 		<!-- For deriving data points -->
-		<AlgorithmSet>
-			<CustomAlgorithm name="calculate_apogee">
-				<AlgorithmText language="java-expression">
-					out0.setFloatValue(Math.max(newValue.getEngValue().getFloatValue(), oldValue.getEngValue().getFloatValue()));
-				</AlgorithmText>
-				<InputSet>
-					<InputParameterInstanceRef parameterRef="alt_altitude" inputName="newValue" />
-					<InputParameterInstanceRef parameterRef="alt_apogee" inputName="oldValue" />
-				</InputSet>
-				<OutputSet>
-					<OutputParameterRef parameterRef="alt_apogee" outputName="out0" />
-				</OutputSet>
-				<TriggerSet>
-					<OnParameterUpdateTrigger parameterRef="alt_altitude" />
-				</TriggerSet>
-			</CustomAlgorithm>
-		</AlgorithmSet>
 	</TelemetryMetaData>
 	<CommandMetaData>
 		<ArgumentTypeSet>
